@@ -2,6 +2,7 @@ import React from 'react'
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
+import PropTypes from 'prop-types'
 
 import styles from './burger-ingredients.module.css'
 
@@ -32,6 +33,15 @@ const BurgerIngredients = (props) => {
         </ul>
       </div>
     </section>
+  )
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired
+    })
   )
 }
 

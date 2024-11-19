@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './order-details.module.css'
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
 
 const OrderDetails = ({orderId}) => {
   return (
@@ -14,4 +15,5 @@ const OrderDetails = ({orderId}) => {
   )
 }
 
+OrderDetails.propTypes = { orderId: PropTypes.string }
 export default OrderDetails

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import * as ReactDom from 'react-dom'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
 
 import styles from './modal.module.css'
 
@@ -41,4 +42,9 @@ const Modal = (props) => {
   )
 }
 
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  header: PropTypes.string,
+}
 export default Modal
