@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import styles from './app.module.css';
-import {URL_GALAXY} from "../../utils/constants";
+import React, {useEffect, useState} from 'react'
+import AppHeader from '../app-header/app-header'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients'
+import BurgerConstructor from '../burger-constructor/burger-constructor'
+import styles from './app.module.css'
+import {URL_GALAXY} from '../../utils/constants'
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -22,9 +22,7 @@ const App = () => {
         setIsLoading(false)
         setHasError(true)
       })
-  }, []);
-
-  console.log(ingredients)
+  }, [])
 
   return (
     <div className={`${styles.app} pt-10 text_type_main-default`}>
@@ -38,7 +36,7 @@ const App = () => {
       </main>
       }
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import Modal from '../modal/modal'
+import OrderDetails from '../order-details/order-details'
+
+import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = (props) => {
   const { data } = props
   const [isOpenModal, setIsOpenModal] = useState(false)
-
   const outerElement = data.find(item => item.type === 'bun' && item.name === 'Краторная булка N-200i')
-  const priceTotal = '610';
+  const priceTotal = '610'
+  const orderId = '034537'
   const handleOpenOrder = () => {
-    console.log('Кликнули на кнопку')
     setIsOpenModal(true)
   }
-
-  console.log(isOpenModal)
 
   return (
     <section className={`${styles.section} mt-25`}>
@@ -60,7 +58,7 @@ const BurgerConstructor = (props) => {
       </div>
       {isOpenModal
       ? <Modal onClose={() => setIsOpenModal(false)}>
-          <OrderDetails />
+          <OrderDetails orderId={orderId} />
         </Modal>
       : null
       }
@@ -68,5 +66,5 @@ const BurgerConstructor = (props) => {
   )
 }
 
-export default BurgerConstructor;
+export default BurgerConstructor
 

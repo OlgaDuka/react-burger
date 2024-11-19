@@ -12,13 +12,13 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    gap: calc(var(--offset-base-size) * 2);
     border-radius: 50%;
 }
 
 .logo {
     position: absolute;
-    top: 20px;
+    top: calc(var(--offset-base-size) * 5);
     left: 50%;
     transform: translate(-50%);
 }

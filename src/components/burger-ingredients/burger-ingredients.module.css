@@ -21,7 +21,7 @@
 }
 
 .container::-webkit-scrollbar {
-    width: 8px;
+    width: calc(var(--offset-base-size) * 2);
 }
 
 /* Track */

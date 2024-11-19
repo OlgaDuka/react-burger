@@ -11,6 +11,7 @@ body {
 
 :root{
   --text-primary-color-light: #f2f2f3;
+  --colors-check-button-bg: #272140;
 }
 
 ul{

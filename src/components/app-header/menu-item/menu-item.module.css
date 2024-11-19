@@ -1,7 +1,7 @@
 .item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: calc(var(--offset-base-size) * 2);
     background-color: var(--background);
     border-radius: var(--common-border-radius-s);
     cursor: pointer;

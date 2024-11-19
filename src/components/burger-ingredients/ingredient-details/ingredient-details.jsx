@@ -1,10 +1,10 @@
-import React from 'react';
-import {INGREDIENT_PROPS} from "../../../utils/constants";
-import IngredientProp from "./ingredient-prop/ingredient-prop";
+import React from 'react'
+import {INGREDIENT_PROPS} from '../../../utils/constants'
+import IngredientProp from './ingredient-prop/ingredient-prop'
+
 import styles from './ingredient-details.module.css'
 
-const IngredientDetails = (props) => {
-  const { item } = props
+const IngredientDetails = ({ item }) => {
   const { name, image, calories, fat, carbohydrates, proteins } = item
 
   return (
@@ -18,7 +18,7 @@ const IngredientDetails = (props) => {
         <IngredientProp name={INGREDIENT_PROPS.carbohydrates} value={carbohydrates} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default IngredientDetails;
+export default IngredientDetails

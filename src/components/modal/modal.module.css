@@ -1,9 +1,9 @@
 .modal {
     position: relative;
     width: 720px;
-    padding: 40px;
+    padding: calc(var(--offset-base-size) * 10);
     background: var(--background);
-    border-radius: 20px;
+    border-radius: var(--common-border-radius-s);
     box-sizing: border-box;
     z-index: 1001;
 }

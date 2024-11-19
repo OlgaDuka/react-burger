@@ -1,8 +1,9 @@
-import React from 'react';
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import React from 'react'
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
+import {INGREDIENT_TYPES} from '../../utils/constants'
+import IngredientCard from './ingredient-card/ingredient-card'
+
 import styles from './burger-ingredients.module.css'
-import {INGREDIENT_TYPES} from "../../utils/constants";
-import IngredientCard from "./ingredient-card/ingredient-card";
 
 const BurgerIngredients = (props) => {
   const { data } = props
@@ -31,7 +32,7 @@ const BurgerIngredients = (props) => {
         </ul>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default BurgerIngredients;
+export default BurgerIngredients
