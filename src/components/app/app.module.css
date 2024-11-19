@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text-primary-color-light);
+}
+
+.main {
+  margin: 0 auto;
+  width: 1280px;
+  max-width: 1280px;
+  height: 100%;
+  display: flex;
+  gap: 40px;
+}
