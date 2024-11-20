@@ -13,14 +13,20 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true)
     fetch(URL_GALAXY)
-      .then(res => res.json())
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
       .then(res => {
         setIngredients(res.data)
-        setIsLoading(false)
       })
       .catch(() => {
-        setIsLoading(false)
         setHasError(true)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }, [])
 

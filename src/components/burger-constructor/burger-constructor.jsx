@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import PropTypes from 'prop-types'
+import {useModal} from '../hooks/useModal'
+import {IngredientItemType} from '../../utils/types'
 
 import styles from './burger-constructor.module.css'
 
 const BurgerConstructor = (props) => {
   const { data } = props
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const { isOpenModal, openModal, closeModal } = useModal()
   const outerElement = data.find(item => item.type === 'bun' && item.name === 'Краторная булка N-200i')
   const priceTotal = '610'
   const orderId = '034537'
-  const handleOpenOrder = () => {
-    setIsOpenModal(true)
-  }
 
   return (
     <section className={`${styles.section} mt-25`}>
@@ -53,12 +52,12 @@ const BurgerConstructor = (props) => {
       <div className={`${styles.total} mt-10 pr-4`}>
         <p className='text text_type_digits-medium mr-4'>{priceTotal}</p>
         <CurrencyIcon className='mr-10' type="primary"/>
-        <Button htmlType="button" type="primary" size="large" onClick={handleOpenOrder}>
+        <Button htmlType="button" type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>
       {isOpenModal
-      ? <Modal onClose={() => setIsOpenModal(false)}>
+      ? <Modal onClose={closeModal}>
           <OrderDetails orderId={orderId} />
         </Modal>
       : null
@@ -68,13 +67,7 @@ const BurgerConstructor = (props) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired
-    })
-  )
+  data: PropTypes.arrayOf(IngredientItemType).isRequired
 }
 
 export default BurgerConstructor

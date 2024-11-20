@@ -5,6 +5,7 @@ import IngredientCard from './ingredient-card/ingredient-card'
 import PropTypes from 'prop-types'
 
 import styles from './burger-ingredients.module.css'
+import {IngredientItemType} from '../../utils/types'
 
 const BurgerIngredients = (props) => {
   const { data } = props
@@ -37,12 +38,7 @@ const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired
-    })
-  )
+  data: PropTypes.arrayOf(IngredientItemType).isRequired
 }
 
 export default BurgerIngredients

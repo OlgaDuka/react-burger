@@ -1,33 +1,32 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import * as ReactDom from 'react-dom'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
 
 import styles from './modal.module.css'
+import ModalOverlay from './modal-overlay/modal-overlay'
 
 const modalRoot = document.getElementById('modal-root')
 
 const Modal = (props) => {
   const { children, onClose, header = ''} = props
 
-  useEffect(() => {
-    const handleEscapePress = (event) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    };
+  const handleEscapePress = useCallback((event) => {
+    if (event.key === 'Escape') {
+      onClose()
+    }
+  }, [onClose])
 
-    document.body.classList.add('open')
+  useEffect(() => {
     window.addEventListener('keydown', handleEscapePress)
 
     return () => {
-      document.body.classList.remove('open')
       window.removeEventListener('keydown', handleEscapePress)
     };
-  }, [onClose])
+  }, [])
 
   return ReactDom.createPortal (
-      <div className={styles.overlay} onClick={onClose}>
+      <>
         <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
           <div className={`${styles.header} text text_type_main-large`}>
             <div>{header}</div>
@@ -37,7 +36,8 @@ const Modal = (props) => {
           </div>
           {children}
         </div>
-      </div>,
+        <ModalOverlay onClose={onClose} />
+      </>,
     modalRoot
   )
 }

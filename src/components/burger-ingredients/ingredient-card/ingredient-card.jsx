@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import PropTypes from 'prop-types'
 import Modal from '../../modal/modal'
 import IngredientDetails from '../ingredient-details/ingredient-details'
-import PropTypes from 'prop-types'
+import {useModal} from '../../hooks/useModal'
+import {IngredientItemType} from '../../../utils/types'
 
 import styles from './ingredient-card.module.css'
 
 const IngredientCard = ({item, hasCount = false}) => {
   const { image, name, price } = item
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const { isOpenModal, openModal, closeModal } = useModal()
 
   return (
     <div>
-      <div className={`${styles.card} mt-6 mb-8`} onClick={() => setIsOpenModal(true)}>
+      <div className={`${styles.card} mt-6 mb-8`} onClick={openModal}>
         <img className='mt-1' src={image} alt={name}/>
         {hasCount && <Counter count={1} size="default" extraClass="m-1" />}
         <div className={`${styles.currency} mt-1`}>
@@ -22,7 +24,7 @@ const IngredientCard = ({item, hasCount = false}) => {
         <p className='text_type_main-default mt-2 mb-2'>{name}</p>
       </div>
       {isOpenModal
-      ? <Modal onClose={() => setIsOpenModal(false)} header='Детали ингредиента'>
+      ? <Modal onClose={closeModal} header='Детали ингредиента'>
           <IngredientDetails item={item} />
         </Modal>
       : null
@@ -32,11 +34,7 @@ const IngredientCard = ({item, hasCount = false}) => {
 };
 
 IngredientCard.propTypes = {
-  item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
-  }),
+  item: IngredientItemType.isRequired,
   hasCount: PropTypes.bool
 }
 
