@@ -3,7 +3,7 @@ import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/
 import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
-import {useModal} from '../hooks/useModal'
+import {useModal} from '../../hooks/useModal'
 import {IngredientItemType} from '../../utils/types'
 
 import styles from './burger-constructor.module.css'
