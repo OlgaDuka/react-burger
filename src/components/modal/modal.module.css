@@ -1,0 +1,23 @@
+.modal {
+    width: 720px;
+    padding: calc(var(--offset-base-size) * 10);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background);
+    border-radius: var(--common-border-radius-s);
+    box-sizing: border-box;
+    z-index: 1001;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close {
+    cursor: pointer;
+}
+

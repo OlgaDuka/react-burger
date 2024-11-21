@@ -1,0 +1,24 @@
+.header {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 88px;
+    background: var(--background);
+}
+
+.menu {
+    margin: 0 auto;
+    width: 1280px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: calc(var(--offset-base-size) * 2);
+    border-radius: 50%;
+}
+
+.logo {
+    position: absolute;
+    top: calc(var(--offset-base-size) * 5);
+    left: 50%;
+    transform: translate(-50%);
+}

@@ -1,0 +1,35 @@
+.tabs {
+    display: flex;
+}
+
+.section {
+    width: 50%;
+    text-align: left;
+    background: var(--background-alt);
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.container {
+    display: block;
+    height: calc(100vh - 370px);
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    width: calc(var(--offset-base-size) * 2);
+}
+
+/* Track */
+.container::-webkit-scrollbar-track {
+    background: rgba(47, 47, 55, 1);
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+    background: rgba(133, 133, 173, 1);
+}
