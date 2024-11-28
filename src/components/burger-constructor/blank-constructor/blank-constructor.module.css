@@ -1,0 +1,23 @@
+.blank {
+    margin-left: 40px;
+    padding: 24px;
+    display: inline-block;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    color: #F2F2F3;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+
+.blank_top {
+    margin-left: 0;
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.blank_bottom {
+    margin-left: 0;
+    border-radius: var(--bottom-constructor-item-border-radius);
+}

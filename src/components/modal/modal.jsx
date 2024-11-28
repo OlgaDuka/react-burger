@@ -23,6 +23,7 @@ const Modal = (props) => {
     return () => {
       window.removeEventListener('keydown', handleEscapePress)
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return ReactDom.createPortal (

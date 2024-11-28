@@ -1,9 +1,20 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './order-details.module.css'
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
+import {useDispatch, useSelector} from 'react-redux'
+import {sendOrder} from '../../services/actions/order'
 
-const OrderDetails = ({orderId}) => {
+const OrderDetails = () => {
+  const orderId = useSelector(state => state.order.orderId)
+  const dispatch = useDispatch()
+  const ingredients = ['609646e4dc916e00276b286e','643d69a5c3f7b9001cfa093e', '643d69a5c3f7b9001cfa0941']
+
+  useEffect(() => {
+    dispatch(sendOrder(ingredients))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
   return (
     <div className={styles.card}>
       <div className='text text_type_digits-large mb-5'>{orderId}</div>
@@ -15,5 +26,4 @@ const OrderDetails = ({orderId}) => {
   )
 }
 
-OrderDetails.propTypes = { orderId: PropTypes.string }
 export default OrderDetails

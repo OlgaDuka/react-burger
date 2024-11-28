@@ -1,36 +1,39 @@
 import React from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import {useModal} from '../../hooks/useModal'
-import {IngredientItemType} from '../../utils/types'
 
 import styles from './burger-constructor.module.css'
+import {useSelector} from 'react-redux'
+import BlankConstructor from './blank-constructor/blank-constructor'
 
-const BurgerConstructor = (props) => {
-  const { data } = props
+const BurgerConstructor = () => {
+  const bun = useSelector(state => state.burgerConstructor.bun)
+  const ingredients = useSelector(state => state.burgerConstructor.ingredients)
   const { isOpenModal, openModal, closeModal } = useModal()
-  const outerElement = data.find(item => item.type === 'bun' && item.name === 'Краторная булка N-200i')
   const priceTotal = '610'
-  const orderId = '034537'
 
   return (
     <section className={`${styles.section} mt-25`}>
       <div>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${outerElement.name} (верх)`}
-          price={outerElement.price}
-          thumbnail={outerElement.image}
-        />
+        {bun
+        ? <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        : <BlankConstructor position='top' text='Выберите булки' />
+        }
       </div>
+      {
       <ul className={styles.container}>
-        {
-          data.filter(item => item.type !== 'bun').map((item) => (
+        {ingredients && ingredients.length
+          ? ingredients.filter(item => item.type !== 'bun').map((item) => (
             <li key={item._id} className={`${styles.item_wrapper} mt-4`}>
-              <DragIcon type="primary" />
+              <DragIcon type="primary"/>
               <ConstructorElement
                 text={item.name}
                 price={item.price}
@@ -38,16 +41,24 @@ const BurgerConstructor = (props) => {
               />
             </li>
           ))
+          : <li key={1} className={`${styles.item_wrapper} mt-4 mb-4`}>
+            <BlankConstructor text='Выберите начинку' />
+          </li>
+
         }
       </ul>
+      }
       <div>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${outerElement.name} (низ)`}
-          price={outerElement.price}
-          thumbnail={outerElement.image}
-        />
+        {bun
+          ? <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+          : <BlankConstructor position='bottom' text='Выберите булки' />
+        }
       </div>
       <div className={`${styles.total} mt-10 pr-4`}>
         <p className='text text_type_digits-medium mr-4'>{priceTotal}</p>
@@ -58,16 +69,12 @@ const BurgerConstructor = (props) => {
       </div>
       {isOpenModal
       ? <Modal onClose={closeModal}>
-          <OrderDetails orderId={orderId} />
+          <OrderDetails />
         </Modal>
       : null
       }
     </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(IngredientItemType).isRequired
 }
 
 export default BurgerConstructor

@@ -2,13 +2,12 @@ import React from 'react'
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
-import PropTypes from 'prop-types'
 
 import styles from './burger-ingredients.module.css'
-import {IngredientItemType} from '../../utils/types'
+import {useSelector} from 'react-redux'
 
-const BurgerIngredients = (props) => {
-  const { data } = props
+const BurgerIngredients = () => {
+  const ingredients = useSelector(state => state.ingredients.ingredients)
   const [currentTab, setCurrentTab] = React.useState('bun')
 
   return (
@@ -22,7 +21,7 @@ const BurgerIngredients = (props) => {
       <div className={styles.container}>
         <h2 className='text text_type_main-medium'>{INGREDIENT_TYPES[currentTab]}</h2>
         <ul className={styles.list}>
-          {data.map((item) => item.type === currentTab
+          {ingredients.map((item) => item.type === currentTab
             ? <li key={item._id}>
               <IngredientCard
                 item={item}
@@ -35,10 +34,6 @@ const BurgerIngredients = (props) => {
       </div>
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(IngredientItemType).isRequired
 }
 
 export default BurgerIngredients

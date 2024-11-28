@@ -1,12 +1,13 @@
 import React from 'react'
 import {INGREDIENT_PROPS} from '../../../utils/constants'
 import IngredientProp from './ingredient-prop/ingredient-prop'
-import {IngredientItemType} from '../../../utils/types'
 
 import styles from './ingredient-details.module.css'
+import {useSelector} from 'react-redux'
 
-const IngredientDetails = ({ item }) => {
-  const { name, image, calories, fat, carbohydrates, proteins } = item
+const IngredientDetails = () => {
+  const selectedIngredient = useSelector(state => state.details.selectedIngredient)
+  const { name, image, calories, fat, carbohydrates, proteins } = selectedIngredient
 
   return (
     <div className={styles.card}>
@@ -20,10 +21,6 @@ const IngredientDetails = ({ item }) => {
       </div>
     </div>
   )
-}
-
-IngredientDetails.propTypes = {
-  item: IngredientItemType.isRequired
 }
 
 export default IngredientDetails

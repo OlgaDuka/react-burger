@@ -7,14 +7,28 @@ import {useModal} from '../../../hooks/useModal'
 import {IngredientItemType} from '../../../utils/types'
 
 import styles from './ingredient-card.module.css'
+import {useDispatch} from 'react-redux'
+import {clearSelectedIngredient, setSelectedIngredient} from '../../../services/actions/details'
 
 const IngredientCard = ({item, hasCount = false}) => {
   const { image, name, price } = item
+  const dispatch = useDispatch()
   const { isOpenModal, openModal, closeModal } = useModal()
+
+
+  const handleOpenModal = () => {
+    dispatch(setSelectedIngredient(item))
+    openModal()
+  }
+
+  const handleCloseModal = () => {
+    dispatch(clearSelectedIngredient())
+    closeModal()
+  }
 
   return (
     <div>
-      <div className={`${styles.card} mt-6 mb-8`} onClick={openModal}>
+      <div className={`${styles.card} mt-6 mb-8`} onClick={handleOpenModal}>
         <img className='mt-1' src={image} alt={name}/>
         {hasCount && <Counter count={1} size="default" extraClass="m-1" />}
         <div className={`${styles.currency} mt-1`}>
@@ -24,8 +38,8 @@ const IngredientCard = ({item, hasCount = false}) => {
         <p className='text_type_main-default mt-2 mb-2'>{name}</p>
       </div>
       {isOpenModal
-      ? <Modal onClose={closeModal} header='Детали ингредиента'>
-          <IngredientDetails item={item} />
+      ? <Modal onClose={handleCloseModal} header='Детали ингредиента'>
+          <IngredientDetails />
         </Modal>
       : null
       }
