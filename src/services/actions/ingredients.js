@@ -7,10 +7,12 @@ export const getIngredients = () => (dispatch) => {
   dispatch({ type: GET_INGREDIENTS })
 
   getIngredientsRequest()
-    .then((res) => dispatch({
-      type: GET_INGREDIENTS_SUCCESS,
-      payload: res.data
-    }))
+    .then((res) => {
+      dispatch({
+        type: GET_INGREDIENTS_SUCCESS,
+        payload: res.data
+      })
+    })
     .catch(() => dispatch({
       type: GET_INGREDIENTS_ERROR,
       payload: []
