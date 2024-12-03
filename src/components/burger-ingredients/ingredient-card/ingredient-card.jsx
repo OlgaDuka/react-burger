@@ -1,15 +1,15 @@
 import React from 'react';
-import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
-import Modal from '../../modal/modal'
-import IngredientDetails from '../ingredient-details/ingredient-details'
+import {useDispatch} from 'react-redux'
+import {useDrag} from 'react-dnd'
+import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import {useModal} from '../../../hooks/useModal'
 import {IngredientItemType} from '../../../utils/types'
-
-import styles from './ingredient-card.module.css'
-import {useDispatch} from 'react-redux'
 import {clearSelectedIngredient, setSelectedIngredient} from '../../../services/actions/details'
-import {useDrag} from 'react-dnd'
+import Modal from '../../modal/modal'
+import IngredientDetails from '../ingredient-details/ingredient-details'
+import styles from './ingredient-card.module.css'
 
 const IngredientCard = ({ item }) => {
   const { image, name, price, count } = item

@@ -1,10 +1,13 @@
 import React, {useRef} from 'react'
-import styles from '../middle-constructor.module.css'
-import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useDrag, useDrop} from 'react-dnd'
+import PropTypes from 'prop-types'
+import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import {deleteIngredient, sortingIngredients} from '../../../../../services/actions/constructor'
 import {changeCount} from '../../../../../services/actions/ingredients'
 import {useDispatch} from 'react-redux'
+import {IngredientItemType} from '../../../../../utils/types'
+import styles from '../filling.module.css'
 
 const DraggableElement = ({ item, index }) => {
   const ref = useRef(null)
@@ -57,6 +60,11 @@ const DraggableElement = ({ item, index }) => {
       />
     </li>
   )
+}
+
+DraggableElement.propTypes = {
+  item: IngredientItemType.isRequired,
+  index: PropTypes.number.isRequired
 }
 
 export default DraggableElement

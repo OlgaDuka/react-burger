@@ -1,9 +1,9 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
+
 import {INGREDIENT_PROPS} from '../../../utils/constants'
 import IngredientProp from './ingredient-prop/ingredient-prop'
-
 import styles from './ingredient-details.module.css'
-import {useSelector} from 'react-redux'
 
 const IngredientDetails = () => {
   const selectedIngredient = useSelector(state => state.details.selectedIngredient)

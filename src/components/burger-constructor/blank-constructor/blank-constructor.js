@@ -17,7 +17,8 @@ const BlankConstructor = ({ position = '', text, isHover }) => {
 
 BlankConstructor.propTypes = {
   position: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
+  isHover: PropTypes.bool
 }
 
 export default BlankConstructor

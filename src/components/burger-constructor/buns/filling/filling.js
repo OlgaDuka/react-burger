@@ -1,12 +1,14 @@
 import React from 'react'
-import BlankConstructor from '../../blank-constructor/blank-constructor'
 import {useDispatch, useSelector} from 'react-redux'
 import {useDrop} from 'react-dnd'
+
 import {addIngredient} from '../../../../services/actions/constructor'
-import styles from './middle-constructor.module.css'
 import {changeCount} from '../../../../services/actions/ingredients'
+import BlankConstructor from '../../blank-constructor/blank-constructor'
 import DraggableElement from './draggable-element/draggable-element'
-const MiddleConstructor = () => {
+import styles from './filling.module.css'
+
+const Filling = () => {
   const fillings = useSelector(state => state.burgerConstructor.fillings)
   const dispatch = useDispatch()
 
@@ -35,4 +37,4 @@ const MiddleConstructor = () => {
   )
 }
 
-export default MiddleConstructor
+export default Filling

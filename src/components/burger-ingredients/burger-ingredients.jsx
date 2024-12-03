@@ -1,10 +1,10 @@
 import React, {useRef} from 'react'
+import {useSelector} from 'react-redux'
+
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
-
 import styles from './burger-ingredients.module.css'
-import {useSelector} from 'react-redux'
 
 const BurgerIngredients = () => {
   const ingredients = useSelector(state => state.ingredients.ingredients)

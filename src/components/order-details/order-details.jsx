@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
-import styles from './order-details.module.css'
-import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useDispatch, useSelector} from 'react-redux'
+import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+
 import {sendOrder} from '../../services/actions/order'
+import styles from './order-details.module.css'
 
 const OrderDetails = () => {
   const orderId = useSelector(state => state.order.orderId)
@@ -16,10 +17,15 @@ const OrderDetails = () => {
   ingredients.push(bun._id)
 
   useEffect(() => {
-    dispatch(sendOrder(ingredients))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const controller = new AbortController()
 
+    dispatch(sendOrder(ingredients))
+
+    return () => {
+      controller.abort()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className={styles.card}>
