@@ -9,12 +9,20 @@ import {IngredientItemType} from '../../../utils/types'
 import styles from './ingredient-card.module.css'
 import {useDispatch} from 'react-redux'
 import {clearSelectedIngredient, setSelectedIngredient} from '../../../services/actions/details'
+import {useDrag} from 'react-dnd'
 
-const IngredientCard = ({item, hasCount = false}) => {
-  const { image, name, price } = item
+const IngredientCard = ({ item }) => {
+  const { image, name, price, count } = item
   const dispatch = useDispatch()
   const { isOpenModal, openModal, closeModal } = useModal()
 
+  const [{ opacity }, dragRef] = useDrag({
+    type: item.type === 'bun' ? 'bun' : 'ingredients',
+    item: item,
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  })
 
   const handleOpenModal = () => {
     dispatch(setSelectedIngredient(item))
@@ -28,9 +36,9 @@ const IngredientCard = ({item, hasCount = false}) => {
 
   return (
     <div>
-      <div className={`${styles.card} mt-6 mb-8`} onClick={handleOpenModal}>
+      <div ref={dragRef} className={`${styles.card} mt-6 mb-8`} style={{ opacity }} onClick={handleOpenModal}>
         <img className='mt-1' src={image} alt={name}/>
-        {hasCount && <Counter count={1} size="default" extraClass="m-1" />}
+        {!!count && <Counter count={count} size="default" extraClass="m-1" />}
         <div className={`${styles.currency} mt-1`}>
           <span className='text text_type_digits-default mr-2'>{price}</span>
           <CurrencyIcon type="primary"/>

@@ -3,7 +3,8 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 export const  DELETE_INGREDIENT = 'DELETE_INGREDIENT'
 export const  CLEAR_BURGER = 'CLEAR_BURGER'
 
-export const addIngredient = (ingredient) => {
+export const addIngredient = (item) => {
+ const ingredient = Object.assign({}, item)
  ingredient.oguid = uuidv4()
 
  return {

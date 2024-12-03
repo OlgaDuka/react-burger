@@ -2,7 +2,7 @@ import {ADD_INGREDIENT, CLEAR_BURGER, DELETE_INGREDIENT} from '../actions/constr
 
 const initialState = {
   bun: null,
-  ingredients: []
+  fillings: []
 }
 
 export const constructorReducer = (state = initialState, action) => {
@@ -11,11 +11,11 @@ export const constructorReducer = (state = initialState, action) => {
       if (action.payload.type === 'bun') {
         return {...state, bun: action.payload}
       }
-      return {...state, ingredients: [...state.ingredients, action.payload]}
+      return {...state, fillings: [...state.fillings, action.payload]}
     }
     case DELETE_INGREDIENT: {
-      const lostIngredients = state.ingredients.filter((item) => item.id !== action.payload.id)
-      return {...state, ingredients: lostIngredients}
+      const lostIngredients = state.fillings.filter((item) => item.oguid !== action.payload.oguid)
+      return {...state, fillings: lostIngredients}
     }
     case CLEAR_BURGER: {
       return {...initialState}

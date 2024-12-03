@@ -21,3 +21,7 @@
     margin-left: 0;
     border-radius: var(--bottom-constructor-item-border-radius);
 }
+
+.hover {
+    border: 2px solid var(--colors-interface-accent)
+}

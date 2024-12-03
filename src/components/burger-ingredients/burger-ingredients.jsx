@@ -53,10 +53,7 @@ const BurgerIngredients = () => {
             <ul className={styles.list}>
               {ingredients.map((item) => item.type === tab
                 ? <li key={item._id}>
-                    <IngredientCard
-                      item={item}
-                      hasCount={activeTab === 'bun' && item.name === 'Краторная булка N-200i'}
-                    />
+                    <IngredientCard item={item} />
                   </li>
                 : null
               )}

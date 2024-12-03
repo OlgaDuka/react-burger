@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types'
 import styles from './blank-constructor.module.css'
 
-const BlankConstructor = ({ position = '', text }) => {
-  const classes = `pt-4 ${styles.blank} ${position && styles[`blank_${position}`]}`
+const BlankConstructor = ({ position = '', text, isHover }) => {
+  const classes =
+   `pt-4
+   ${styles.blank}
+   ${position && styles[`blank_${position}`]}
+   ${isHover && styles.hover}`
 
   return (
     <div className={classes}>
