@@ -1,7 +1,7 @@
 import React from 'react'
 
-import styles from './menu-item.module.css'
 import PropTypes from 'prop-types'
+import styles from './menu-item.module.css'
 
 const MenuItem = (props) => {
   const { text, children } = props

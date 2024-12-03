@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect} from 'react'
 import * as ReactDom from 'react-dom'
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import styles from './modal.module.css'
 import ModalOverlay from './modal-overlay/modal-overlay'
+import styles from './modal.module.css'
 
 const modalRoot = document.getElementById('modal-root')
 
@@ -23,6 +23,7 @@ const Modal = (props) => {
     return () => {
       window.removeEventListener('keydown', handleEscapePress)
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return ReactDom.createPortal (
