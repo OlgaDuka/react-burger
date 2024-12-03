@@ -1,9 +1,9 @@
 import React from 'react'
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
 import BlankConstructor from '../blank-constructor/blank-constructor'
-import MiddleConstructor from '../middle-constructor/middle-constructor'
+import MiddleConstructor from './middle-constructor/middle-constructor'
 import {useDispatch, useSelector} from 'react-redux'
-import {addIngredient} from '../../../services/actions/constructor'
+import {addIngredient, deleteIngredient} from '../../../services/actions/constructor'
 import {useDrop} from 'react-dnd'
 import {changeCount} from '../../../services/actions/ingredients'
 
@@ -13,6 +13,7 @@ const BunConstructor = () => {
 
   const moveBun = (item) => {
     if (bun) {
+      dispatch(deleteIngredient(bun))
       dispatch(changeCount(bun._id, 'minus'))
     }
     dispatch(addIngredient(item))

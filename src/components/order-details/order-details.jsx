@@ -6,8 +6,14 @@ import {sendOrder} from '../../services/actions/order'
 
 const OrderDetails = () => {
   const orderId = useSelector(state => state.order.orderId)
+  const bun = useSelector(state => state.burgerConstructor.bun)
+  const fillings = useSelector(state => state.burgerConstructor.fillings)
   const dispatch = useDispatch()
-  const ingredients = ['609646e4dc916e00276b286e','643d69a5c3f7b9001cfa093e', '643d69a5c3f7b9001cfa0941']
+
+  const ingredients = []
+  ingredients.push(bun._id)
+  fillings.forEach(item => ingredients.push(item._id))
+  ingredients.push(bun._id)
 
   useEffect(() => {
     dispatch(sendOrder(ingredients))
