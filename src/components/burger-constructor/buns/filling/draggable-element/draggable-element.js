@@ -50,7 +50,7 @@ const DraggableElement = ({ item, index }) => {
   const dragDropRef = dragRef(dropRef(ref))
 
   return (
-    <li ref={dragDropRef} key={item.oguid} style={{ opacity }} className={`${styles.item_wrapper} mt-4 mb-4`}>
+    <li ref={dragDropRef} style={{ opacity }} className={`${styles.item_wrapper} mt-4 mb-4`}>
       <DragIcon type="primary"/>
       <ConstructorElement
         text={item.name}

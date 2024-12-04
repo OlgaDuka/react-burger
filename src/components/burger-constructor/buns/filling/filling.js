@@ -28,7 +28,7 @@ const Filling = () => {
   return (
     <ul ref={dropIngredient} className={`${styles.container} mb-0`}>
       {fillings && fillings.length
-        ? fillings.map((item, index) => <DraggableElement item={item} index={index} />)
+        ? fillings.map((item, index) => <DraggableElement key={item.oguid} item={item} index={index} />)
         : <li className={`${styles.item_wrapper} mt-4 mb-4`}>
           <BlankConstructor isHover={isHoverIngredient} text='Выберите начинку'/>
         </li>

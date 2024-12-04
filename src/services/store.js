@@ -1,6 +1,5 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 import {thunk} from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
 import {constructorReducer} from './reducers/constructor'
 import {orderReducer} from './reducers/order'
 import {ingredientsReducer} from './reducers/ingredients'
@@ -13,6 +12,7 @@ const rootReducer = combineReducers({
     order: orderReducer
 })
 
-const enhanser = composeWithDevTools(applyMiddleware(thunk))
+const initialState = {}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export const store = createStore(rootReducer, enhanser)
+export const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunk)))

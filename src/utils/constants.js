@@ -1,8 +1,8 @@
-export const URL_GALAXY = 'https://norma.nomoreparties.space/api/'
+export const BASE_URL_GALAXY = 'https://norma.nomoreparties.space/api/'
 
-export const PATH_REQUESTS = {
-    INGREDIENTS: `${URL_GALAXY}ingredients`,
-    ORDER: `${URL_GALAXY}orders`
+export const ENDPOINT = {
+    INGREDIENTS: 'ingredients',
+    ORDER: 'orders'
 }
 export const INGREDIENT_TYPES = {
     'bun': 'Булки',
