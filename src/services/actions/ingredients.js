@@ -3,9 +3,8 @@ export const GET_INGREDIENTS = 'GET_INGREDIENTS'
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS'
 export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR'
 export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT'
-
 export const DECREASE_INGREDIENT = 'DECREASE_INGREDIENT'
-
+export const RESET_COUNT = 'RESET_COUNT'
 export const getIngredients = () => (dispatch) => {
   dispatch({ type: GET_INGREDIENTS })
 
@@ -38,3 +37,5 @@ export const changeCount = (itemId, operation = 'plus') => (dispatch) => {
     })
   }
 }
+
+export const resetCount = () => (dispatch) => dispatch({ type: RESET_COUNT })
