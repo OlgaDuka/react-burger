@@ -8,12 +8,10 @@ import {loginUser} from '../services/actions/user'
 
 const LoginPage = () => {
   const { state } = useLocation()
-  const location = useLocation()
   const isAuthChecked = useSelector(state => state.user.isAuthChecked)
   const dispatch = useDispatch()
   const [form, setValue] = useState({ email: '', password: '' });
 
-  console.log('location: ', location)
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
@@ -30,7 +28,7 @@ const LoginPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={login} >
           <p className='text text_type_main-medium mb-6'>Вход</p>
           <EmailInput
             name='email'
@@ -38,6 +36,7 @@ const LoginPage = () => {
             placeholder='E-mail'
             value={form.email}
             onChange={onChange}
+            autoComplete='username'
           />
           <PasswordInput
             extraClass='mb-6'
@@ -45,8 +44,9 @@ const LoginPage = () => {
             placeholder="Пароль"
             value={form.password}
             onChange={onChange}
+            autoComplete='current-password'
           />
-          <Button onClick={login} type='primary' htmlType='submit' extraClass='mb-20'>
+          <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Войти
           </Button>
         </form>

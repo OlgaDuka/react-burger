@@ -21,7 +21,7 @@ const ForgotPassword = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={reset}>
           <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
           <Input
             extraClass='mb-6'
@@ -31,7 +31,7 @@ const ForgotPassword = () => {
             type='email'
             onChange={onChange}
           />
-          <Button onClick={reset} type='primary' htmlType='submit' extraClass='mb-20'>
+          <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Восстановить
           </Button>
         </form>

@@ -21,7 +21,7 @@ const ResetPassword = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={reset}>
           <p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
           <PasswordInput
             extraClass='mb-6'
@@ -29,6 +29,7 @@ const ResetPassword = () => {
             placeholder="Введите новый пароль"
             value={form.password}
             onChange={onChange}
+            autoComplete='current-password'
           />
           <Input
             extraClass='mb-6'
@@ -38,7 +39,7 @@ const ResetPassword = () => {
             type='text'
             onChange={onChange}
           />
-          <Button onClick={reset} type='primary' htmlType='submit' extraClass='mb-20'>
+          <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Сохранить
           </Button>
         </form>

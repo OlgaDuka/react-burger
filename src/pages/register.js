@@ -23,7 +23,7 @@ const RegisterPage = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={register} >
           <p className='text text_type_main-medium mb-6'>Регистрация</p>
           <Input
             name='name'
@@ -39,6 +39,7 @@ const RegisterPage = () => {
             placeholder='E-mail'
             value={form.email}
             onChange={onChange}
+            autoComplete='username'
           />
           <PasswordInput
             extraClass='mb-6'
@@ -46,8 +47,9 @@ const RegisterPage = () => {
             placeholder="Пароль"
             value={form.password}
             onChange={onChange}
+            autoComplete='current-password'
           />
-          <Button onClick={register} type='primary' htmlType='submit' extraClass='mb-20'>
+          <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Зарегистрироваться
           </Button>
         </form>

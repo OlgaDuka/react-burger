@@ -8,64 +8,54 @@ import {updateUser} from '../../services/actions/user'
 const Profile = () => {
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
-  const [name, setName] = useState(user?.name || '')
-  const [email, setEmail] = useState(user?.email || '')
-  const [password, setPassword] = useState(user?.password || '')
+  const [form, setValue] = useState(user)
   const [isChange, setIsChange] = useState(false)
 
-  console.log(isChange)
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+    if(form !== user) {
+      setIsChange(true)
+    }
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(updateUser({ name, email, password }))
+  const handleSubmit = () => {
+    dispatch(updateUser(form))
     setIsChange(false)
   }
 
   const handleCancel = () => {
-    setName(user?.name || '')
-    setEmail(user?.email || '')
-    setPassword(user?.password || '')
+    setValue(user)
     setIsChange(false)
   }
 
   return (
     <div>
-      <form className={styles.form} onClick={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <Input
           extraClass='mb-6'
+          name='name'
           placeholder='Имя'
-          value={name}
+          value={form.name}
           type='text'
-          onChange={(e) => {
-            if (name !== e.target.value) {
-              setName(e.target.value)
-              setIsChange(true)
-            }}
-          }
+          onChange={onChange}
           icon={'EditIcon'}
         />
         <EmailInput
           extraClass='mb-6'
+          name='email'
           placeholder='Логин'
-          value={email}
-          onChange={(e) => {
-            if (email !== e.target.value) {
-              setEmail(e.target.value)
-              setIsChange(true)
-            }}
-          }
+          value={form.email}
+          onChange={onChange}
           icon={'EditIcon'}
+          autoComplete='username'
         />
         <PasswordInput
           extraClass='mb-6'
+          name='password'
           placeholder="Пароль"
-          value={password}
-          onChange={(e) => {
-            if (password !== e.target.value) {
-              setPassword(e.target.value)
-              setIsChange(true)
-            }}
-          }
+          value={form.password}
+          onChange={onChange}
+          autoComplete='current-password'
         />
         {isChange &&
           <div className={styles.buttons}>
