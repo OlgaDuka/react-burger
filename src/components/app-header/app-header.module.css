@@ -12,6 +12,7 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: calc(var(--offset-base-size) * 2);
     border-radius: 50%;
 }
@@ -22,3 +23,15 @@
     left: 50%;
     transform: translate(-50%);
 }
+
+.last_item {
+    margin-left: auto;
+}
+
+.link {
+    text-decoration: none;
+}
+
+
+
+

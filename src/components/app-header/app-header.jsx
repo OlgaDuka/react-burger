@@ -3,23 +3,49 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-devel
 
 import MenuItem from './menu-item/menu-item'
 import styles from './app-header.module.css'
+import {useSelector} from 'react-redux'
+import {Link, NavLink} from 'react-router-dom'
 
 const AppHeader = () => {
+  const isAuthChecked = useSelector(state => state.user.isAuthChecked)
+  const user = useSelector(state => state.user.user)
+  const classLink = (isActive) => {
+    return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
+  }
+
   return (
     <header className={styles.header}>
       <nav className={styles.menu}>
-        <MenuItem text={'Конструктор'}>
-          <BurgerIcon type="primary" />
-        </MenuItem>
-        <MenuItem text={'Лента заказов'}>
-          <ListIcon type="secondary" />
-        </MenuItem>
-        <div className={styles.logo}>
+        <NavLink
+          to='/'
+          className={({isActive}) => classLink(isActive)}
+        >
+          <MenuItem text='Конструктор'>
+            <BurgerIcon type="primary" />
+          </MenuItem>
+        </NavLink>
+
+        <NavLink
+          to='/page-404'
+          className={({isActive}) => classLink(isActive)}
+        >
+          <MenuItem text='Лента заказов'>
+            <ListIcon type="secondary" />
+          </MenuItem>
+        </NavLink>
+
+        <Link to='/' className={styles.logo}>
           <Logo />
-        </div>
-        <MenuItem text={'Личный кабинет'}>
-          <ProfileIcon type="secondary" />
-        </MenuItem>
+        </Link>
+
+        <NavLink
+          to='/profile/'
+          className={({isActive}) => classLink(isActive) + ` ${styles.last_item}`}
+        >
+          <MenuItem text={isAuthChecked ? user.name : 'Личный кабинет'}>
+            <ProfileIcon type="secondary" />
+          </MenuItem>
+        </NavLink>
       </nav>
     </header>
   )
