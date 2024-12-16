@@ -1,38 +1,31 @@
-import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
-import {DndProvider} from 'react-dnd'
-import {HTML5Backend} from 'react-dnd-html5-backend'
+import React from 'react'
 
 import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import {getIngredients} from '../../services/actions/ingredients'
 
+import {FogotPassword, Home, Ingredient, LoginPage, Page404, ProfilePage, RegisterPage, ResetPassword} from '../../pages'
+import {Route, Routes} from 'react-router-dom'
+import ProtectedRoute from '../protected-route/protected-route'
 import styles from './app.module.css'
+import HistoryOrders from '../../pages/profile-page/history-orders'
+import Profile from '../../pages/profile-page/profile'
 
 const App = () => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    dispatch(getIngredients())
-
-    return () => {
-      controller.abort()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div className={`${styles.app} pt-10 text_type_main-default`}>
-      <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
+          <AppHeader />
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/login" element={<LoginPage/>} />
+            <Route path="/register" element={<RegisterPage/>} />
+            <Route path="/fogot-password" element={<FogotPassword/>} />
+            <Route path="/reset-password" element={<ResetPassword/>} />
+            <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>}/>}>
+              <Route path="profile" element={<ProtectedRoute element={<Profile/>}/>} />
+              <Route path="history-orders" element={<ProtectedRoute element={<HistoryOrders/>}/>} />
+            </Route>
+            <Route path="/ingredients/:id" element={<Ingredient/>} />
+            <Route path="*" element={<Page404 />} />
+          </Routes>
     </div>
   )
 }
