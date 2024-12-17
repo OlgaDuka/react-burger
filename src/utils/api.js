@@ -24,6 +24,7 @@ export const sendOrderRequest = async (ingredients) => await request(ENDPOINT.OR
 }).then(res => res.order)
   .catch(error => {
     if (error.message === 'jwt expired') {
+      console.log('Испортился токен')
       updateToken()
         .then(() => sendOrderRequest(ingredients))
         .catch(() => null)

@@ -15,23 +15,13 @@ const ProfilePage = () => {
       <div className={styles.profile}>
         <div className={styles.profile_menu}>
           <nav className={`${styles.list} text text_type_main-medium text_color_inactive mb-20`}>
-            <NavLink
-              to='profile'
-              className={({isActive}) => classLink(isActive) + ' mb-8'}
-            >
+            <NavLink to='/profile' className={({isActive}) => classLink(isActive) + ' mb-8'}>
               Профиль
             </NavLink>
-            <NavLink
-              to='history-orders'
-              className={({isActive}) => classLink(isActive) + ' mb-8'}
-            >
+            <NavLink to='history-orders' className={({isActive}) => classLink(isActive) + ' mb-8'}>
               История заказов
             </NavLink>
-            <NavLink
-              to='/'
-              className={({isActive}) => classLink(isActive)}
-              onClick={() => dispatch(logoutUser())}
-            >
+            <NavLink to='/' className={({isActive}) => classLink(isActive)} onClick={() => dispatch(logoutUser())}>
               Выход
             </NavLink>
           </nav>

@@ -3,12 +3,10 @@ import {thunk} from 'redux-thunk'
 import {constructorReducer} from './reducers/constructor'
 import {orderReducer} from './reducers/order'
 import {ingredientsReducer} from './reducers/ingredients'
-import {detailsReducer} from './reducers/details'
 import {userReducer} from './reducers/user'
 
 const rootReducer = combineReducers({
     burgerConstructor: constructorReducer,
-    details: detailsReducer,
     ingredients: ingredientsReducer,
     order: orderReducer,
     user: userReducer

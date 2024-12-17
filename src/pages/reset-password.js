@@ -15,6 +15,11 @@ const ResetPassword = () => {
   const reset = (e) => {
     e.preventDefault()
     resetPassword(form.password, form.token)
+    localStorage.removeItem('resetPassword')
+    navigate('/login')
+  }
+
+  if (!localStorage.getItem('resetPassword')) {
     navigate('/login')
   }
 

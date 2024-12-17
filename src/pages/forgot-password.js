@@ -15,6 +15,7 @@ const ForgotPassword = () => {
   const reset = (e) => {
     e.preventDefault()
     sendEmail(form.email)
+    localStorage.setItem('resetPassword', true)
     navigate('/reset-password')
   }
 
