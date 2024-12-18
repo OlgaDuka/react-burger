@@ -24,7 +24,6 @@ export const sendOrderRequest = async (ingredients) => await request(ENDPOINT.OR
 }).then(res => res.order)
   .catch(error => {
     if (error.message === 'jwt expired') {
-      console.log('Испортился токен')
       updateToken()
         .then(() => sendOrderRequest(ingredients))
         .catch(() => null)
@@ -114,7 +113,6 @@ export const updateUserRequest = async (user) => await request(ENDPOINT.USER, {
 }).then(res => res.user)
   .catch(error => {
     if (error.message === 'jwt expired') {
-      console.log('error.message: ', error.message)
       updateToken()
         .then(() => updateUserRequest(user))
         .catch(() => null)

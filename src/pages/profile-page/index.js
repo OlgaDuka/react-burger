@@ -21,7 +21,7 @@ const ProfilePage = () => {
             <NavLink to='history-orders' className={({isActive}) => classLink(isActive) + ' mb-8'}>
               История заказов
             </NavLink>
-            <NavLink to='/' className={({isActive}) => classLink(isActive)} onClick={() => dispatch(logoutUser())}>
+            <NavLink to='/login' className={({isActive}) => classLink(isActive)} onClick={() => dispatch(logoutUser())}>
               Выход
             </NavLink>
           </nav>

@@ -10,7 +10,6 @@ const RegisterPage = () => {
   const [form, setValue] = useState({ name: '', email: '', password: '' });
 
   const onChange = e => {
-    console.log(e.target.name)
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
