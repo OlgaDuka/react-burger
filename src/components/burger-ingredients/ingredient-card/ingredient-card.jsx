@@ -1,20 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {useDispatch} from 'react-redux'
 import {useDrag} from 'react-dnd'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-
-import {useModal} from '../../../hooks/useModal'
 import {IngredientItemType} from '../../../utils/types'
-import {clearSelectedIngredient, setSelectedIngredient} from '../../../services/actions/details'
-import Modal from '../../modal/modal'
-import IngredientDetails from '../ingredient-details/ingredient-details'
 import styles from './ingredient-card.module.css'
+import {Link, useLocation} from 'react-router-dom'
 
 const IngredientCard = ({ item }) => {
-  const { image, name, price, count } = item
-  const dispatch = useDispatch()
-  const { isOpenModal, openModal, closeModal } = useModal()
+  const location = useLocation()
+  const { image, name, price, count, _id } = item
 
   const [{ opacity }, dragRef] = useDrag({
     type: item.type === 'bun' ? 'bun' : 'ingredients',
@@ -24,19 +18,9 @@ const IngredientCard = ({ item }) => {
     })
   })
 
-  const handleOpenModal = () => {
-    dispatch(setSelectedIngredient(item))
-    openModal()
-  }
-
-  const handleCloseModal = () => {
-    dispatch(clearSelectedIngredient())
-    closeModal()
-  }
-
   return (
-    <div>
-      <div ref={dragRef} className={`${styles.card} mt-6 mb-8`} style={{ opacity }} onClick={handleOpenModal}>
+    <Link key={_id} to={`/ingredients/${_id}`} state={{ background: location }} className={styles.link}>
+      <div ref={dragRef} className={`${styles.card} mt-6 mb-8`} style={{ opacity }}>
         <img className='mt-1' src={image} alt={name}/>
         {!!count && <Counter count={count} size="default" extraClass="m-1" />}
         <div className={`${styles.currency} mt-1`}>
@@ -45,15 +29,9 @@ const IngredientCard = ({ item }) => {
         </div>
         <p className='text_type_main-default mt-2 mb-2'>{name}</p>
       </div>
-      {isOpenModal
-      ? <Modal onClose={handleCloseModal} header='Детали ингредиента'>
-          <IngredientDetails />
-        </Modal>
-      : null
-      }
-    </div>
-  );
-};
+    </Link>
+  )
+}
 
 IngredientCard.propTypes = {
   item: IngredientItemType.isRequired,

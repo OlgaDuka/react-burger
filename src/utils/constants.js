@@ -2,7 +2,14 @@ export const BASE_URL_GALAXY = 'https://norma.nomoreparties.space/api/'
 
 export const ENDPOINT = {
     INGREDIENTS: 'ingredients',
-    ORDER: 'orders'
+    ORDER: 'orders',
+    PASSWORD_RESET: 'password-reset',
+    PASSWORD_RESET_RESET: 'password-reset/reset',
+    REGISTER: 'auth/register',
+    LOGIN: 'auth/login',
+    LOGOUT: 'auth/logout',
+    UPDATE_TOKEN: 'auth/token',
+    USER: 'auth/user'
 }
 export const INGREDIENT_TYPES = {
     'bun': 'Булки',

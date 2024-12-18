@@ -7,7 +7,3 @@
     cursor: pointer;
 }
 
-.item:last-child {
-    margin-left: auto;
-}
-

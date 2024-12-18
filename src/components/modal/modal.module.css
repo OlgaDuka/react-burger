@@ -1,5 +1,4 @@
 .modal {
-    width: 720px;
     padding: calc(var(--offset-base-size) * 10);
     position: absolute;
     top: 50%;
