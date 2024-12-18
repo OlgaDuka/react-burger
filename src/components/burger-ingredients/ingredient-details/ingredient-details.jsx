@@ -14,8 +14,6 @@ const IngredientDetails = () => {
     return ingredients.find((item) => item._id === id)
   }, [id, ingredients])
 
-  console.log('ingredient: ', ingredient)
-
   return (
     ingredient
     ? <div className={styles.card}>

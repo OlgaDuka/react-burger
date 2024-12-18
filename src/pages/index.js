@@ -3,7 +3,7 @@ import LoginPage from './login'
 import RegisterPage from './register'
 import FogotPassword from './forgot-password'
 import ResetPassword from './reset-password'
-import ProfilePage from './profile-page/index'
+import ProfilePage from './profile-page'
 import Page404 from './page-404'
 import Home from './home'
 

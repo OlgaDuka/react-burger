@@ -18,7 +18,8 @@ const Profile = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     dispatch(updateUser(form))
     setIsChange(false)
   }
