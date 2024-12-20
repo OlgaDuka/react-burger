@@ -1,31 +1,38 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import {useDispatch, useSelector} from 'react-redux'
 
 import styles from './profile.module.css'
 import {updateUser} from '../../services/actions/user'
+import {useForm} from '../../hooks/useForm'
 
 const Profile = () => {
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
-  const [form, setValue] = useState(user)
   const [isChange, setIsChange] = useState(false)
+  const {formValues, handleChange, setFormValues} = useForm({
+    name: '',
+    email: '',
+    password: ''
+  })
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-    if(form !== user) {
-      setIsChange(true)
-    }
-  };
+  useEffect(() => {
+    setFormValues(user)
+  }, [user, setFormValues])
+
+  const onChange = (e) => {
+    handleChange(e)
+    setIsChange(true)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(updateUser(form))
+    dispatch(updateUser(formValues))
     setIsChange(false)
   }
 
   const handleCancel = () => {
-    setValue(user)
+    setFormValues()
     setIsChange(false)
   }
 
@@ -36,7 +43,7 @@ const Profile = () => {
           extraClass='mb-6'
           name='name'
           placeholder='Имя'
-          value={form.name}
+          value={formValues?.name ?? ''}
           type='text'
           onChange={onChange}
           icon={'EditIcon'}
@@ -45,7 +52,7 @@ const Profile = () => {
           extraClass='mb-6'
           name='email'
           placeholder='Логин'
-          value={form.email}
+          value={formValues?.email ?? ''}
           onChange={onChange}
           icon={'EditIcon'}
           autoComplete='username'
@@ -54,9 +61,9 @@ const Profile = () => {
           extraClass='mb-6'
           name='password'
           placeholder="Пароль"
-          value={form.password}
+          value={formValues?.password ?? ''}
           onChange={onChange}
-          autoComplete='current-password'
+          autoComplete='new-password'
         />
         {isChange &&
           <div className={styles.buttons}>

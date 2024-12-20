@@ -1,20 +1,17 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styles from './pages.module.css'
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, useNavigate} from 'react-router-dom'
 import {resetPassword} from '../utils/api'
+import {useForm} from '../hooks/useForm'
 
 const ResetPassword = () => {
   const navigate = useNavigate()
-  const [form, setValue] = useState({ password: '', token: '' });
-
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {formValues, handleChange} = useForm({ password: '', token: '' })
 
   const reset = (e) => {
     e.preventDefault()
-    resetPassword(form.password, form.token)
+    resetPassword(formValues.password, formValues.token)
     localStorage.removeItem('resetPassword')
     navigate('/login')
   }
@@ -32,17 +29,17 @@ const ResetPassword = () => {
             extraClass='mb-6'
             name='password'
             placeholder="Введите новый пароль"
-            value={form.password}
-            onChange={onChange}
+            value={formValues?.password || ''}
+            onChange={handleChange}
             autoComplete='current-password'
           />
           <Input
             extraClass='mb-6'
             name='token'
             placeholder='Введите код из письма'
-            value={form.token}
+            value={formValues?.token || ''}
             type='text'
-            onChange={onChange}
+            onChange={handleChange}
           />
           <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Сохранить

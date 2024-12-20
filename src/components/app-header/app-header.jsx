@@ -42,7 +42,7 @@ const AppHeader = () => {
           to='/profile/'
           className={({isActive}) => classLink(isActive) + ` ${styles.last_item}`}
         >
-          <MenuItem text={isAuthChecked ? user.name : 'Личный кабинет'}>
+          <MenuItem text={isAuthChecked && user ? user.name : 'Личный кабинет'}>
             <ProfileIcon type="secondary" />
           </MenuItem>
         </NavLink>

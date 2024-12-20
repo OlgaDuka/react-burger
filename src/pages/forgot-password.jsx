@@ -1,22 +1,25 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styles from './pages.module.css'
 import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 import {sendEmail} from '../utils/api'
+import {useForm} from '../hooks/useForm'
+import {useSelector} from 'react-redux'
 
 const ForgotPassword = () => {
+  const isAuthChecked = useSelector(state => state.user.isAuthChecked)
   const navigate = useNavigate()
-  const [form, setValue] = useState({ email: '' });
-
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {formValues, handleChange} = useForm({ email: '' })
 
   const reset = (e) => {
     e.preventDefault()
-    sendEmail(form.email)
+    sendEmail(formValues.email)
     localStorage.setItem('resetPassword', true)
     navigate('/reset-password')
+  }
+
+  if (isAuthChecked) {
+    return <Navigate to='/' />
   }
 
   return (
@@ -28,9 +31,9 @@ const ForgotPassword = () => {
             extraClass='mb-6'
             name='email'
             placeholder='E-mail'
-            value={form.email}
+            value={formValues?.email || ''}
             type='email'
-            onChange={onChange}
+            onChange={handleChange}
           />
           <Button type='primary' htmlType='submit' extraClass='mb-20'>
             Восстановить

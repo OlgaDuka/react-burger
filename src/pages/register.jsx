@@ -1,22 +1,25 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 
 import styles from './pages.module.css'
 import {registerUser} from '../utils/api'
+import {useForm} from '../hooks/useForm'
+import {useSelector} from 'react-redux'
 
 const RegisterPage = () => {
+  const isAuthChecked = useSelector(state => state.user.isAuthChecked)
   const navigate = useNavigate()
-  const [form, setValue] = useState({ name: '', email: '', password: '' });
-
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {formValues, handleChange} = useForm({ name: '', email: '', password: '' })
 
   const register = (e) => {
-    e.preventDefault();
-    registerUser(form);
+    e.preventDefault()
+    registerUser(formValues)
     navigate('/login')
+  }
+
+  if (isAuthChecked) {
+    return <Navigate to='/' />
   }
 
   return (
@@ -28,24 +31,24 @@ const RegisterPage = () => {
             name='name'
             extraClass='mb-6'
             placeholder='Имя'
-            value={form.name}
+            value={formValues?.name || ''}
             type='text'
-            onChange={onChange}
+            onChange={handleChange}
           />
           <EmailInput
             name='email'
             extraClass='mb-6'
             placeholder='E-mail'
-            value={form.email}
-            onChange={onChange}
+            value={formValues?.email || ''}
+            onChange={handleChange}
             autoComplete='username'
           />
           <PasswordInput
             extraClass='mb-6'
             name='password'
             placeholder="Пароль"
-            value={form.password}
-            onChange={onChange}
+            value={formValues?.password || ''}
+            onChange={handleChange}
             autoComplete='current-password'
           />
           <Button type='primary' htmlType='submit' extraClass='mb-20'>

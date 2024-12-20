@@ -1,28 +1,26 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Link, Navigate, useLocation} from 'react-router-dom'
 import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './pages.module.css'
 import {useDispatch, useSelector} from 'react-redux'
 import {loginUser} from '../services/actions/user'
+import {useForm} from '../hooks/useForm'
 
 const LoginPage = () => {
-  const { state } = useLocation()
+  const location = useLocation()
+  const from = location.state?.from || '/'
   const isAuthChecked = useSelector(state => state.user.isAuthChecked)
   const dispatch = useDispatch()
-  const [form, setValue] = useState({ email: '', password: '' });
-
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {formValues, handleChange} = useForm({ email: '', password: '' })
 
   const login = (e) => {
     e.preventDefault();
-    dispatch(loginUser(form))
+    dispatch(loginUser(formValues))
   }
 
   if (isAuthChecked) {
-    return <Navigate to={state?.pathname ? state.pathname : '/'} replace />
+    return <Navigate to={ from } />
   }
 
   return (
@@ -34,16 +32,16 @@ const LoginPage = () => {
             name='email'
             extraClass='mb-6'
             placeholder='E-mail'
-            value={form.email}
-            onChange={onChange}
+            value={formValues?.email || ''}
+            onChange={handleChange}
             autoComplete='username'
           />
           <PasswordInput
             extraClass='mb-6'
             name='password'
             placeholder="Пароль"
-            value={form.password}
-            onChange={onChange}
+            value={formValues?.password || ''}
+            onChange={handleChange}
             autoComplete='current-password'
           />
           <Button type='primary' htmlType='submit' extraClass='mb-20'>

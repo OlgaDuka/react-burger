@@ -4,7 +4,7 @@ const checkResponse = (res) => {
   if (res.ok) {
     return res.json()
   }
-  return Promise.reject(`Ошибка ${res.status}`)
+  return res.json().then((error) => Promise.reject(error))
 }
 
 function request(endpoint, options) {
@@ -54,9 +54,8 @@ export const registerUser = async (user) => await request(ENDPOINT.REGISTER, {
 }).then((res) => {
   localStorage.setItem('accessToken', res.accessToken)
   localStorage.setItem('refreshToken', res.refreshToken)
-
   return res.user
-})
+}).catch(error => { throw error })
 
 export const loginUserRequest = async (user) => await request(ENDPOINT.LOGIN, {
   method: 'POST',
@@ -76,7 +75,11 @@ export const logoutUserRequest = async () => await request(ENDPOINT.LOGOUT, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json;charset=utf-8' },
   body: JSON.stringify({ 'token': localStorage.getItem('refreshToken') })
-}).then(res => res.message)
+}).then(res => {
+  localStorage.removeItem('accessToken')
+
+  return res.message
+})
 
 export const updateToken = async () => await request(ENDPOINT.UPDATE_TOKEN, {
   method: 'POST',

@@ -4,6 +4,7 @@ export const SET_USER = 'SET_USER'
 export const SET_USER_SUCCESS = 'SET_USER_SUCCESS'
 export const SET_USER_ERROR = 'SET_USER_ERROR'
 export const LOGOUT_USER = 'LOGOUT_USER'
+export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED'
 
 export const getUser = () => (dispatch) => {
   dispatch({ type: SET_USER })
@@ -43,6 +44,10 @@ export const loginUser = (user) => (dispatch) => {
       type: SET_USER_SUCCESS,
       payload: result
     })
+    dispatch({
+      type: SET_AUTH_CHECKED,
+      payload: true
+    })
   })
     .catch(() => dispatch({
       type: SET_USER_ERROR
@@ -50,5 +55,18 @@ export const loginUser = (user) => (dispatch) => {
 }
 
 export const logoutUser = () => (dispatch) => {
-  logoutUserRequest().then(() => dispatch({ type: LOGOUT_USER }))
+  logoutUserRequest().then(() => {
+    dispatch({ type: LOGOUT_USER })
+    dispatch({
+      type: SET_AUTH_CHECKED,
+      payload: false
+    })
+  })
+}
+
+export const setAuthChecked = (hasToken) => (dispatch) => {
+  dispatch({
+    type: SET_AUTH_CHECKED,
+    payload: hasToken
+  })
 }

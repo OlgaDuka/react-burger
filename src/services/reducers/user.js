@@ -1,10 +1,7 @@
-import {LOGOUT_USER, SET_USER, SET_USER_ERROR, SET_USER_SUCCESS} from '../actions/user'
+import {LOGOUT_USER, SET_AUTH_CHECKED, SET_USER, SET_USER_ERROR, SET_USER_SUCCESS} from '../actions/user'
 
 const initialState = {
-  user: {
-    email: '',
-    name: ''
-  },
+  user: null,
   isAuthChecked: false,
   loading: false,
   hasError: false
@@ -16,13 +13,16 @@ export const userReducer = (state = initialState, action) => {
       return {...state, loading: true }
     }
     case SET_USER_SUCCESS: {
-      return { ...state, loading: false, hasError: false, user: action.payload, isAuthChecked: true }
+      return { ...state, loading: false, hasError: false, user: action.payload }
     }
     case SET_USER_ERROR: {
-      return { ...state, loading: false, hasError: true, user: { email: '', name: '' }, isAuthChecked: false }
+      return { ...state, loading: false, hasError: true, user: null }
     }
     case LOGOUT_USER: {
-      return { state: initialState }
+      return { ...state, user: null }
+    }
+    case SET_AUTH_CHECKED: {
+      return { ...state, isAuthChecked: action.payload }
     }
     default:
       return state
