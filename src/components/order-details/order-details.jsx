@@ -1,31 +1,11 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React from 'react'
+import {useSelector} from 'react-redux'
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import {sendOrder} from '../../services/actions/order'
 import styles from './order-details.module.css'
 
 const OrderDetails = () => {
   const orderId = useSelector(state => state.order.orderId)
-  const bun = useSelector(state => state.burgerConstructor.bun)
-  const fillings = useSelector(state => state.burgerConstructor.fillings)
-  const dispatch = useDispatch()
-
-  const ingredients = []
-  ingredients.push(bun._id)
-  fillings.forEach(item => ingredients.push(item._id))
-  ingredients.push(bun._id)
-
-  useEffect(() => {
-    const controller = new AbortController()
-
-    dispatch(sendOrder(ingredients))
-
-    return () => {
-      controller.abort()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <div className={styles.card}>

@@ -1,0 +1,33 @@
+.main {
+    margin: 0 auto;
+    width: 1280px;
+    max-width: 1280px;
+    height: 100%;
+    display: flex;
+    gap: calc(var(--offset-base-size) * 10);
+}
+
+.wrapper {
+    width: 100%;
+    height: calc(100vh - 188px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

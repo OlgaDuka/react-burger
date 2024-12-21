@@ -11,7 +11,7 @@ export const sendOrder = (ingredients) => (dispatch) => {
   sendOrderRequest(ingredients)
     .then((res) => dispatch({
       type: SEND_ORDER_SUCCESS,
-      payload: res.order.number
+      payload: res.number
     }))
     .catch(() => dispatch({
       type: SEND_ORDER_ERROR,

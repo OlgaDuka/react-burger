@@ -3,7 +3,7 @@ import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_ERROR,
   GET_INGREDIENTS_SUCCESS,
-  INCREASE_INGREDIENT
+  INCREASE_INGREDIENT, RESET_COUNT
 } from '../actions/ingredients'
 
 const initialState = {
@@ -50,6 +50,13 @@ export const ingredientsReducer = (state = initialState, action) => {
       })
 
       return {...state, ingredients: modifiedIngredient }
+    }
+    case RESET_COUNT: {
+      const resetIngredients = state.ingredients.map((item) => {
+        item.count = 0
+        return item
+      })
+      return {...state, ingredients: resetIngredients }
     }
     default:
       return state
