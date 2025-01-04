@@ -26,7 +26,7 @@ const AppHeader = () => {
         </NavLink>
 
         <NavLink
-          to='/page-404'
+          to='/history-page'
           className={({isActive}) => classLink(isActive)}
         >
           <MenuItem text='Лента заказов'>

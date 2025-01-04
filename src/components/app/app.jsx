@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
   FogotPassword,
+  HistoryPage,
   Home,
   LoginPage,
   Page404,
@@ -49,6 +50,7 @@ const App = () => {
       <Routes location={background || location}>
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
+        <Route path="/history-page" element={<HistoryPage />} />
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
