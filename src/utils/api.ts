@@ -2,8 +2,9 @@ import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
   IngredientItem,
   TErrorResponse,
-  TForm, TLoginUser, TProfileUser, TResetPassword, TSendEmail
+  TLoginUser, TProfileUser, TResetPassword, TSendEmail
 } from './types'
+import {TForm} from '../services/types'
 
 const checkResponse = async (res: Response) => {
   if (res.ok) {

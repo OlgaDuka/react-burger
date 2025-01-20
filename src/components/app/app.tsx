@@ -44,6 +44,7 @@ const App: FC = () => {
       dispatch(getUser())
       dispatch(setAuthChecked(true))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
