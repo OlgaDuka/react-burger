@@ -8,12 +8,12 @@ import Buns from './buns/buns'
 import styles from './burger-constructor.module.css'
 import {NavigateFunction, useNavigate} from 'react-router-dom'
 import Loader from '../loader/loader'
-import {RootState, useAppDispatch, useAppSelector} from "../../redux"
-import {clearOrder} from "../../redux/slices/order"
-import {clearBurger} from "../../redux/slices/burger-constructor"
-import {resetCount} from "../../redux/slices/ingredients";
-import {sendOrder} from "../../redux/thunks";
-import {IngredientItem} from "../../utils/types";
+import {RootState, useAppDispatch, useAppSelector} from '../../services'
+import {clearOrder} from '../../services/slices/order'
+import {clearBurger} from '../../services/slices/burger-constructor'
+import {resetCount} from '../../services/slices/ingredients'
+import {sendOrder} from '../../services/thunks'
+import {IngredientItem} from '../../utils/types'
 
 const BurgerConstructor = () => {
   const { isOpenModal, openModal, closeModal } = useModal()

@@ -3,8 +3,8 @@ import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-deve
 
 import styles from './profile.module.css'
 import {useForm} from '../../hooks/useForm'
-import {RootState, useAppDispatch, useAppSelector} from '../../redux'
-import {updateUser} from "../../redux/thunks";
+import {RootState, useAppDispatch, useAppSelector} from '../../services'
+import {updateUser} from '../../services/thunks";
 
 const Profile = () => {
   const { user, error, success } = useAppSelector((state: RootState) => state.user)

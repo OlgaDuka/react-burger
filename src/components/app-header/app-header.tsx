@@ -4,7 +4,7 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-devel
 import MenuItem from './menu-item/menu-item'
 import styles from './app-header.module.css'
 import {Link, NavLink} from 'react-router-dom'
-import {RootState, useAppSelector} from "../../redux";
+import {RootState, useAppSelector} from '../../services'
 
 const AppHeader = () => {
   const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)

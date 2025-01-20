@@ -4,10 +4,10 @@ import {useDrop} from 'react-dnd'
 import BlankConstructor from '../../blank-constructor/blank-constructor'
 import DraggableElement from './draggable-element/draggable-element'
 import styles from './filling.module.css'
-import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../../redux'
-import {IngredientItem} from "../../../../utils/types";
-import {addIngredient} from "../../../../redux/slices/burger-constructor";
-import {increaseIngredient} from "../../../../redux/slices/ingredients";
+import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../../services'
+import {IngredientItem} from '../../../../utils/types'
+import {addIngredient} from '../../../../services/slices/burger-constructor'
+import {increaseIngredient} from '../../../../services/slices/ingredients'
 
 const Filling = () => {
   const fillings: IngredientItem[] = useAppSelector((state: RootState) => state.burgerConstructor.fillings)

@@ -10,7 +10,7 @@ import {
   RegisterPage,
   ResetPassword
 } from '../../pages'
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
+import {NavigateFunction, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import ProtectedRoute from '../protected-route/protected-route'
 import styles from './app.module.css'
 import HistoryOrders from '../../pages/profile-page/history-orders'
@@ -18,18 +18,18 @@ import Profile from '../../pages/profile-page/profile'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 import IngredientPage from '../../pages/ingredient'
-import {RootState, useAppDispatch, useAppSelector} from "../../redux";
-import {setAuthChecked} from "../../redux/slices/user";
-import {fetchIngredients, getUser} from "../../redux/thunks";
-import {IngredientItem} from "../../utils/types";
-import {STORAGE_KEY} from "../../utils/constants";
+import {RootState, useAppDispatch, useAppSelector} from '../../services'
+import {setAuthChecked} from '../../services/slices/user'
+import {fetchIngredients, getUser} from '../../services/thunks'
+import {IngredientItem} from '../../utils/types'
+import {STORAGE_KEY} from '../../utils/constants'
 
 const App: FC = () => {
   const ingredients: IngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
   const isAuthChecked: boolean = useAppSelector((state: RootState) => state.user.isAuthChecked)
   const dispatch = useAppDispatch()
   const location = useLocation()
-  const navigate = useNavigate()
+  const navigate: NavigateFunction = useNavigate()
   const background = location.state && location.state.background
   const token = localStorage.getItem(STORAGE_KEY.ACCESS)
 

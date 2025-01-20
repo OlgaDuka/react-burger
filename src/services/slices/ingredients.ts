@@ -1,7 +1,7 @@
-import {IngredientItem} from "../../utils/types";
-import {createSlice} from "@reduxjs/toolkit";
-import {IngredientsState} from "../types";
-import {fetchIngredients} from "../thunks";
+import {IngredientItem} from '../../utils/types'
+import {createSlice} from '@reduxjs/toolkit'
+import {IngredientsState} from '../types'
+import {fetchIngredients} from '../thunks'
 
 const initialState: IngredientsState = {
   ingredients: [],

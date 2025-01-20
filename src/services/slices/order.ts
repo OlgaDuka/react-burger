@@ -1,6 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {OrderState} from "../types";
-import {sendOrder} from "../thunks";
+import {createSlice} from '@reduxjs/toolkit'
+import {OrderState} from '../types'
+import {sendOrder} from '../thunks'
 
 const initialState: OrderState = {
   orderId: null,

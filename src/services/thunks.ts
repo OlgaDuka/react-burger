@@ -1,12 +1,12 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {IngredientItem, TForm, TLoginUser, TProfileUser} from "../utils/types";
+import {IngredientItem, TForm, TLoginUser, TProfileUser} from '../utils/types'
 import {
   getIngredientsRequest,
   getUserRequest,
   loginUserRequest, logoutUserRequest, registerUserRequest,
   sendOrderRequest,
   updateUserRequest
-} from "../utils/api";
+} from '../utils/api'
 
 export const fetchIngredients = createAsyncThunk<IngredientItem[], void, { rejectValue: string }>(
   'ingredients/fetchIngredients',

@@ -4,9 +4,9 @@ import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger
 
 import {DraggableElProps} from '../../../../../utils/types'
 import styles from '../filling.module.css'
-import {AppDispatch, useAppDispatch} from '../../../../../redux'
-import {deleteIngredient, sortingIngredients} from "../../../../../redux/slices/burger-constructor";
-import {decreaseIngredient} from "../../../../../redux/slices/ingredients";
+import {AppDispatch, useAppDispatch} from '../../../../../services'
+import {deleteIngredient, sortingIngredients} from '../../../../../services/slices/burger-constructor'
+import {decreaseIngredient} from '../../../../../services/slices/ingredients'
 
 const DraggableElement = (props: DraggableElProps) => {
   const { item, index } = props

@@ -1,6 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {UserState} from "../types";
-import {getUser, loginUser, logoutUser, registerUser, updateUser} from "../thunks";
+import {createSlice} from '@reduxjs/toolkit'
+import {UserState} from '../types'
+import {getUser, loginUser, logoutUser, registerUser, updateUser} from '../thunks'
 
 const initialState: UserState = {
   user: null,

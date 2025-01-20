@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {DraggDataProps, IngredientItem} from "../../utils/types";
-import {v4 as uuidv4} from "uuid";
-import {ConstructorState} from "../types";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {DraggDataProps, IngredientItem} from '../../utils/types'
+import {v4 as uuidv4} from 'uuid'
+import {ConstructorState} from '../types'
 
 const initialState:ConstructorState = {
   bun: null,

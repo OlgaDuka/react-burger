@@ -1,4 +1,4 @@
-import {IngredientItem, TForm, TLoginUser, TProfileUser, TResetPassword, TSendEmail} from "../utils/types";
+import {IngredientItem, TLoginUser, TProfileUser, TResetPassword, TSendEmail} from '../utils/types'
 
 export interface ConstructorState {
   bun: IngredientItem | null,
@@ -24,6 +24,10 @@ export interface OrderState {
 }
 
 export type TFormObject = TLoginUser | TResetPassword | TProfileUser | TSendEmail
+
+export type TForm<T> = {
+  [key:string]: string
+}
 
 export interface UserState {
   user: TForm<TFormObject> | null

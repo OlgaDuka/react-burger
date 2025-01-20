@@ -3,7 +3,7 @@ import {
   IngredientItem,
   TErrorResponse,
   TForm, TLoginUser, TProfileUser, TResetPassword, TSendEmail
-} from "./types"
+} from './types'
 
 const checkResponse = async (res: Response) => {
   if (res.ok) {

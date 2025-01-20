@@ -55,10 +55,6 @@ export interface ProtectedRouteProps {
   anonimus?: boolean
 }
 
-export type TForm<T> = {
-  [key:string]: string
-}
-
 export type TLoginUser = {
   name: string
   email: string

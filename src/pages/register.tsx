@@ -4,8 +4,8 @@ import {Link, Navigate, NavigateFunction, useNavigate} from 'react-router-dom'
 
 import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
-import {RootState, useAppDispatch, useAppSelector} from "../redux";
-import {registerUser} from "../redux/thunks";
+import {RootState, useAppDispatch, useAppSelector} from '../services'
+import {registerUser} from '../services/thunks'
 
 const RegisterPage = () => {
   const { isAuthChecked, error, success } =  useAppSelector((state: RootState) => state.user)

@@ -4,14 +4,15 @@ import {INGREDIENT_PROPS} from '../../../utils/constants'
 import IngredientProp from './ingredient-prop/ingredient-prop'
 import styles from './ingredient-details.module.css'
 import {useParams} from 'react-router-dom'
-import {RootState, useAppSelector} from "../../../redux";
+import {RootState, useAppSelector} from '../../../services'
+import {IngredientItem} from '../../../utils/types'
 
 const IngredientDetails = () => {
   const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients)
   const { id } = useParams()
 
   const ingredient = useMemo(() => {
-    return ingredients.find((item) => item._id === id)
+    return ingredients.find((item: IngredientItem) => item._id === id)
   }, [id, ingredients])
 
   return (

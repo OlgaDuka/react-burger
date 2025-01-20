@@ -1,5 +1,5 @@
 import styles from './blank-constructor.module.css'
-import {BlankBurgerProps} from "../../../utils/types";
+import {BlankBurgerProps} from '../../../utils/types'
 
 const BlankConstructor = (props: BlankBurgerProps) => {
   const { position = '', text, isHover } = props

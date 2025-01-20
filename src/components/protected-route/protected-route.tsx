@@ -1,6 +1,6 @@
 import {Navigate, useLocation} from 'react-router-dom'
 import {ProtectedRouteProps} from '../../utils/types'
-import {RootState, useAppSelector} from '../../redux'
+import {RootState, useAppSelector} from '../../services'
 import {FC, ReactElement} from 'react'
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonimus = false }): ReactElement => {

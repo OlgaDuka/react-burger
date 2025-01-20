@@ -4,8 +4,8 @@ import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-b
 
 import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
-import {RootState, useAppDispatch, useAppSelector} from "../redux";
-import {loginUser} from "../redux/thunks";
+import {RootState, useAppDispatch, useAppSelector} from '../services'
+import {loginUser} from '../services/thunks'
 
 const LoginPage = () => {
   const location = useLocation()

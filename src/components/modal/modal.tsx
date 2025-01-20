@@ -4,7 +4,7 @@ import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import ModalOverlay from './modal-overlay/modal-overlay'
 import styles from './modal.module.css'
-import {ModalProps} from "../../utils/types";
+import {ModalProps} from '../../utils/types'
 
 const modalRoot: any = document.getElementById('modal-root')
 

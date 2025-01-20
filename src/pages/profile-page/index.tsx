@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './profile.module.css'
 import {NavLink, Outlet} from 'react-router-dom'
-import {useAppDispatch} from "../../redux";
-import {logoutUser} from "../../redux/thunks";
+import {useAppDispatch} from '../../services'
+import {logoutUser} from '../../services/thunks'
 const ProfilePage = () => {
   const dispatch = useAppDispatch()
 

@@ -4,10 +4,10 @@ import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-compon
 
 import BlankConstructor from '../blank-constructor/blank-constructor'
 import Filling from './filling/filling'
-import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../redux'
-import {IngredientItem} from "../../../utils/types"
-import {addIngredient, deleteIngredient} from "../../../redux/slices/burger-constructor"
-import {decreaseIngredient, increaseIngredient} from "../../../redux/slices/ingredients";
+import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../services'
+import {IngredientItem} from '../../../utils/types'
+import {addIngredient, deleteIngredient} from '../../../services/slices/burger-constructor'
+import {decreaseIngredient, increaseIngredient} from '../../../services/slices/ingredients'
 
 const Buns = () => {
   const bun: IngredientItem | null = useAppSelector((state: RootState) => state.burgerConstructor.bun)

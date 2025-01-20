@@ -2,7 +2,7 @@ import React from 'react'
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './order-details.module.css'
-import {RootState, useAppSelector} from "../../redux";
+import {RootState, useAppSelector} from '../../services'
 
 const OrderDetails = () => {
   const orderId = useAppSelector((state: RootState) => state.order.orderId)

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from './menu-item.module.css'
-import {MenuItemProps} from "../../../utils/types";
+import {MenuItemProps} from '../../../utils/types'
 
 const MenuItem = (props: MenuItemProps) => {
   const { text, children } = props

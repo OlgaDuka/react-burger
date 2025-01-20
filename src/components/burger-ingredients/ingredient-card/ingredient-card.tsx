@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {useDrag} from 'react-dnd'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import {IngredientProps} from '../../../utils/types'

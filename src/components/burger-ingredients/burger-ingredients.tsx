@@ -4,7 +4,8 @@ import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
 import styles from './burger-ingredients.module.css'
-import {RootState, useAppSelector} from "../../redux";
+import {RootState, useAppSelector} from '../../services'
+import {IngredientItem} from '../../utils/types'
 
 const BurgerIngredients = () => {
   const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients)
@@ -51,7 +52,7 @@ const BurgerIngredients = () => {
           <div key={index} ref={tabRefs[index]} data-tab={tab}>
             <h2 className='text text_type_main-medium'>{INGREDIENT_TYPES[index]}</h2>
             <ul className={styles.list}>
-              {ingredients.map((item) => item.type === tab
+              {ingredients.map((item: IngredientItem) => item.type === tab
                 ? <li key={item._id}>
                     <IngredientCard item={item} />
                   </li>

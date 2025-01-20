@@ -1,8 +1,12 @@
-import {ChangeEvent, useState} from 'react'
-import {TForm} from "../utils/types";
-import {TFormObject} from "../redux/types";
+import {ChangeEvent, Dispatch, SetStateAction, useState} from 'react'
+import {TForm, TFormObject} from '../services/types'
 
-export function useForm(inputValues: TForm<TFormObject> | null) {
+interface IForm {
+  formValues: TForm<TFormObject> | null
+  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void
+  setFormValues: Dispatch<SetStateAction<TForm<TFormObject> | null>>
+}
+export function useForm(inputValues: TForm<TFormObject> | null): IForm {
   const [formValues, setFormValues] = useState(inputValues)
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {

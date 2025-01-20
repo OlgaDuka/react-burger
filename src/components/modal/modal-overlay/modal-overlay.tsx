@@ -1,5 +1,5 @@
 import React from 'react'
-import {ModalProps} from "../../../utils/types";
+import {ModalProps} from '../../../utils/types'
 
 import styles from './modal-overlay.module.css'
 

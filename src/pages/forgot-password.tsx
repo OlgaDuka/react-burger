@@ -4,7 +4,7 @@ import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, Navigate, NavigateFunction, useNavigate} from 'react-router-dom'
 import {sendEmail} from '../utils/api'
 import {useForm} from '../hooks/useForm'
-import {RootState, useAppSelector} from '../redux'
+import {RootState, useAppSelector} from '../services'
 
 const ForgotPassword = () => {
   const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)
