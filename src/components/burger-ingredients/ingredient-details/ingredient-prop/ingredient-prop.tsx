@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 
 import styles from './ingredient-prop.module.css'
-import {AttributeProps} from '../../../../utils/types'
+import {IAttributeProps as IProps} from '../../../../utils/types'
 
-const IngredientProp = (props: AttributeProps) => {
+const IngredientProp: FC<IProps> = (props: IProps) => {
   const { name, value } = props
 
   return (

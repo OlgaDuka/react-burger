@@ -1,6 +1,6 @@
 import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
-  IngredientItem,
+  IIngredientItem,
   TErrorResponse,
   TLoginUser, TProfileUser, TResetPassword, TSendEmail
 } from './types'
@@ -47,8 +47,8 @@ export const requestWithUpdateToken = async (endpoint: string, options?: Request
   }
 }
 
-export const getIngredientsRequest = (): Promise<IngredientItem[]> => request(ENDPOINT.INGREDIENTS)
-  .then((res) => res.data.map((item: IngredientItem) => { return { ...item, count: 0 }}))
+export const getIngredientsRequest = (): Promise<IIngredientItem[]> => request(ENDPOINT.INGREDIENTS)
+  .then((res) => res.data.map((item: IIngredientItem) => { return { ...item, count: 0 }}))
 
 export const sendOrderRequest = (ingredients: string[]) => requestWithUpdateToken(ENDPOINT.ORDER, {
   method: 'POST',

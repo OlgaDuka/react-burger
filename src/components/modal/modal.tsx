@@ -1,17 +1,17 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {FC, useCallback, useEffect} from 'react'
 import * as ReactDom from 'react-dom'
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import ModalOverlay from './modal-overlay/modal-overlay'
 import styles from './modal.module.css'
-import {ModalProps} from '../../utils/types'
+import {IModalProps as IProps} from '../../utils/types'
 
 const modalRoot: any = document.getElementById('modal-root')
 
-const Modal = (props: ModalProps) => {
+const Modal: FC<IProps> = (props: IProps) => {
   const { children, onClose, header = ''} = props
 
-  const handleEscapePress = useCallback((event: KeyboardEvent) => {
+  const handleEscapePress = useCallback((event: KeyboardEvent): void => {
     if (event.key === 'Escape') {
       onClose()
     }
@@ -20,9 +20,9 @@ const Modal = (props: ModalProps) => {
   useEffect(() => {
     window.addEventListener('keydown', handleEscapePress)
 
-    return () => {
+    return (): void => {
       window.removeEventListener('keydown', handleEscapePress)
-    };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

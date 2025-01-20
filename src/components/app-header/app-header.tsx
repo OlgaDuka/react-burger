@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import MenuItem from './menu-item/menu-item'
@@ -6,10 +6,9 @@ import styles from './app-header.module.css'
 import {Link, NavLink} from 'react-router-dom'
 import {RootState, useAppSelector} from '../../services'
 
-const AppHeader = () => {
-  const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)
-  const user = useAppSelector((state: RootState) => state.user.user)
-  const classLink = (isActive: boolean) => {
+const AppHeader: FC = () => {
+  const { isAuthChecked, user } = useAppSelector((state: RootState) => state.user)
+  const classLink = (isActive: boolean): string => {
     return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
   }
 

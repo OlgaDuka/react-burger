@@ -1,19 +1,19 @@
-import React, {useRef} from 'react'
+import React, {FC, RefObject, useRef} from 'react'
 import {useDrag, useDrop} from 'react-dnd'
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import {DraggableElProps} from '../../../../../utils/types'
+import {IDraggableElProps as IProps} from '../../../../../utils/types'
 import styles from '../filling.module.css'
 import {AppDispatch, useAppDispatch} from '../../../../../services'
 import {deleteIngredient, sortingIngredients} from '../../../../../services/slices/burger-constructor'
 import {decreaseIngredient} from '../../../../../services/slices/ingredients'
 
-const DraggableElement = (props: DraggableElProps) => {
+const DraggableElement: FC<IProps> = (props: IProps) => {
   const { item, index } = props
-  const ref= useRef<HTMLLIElement>(null)
+  const ref: RefObject<HTMLLIElement> = useRef(null)
   const dispatch: AppDispatch = useAppDispatch()
 
-  const removeIngredient = () => {
+  const removeIngredient = (): void => {
     dispatch(deleteIngredient(item))
     dispatch(decreaseIngredient(item._id))
   }

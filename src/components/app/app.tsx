@@ -21,17 +21,17 @@ import IngredientPage from '../../pages/ingredient'
 import {RootState, useAppDispatch, useAppSelector} from '../../services'
 import {setAuthChecked} from '../../services/slices/user'
 import {fetchIngredients, getUser} from '../../services/thunks'
-import {IngredientItem} from '../../utils/types'
+import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
 
 const App: FC = () => {
-  const ingredients: IngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
+  const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
   const isAuthChecked: boolean = useAppSelector((state: RootState) => state.user.isAuthChecked)
   const dispatch = useAppDispatch()
   const location = useLocation()
   const navigate: NavigateFunction = useNavigate()
   const background = location.state && location.state.background
-  const token = localStorage.getItem(STORAGE_KEY.ACCESS)
+  const token: string | null = localStorage.getItem(STORAGE_KEY.ACCESS)
 
   useEffect(() => {
     if (ingredients.length === 0) {

@@ -1,19 +1,19 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {useDrop} from 'react-dnd'
 
 import BlankConstructor from '../../blank-constructor/blank-constructor'
 import DraggableElement from './draggable-element/draggable-element'
 import styles from './filling.module.css'
 import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../../services'
-import {IngredientItem} from '../../../../utils/types'
+import {IIngredientItem} from '../../../../utils/types'
 import {addIngredient} from '../../../../services/slices/burger-constructor'
 import {increaseIngredient} from '../../../../services/slices/ingredients'
 
-const Filling = () => {
-  const fillings: IngredientItem[] = useAppSelector((state: RootState) => state.burgerConstructor.fillings)
+const Filling: FC = () => {
+  const fillings: IIngredientItem[] = useAppSelector((state: RootState) => state.burgerConstructor.fillings)
   const dispatch: AppDispatch = useAppDispatch()
 
-  const moveIngredient = (itemId: IngredientItem) => {
+  const moveIngredient = (itemId: IIngredientItem): void => {
     dispatch(addIngredient(itemId))
     dispatch(increaseIngredient(itemId._id))
   }
@@ -23,7 +23,7 @@ const Filling = () => {
     collect: monitor => ({
       isHoverIngredient: monitor.isOver()
     }),
-    drop: (itemId: IngredientItem) => moveIngredient(itemId)
+    drop: (itemId: IIngredientItem) => moveIngredient(itemId)
   })
 
   return (

@@ -1,4 +1,4 @@
-import React, {FormEvent} from 'react'
+import React, {FC, FormEvent} from 'react'
 import {Link, Navigate, useLocation} from 'react-router-dom'
 import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -6,15 +6,16 @@ import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
 import {RootState, useAppDispatch, useAppSelector} from '../services'
 import {loginUser} from '../services/thunks'
+import {ROUTES} from "../utils/constants";
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const location = useLocation()
-  const from = location.state?.from || '/'
+  const from: string = location.state?.from || '/'
   const { isAuthChecked, error } = useAppSelector((state: RootState) => state.user)
   const dispatch = useAppDispatch()
   const {formValues, handleChangeInput} = useForm({ email: '', password: '' })
 
-  const login = (e: FormEvent) => {
+  const login = (e: FormEvent): void => {
     e.preventDefault()
     if (formValues) {
       dispatch(loginUser({
@@ -59,10 +60,10 @@ const LoginPage = () => {
           </Button>
         </form>
         <span className='mb-4'>Вы - новый пользователь?&nbsp;
-          <Link to='/register'>Зарегистрироваться</Link>
+          <Link to={ROUTES.REGISTER}>Зарегистрироваться</Link>
         </span>
         <span>Забыли пароль?&nbsp;
-          <Link to='/fogot-password'>Восстановить пароль</Link>
+          <Link to={ROUTES.FOGOT_PASSWORD}>Восстановить пароль</Link>
         </span>
       </div>
     </div>

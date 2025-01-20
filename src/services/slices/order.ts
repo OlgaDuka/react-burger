@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {OrderState} from '../types'
+import {IOrderState} from '../types'
 import {sendOrder} from '../thunks'
 
-const initialState: OrderState = {
+const initialState: IOrderState = {
   orderId: null,
   loading: false,
   hasError: false,
@@ -17,15 +17,15 @@ export const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(sendOrder.pending, (state: OrderState) => {
+      .addCase(sendOrder.pending, (state: IOrderState) => {
         state.loading = true
         state.hasError = false
       })
-      .addCase(sendOrder.fulfilled, (state: OrderState, { payload}) => {
+      .addCase(sendOrder.fulfilled, (state: IOrderState, { payload}) => {
         state.loading = false
         state.orderId = payload
       })
-      .addCase(sendOrder.rejected, (state: OrderState, action) => {
+      .addCase(sendOrder.rejected, (state: IOrderState, action) => {
         state.loading = false
         state.hasError = true
         state.error = String(action.error.message)

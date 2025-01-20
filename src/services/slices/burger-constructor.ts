@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {DraggDataProps, IngredientItem} from '../../utils/types'
+import {IDraggDataProps, IIngredientItem} from '../../utils/types'
 import {v4 as uuidv4} from 'uuid'
-import {ConstructorState} from '../types'
+import {IConstructorState} from '../types'
 
-const initialState:ConstructorState = {
+const initialState: IConstructorState = {
   bun: null,
   fillings: [],
   totalPrice: 0
@@ -13,7 +13,7 @@ export const constructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state: ConstructorState, { payload }) => {
+    addIngredient: (state: IConstructorState, { payload }) => {
       const ingredient = Object.assign({}, payload)
       ingredient.oguid = uuidv4()
 
@@ -30,8 +30,8 @@ export const constructorSlice = createSlice({
         totalPrice: state.totalPrice + payload.price
       }
     },
-    deleteIngredient: (state: ConstructorState, action: PayloadAction<IngredientItem>) => {
-      const lostIngredients = state.fillings.filter((item: IngredientItem) => item.oguid !== action.payload.oguid)
+    deleteIngredient: (state: IConstructorState, action: PayloadAction<IIngredientItem>) => {
+      const lostIngredients = state.fillings.filter((item: IIngredientItem) => item.oguid !== action.payload.oguid)
       if (action.payload.type === 'bun') {
         return {
           ...state,
@@ -45,7 +45,7 @@ export const constructorSlice = createSlice({
         totalPrice: state.totalPrice - action.payload.price
       }
     },
-    sortingIngredients: (state: ConstructorState, action: PayloadAction<DraggDataProps>) => {
+    sortingIngredients: (state: IConstructorState, action: PayloadAction<IDraggDataProps>) => {
       const ingredients = [...state.fillings]
       ingredients.splice(action.payload.toIndex, 0,
         ingredients.splice(action.payload.fromIndex, 1)[0])

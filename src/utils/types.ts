@@ -1,6 +1,6 @@
 import {ReactElement, ReactNode} from 'react'
 
-export interface IngredientItem {
+export interface IIngredientItem {
   _id: string
     name: string
     image: string
@@ -14,43 +14,43 @@ export interface IngredientItem {
     oguid?: string
 }
 
-export interface IngredientProps {
-  item: IngredientItem
+export interface IIngredientProps {
+  item: IIngredientItem
 }
 
-export interface DraggDataProps {
+export interface IDraggDataProps {
   fromIndex: number
   toIndex: number
 }
 
-export interface DraggableElProps {
-  item: IngredientItem
+export interface IDraggableElProps {
+  item: IIngredientItem
   index: number
 }
 
-export interface BlankBurgerProps {
+export interface IBlankBurgerProps {
   position?: string
   text: string
   isHover: boolean
 }
 
-export interface MenuItemProps {
+export interface IMenuItemProps {
   text: string
   children: ReactNode
 }
 
-export interface ModalProps {
+export interface IModalProps {
   onClose: () => void
   header?: string
   children?: ReactNode
 }
 
-export interface AttributeProps {
+export interface IAttributeProps {
   name: string
   value: number
 }
 
-export interface ProtectedRouteProps {
+export interface IProtectedRouteProps {
   element: ReactElement
   anonimus?: boolean
 }

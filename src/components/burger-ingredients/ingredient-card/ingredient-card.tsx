@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {useDrag} from 'react-dnd'
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import {IngredientProps} from '../../../utils/types'
+import {IIngredientProps as IProps} from '../../../utils/types'
 import styles from './ingredient-card.module.css'
 import {Link, useLocation} from 'react-router-dom'
 
-const IngredientCard = (props: IngredientProps) => {
+const IngredientCard: FC<IProps> = (props: IProps) => {
   const { item } = props
   const location = useLocation()
   const { image, name, price, count, _id } = item

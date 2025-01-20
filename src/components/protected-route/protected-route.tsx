@@ -1,9 +1,10 @@
 import {Navigate, useLocation} from 'react-router-dom'
-import {ProtectedRouteProps} from '../../utils/types'
+import {IProtectedRouteProps as IProps} from '../../utils/types'
 import {RootState, useAppSelector} from '../../services'
 import {FC, ReactElement} from 'react'
 
-const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonimus = false }): ReactElement => {
+const ProtectedRoute: FC<IProps> = (props: IProps): ReactElement => {
+  const { element, anonimus = false } = props
   const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)
   const location = useLocation()
   const from = location.state?.from || '/'

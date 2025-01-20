@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {FC} from 'react'
 
-const HistoryPage = () => {
+const HistoryPage: FC = () => {
   return (
     <div>
       Здесь будет история заказов

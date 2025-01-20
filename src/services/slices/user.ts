@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {UserState} from '../types'
+import {IUserState} from '../types'
 import {getUser, loginUser, logoutUser, registerUser, updateUser} from '../thunks'
 
-const initialState: UserState = {
+const initialState: IUserState = {
   user: null,
   success: false,
   isAuthChecked: false,
@@ -14,93 +14,93 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setAuthChecked: (state: UserState, action: { payload: boolean }) => {
+    setAuthChecked: (state: IUserState, action: { payload: boolean }) => {
       state.isAuthChecked = action.payload
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state: UserState) => {
+      .addCase(getUser.pending, (state: IUserState) => {
         state.loading = true
         state.success = false
         state.error = null
       })
-      .addCase(getUser.fulfilled, (state: UserState, { payload }) => {
+      .addCase(getUser.fulfilled, (state: IUserState, { payload }) => {
         state.loading = false
         state.success = true
         state.user = payload.user
         state.isAuthChecked = true
         state.error = null
       })
-      .addCase(getUser.rejected, (state: UserState, action) => {
+      .addCase(getUser.rejected, (state: IUserState, action) => {
         state.loading = false
         state.isAuthChecked = false
         state.success = false
         state.error = String(action.error.message)
       })
-      .addCase(updateUser.pending, (state: UserState) => {
+      .addCase(updateUser.pending, (state: IUserState) => {
         state.loading = true
         state.success = false
         state.error = null
       })
-      .addCase(updateUser.fulfilled, (state: UserState, { payload }) => {
+      .addCase(updateUser.fulfilled, (state: IUserState, { payload }) => {
         state.loading = false
         state.success = true
         state.user = payload.user
         state.error = null
       })
-      .addCase(updateUser.rejected, (state: UserState, action) => {
+      .addCase(updateUser.rejected, (state: IUserState, action) => {
         state.loading = false
         state.success = false
         state.error = String(action.error.message)
       })
-      .addCase(loginUser.pending, (state: UserState) => {
+      .addCase(loginUser.pending, (state: IUserState) => {
         state.loading = true
         state.success = false
         state.error = null
       })
-      .addCase(loginUser.fulfilled, (state: UserState, { payload }) => {
+      .addCase(loginUser.fulfilled, (state: IUserState, { payload }) => {
         state.loading = false
         state.success = true
         state.user = payload
         state.isAuthChecked = true
         state.error = null
       })
-      .addCase(loginUser.rejected, (state: UserState, action) => {
+      .addCase(loginUser.rejected, (state: IUserState, action) => {
         state.user = null
         state.loading = false
         state.isAuthChecked = false
         state.success = false
         state.error = String(action.error.message)
       })
-      .addCase(logoutUser.pending, (state: UserState) => {
+      .addCase(logoutUser.pending, (state: IUserState) => {
         state.loading = true
         state.success = false
         state.error = null
       })
-      .addCase(logoutUser.fulfilled, (state: UserState) => {
+      .addCase(logoutUser.fulfilled, (state: IUserState) => {
         state.loading = false
         state.user = null
         state.isAuthChecked = false
         state.error = null
       })
-      .addCase(logoutUser.rejected, (state: UserState, action) => {
+      .addCase(logoutUser.rejected, (state: IUserState, action) => {
         state.loading = false
         state.success = false
         state.error = String(action.error.message)
       })
-      .addCase(registerUser.pending, (state: UserState) => {
+      .addCase(registerUser.pending, (state: IUserState) => {
         state.loading = true
         state.success = false
         state.error = null
       })
-      .addCase(registerUser.fulfilled, (state: UserState, { payload }) => {
+      .addCase(registerUser.fulfilled, (state: IUserState, { payload }) => {
         state.loading = false
         state.success = true
         state.user = payload
         state.error = null
       })
-      .addCase(registerUser.rejected, (state: UserState, action) => {
+      .addCase(registerUser.rejected, (state: IUserState, action) => {
         state.loading = false
         state.success = false
         state.error = String(action.error.message)

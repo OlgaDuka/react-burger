@@ -1,8 +1,8 @@
-import {IngredientItem} from '../../utils/types'
+import {IIngredientItem} from '../../utils/types'
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {DetailState} from '../types'
+import {IDetailState} from '../types'
 
-const initialState: DetailState = {
+const initialState: IDetailState = {
   selectedIngredient: {
     name: '',
     image: '',
@@ -21,7 +21,7 @@ export const detailsSlice = createSlice({
   name: 'detail',
   initialState,
   reducers: {
-   setSelectedIngredient: (state: DetailState, action: PayloadAction<IngredientItem>) => {
+   setSelectedIngredient: (state: IDetailState, action: PayloadAction<IIngredientItem>) => {
       return { ...state, selectedIngredient: action.payload }
     },
     clearSelectedIngredient: () => initialState

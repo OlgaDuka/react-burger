@@ -1,12 +1,12 @@
-import React from 'react'
+import React, {FC} from 'react'
 import styles from './profile.module.css'
 import {NavLink, Outlet} from 'react-router-dom'
 import {useAppDispatch} from '../../services'
 import {logoutUser} from '../../services/thunks'
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const dispatch = useAppDispatch()
 
-  const classLink = (isActive: boolean) => {
+  const classLink = (isActive: boolean): string => {
     return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
   }
 

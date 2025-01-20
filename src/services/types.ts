@@ -1,22 +1,22 @@
-import {IngredientItem, TLoginUser, TProfileUser, TResetPassword, TSendEmail} from '../utils/types'
+import {IIngredientItem, TLoginUser, TProfileUser, TResetPassword, TSendEmail} from '../utils/types'
 
-export interface ConstructorState {
-  bun: IngredientItem | null,
-  fillings: IngredientItem[],
+export interface IConstructorState {
+  bun: IIngredientItem | null,
+  fillings: IIngredientItem[],
   totalPrice: number
 }
 
-export interface DetailState {
-  selectedIngredient: IngredientItem
+export interface IDetailState {
+  selectedIngredient: IIngredientItem
 }
 
-export interface  IngredientsState {
-  ingredients: IngredientItem[],
+export interface  IIngredientsState {
+  ingredients: IIngredientItem[],
   loading: boolean,
   hasError: boolean
 }
 
-export interface OrderState {
+export interface IOrderState {
   orderId: number | null,
   loading: boolean,
   hasError: boolean,
@@ -29,7 +29,7 @@ export type TForm<T> = {
   [key:string]: string
 }
 
-export interface UserState {
+export interface IUserState {
   user: TForm<TFormObject> | null
   success: boolean
   isAuthChecked: boolean

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, FC, FormEvent, useEffect, useState} from 'react'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './profile.module.css'
@@ -6,24 +6,24 @@ import {useForm} from '../../hooks/useForm'
 import {RootState, useAppDispatch, useAppSelector} from '../../services'
 import {updateUser} from '../../services/thunks'
 
-const Profile = () => {
+const Profile: FC = () => {
   const { user, error, success } = useAppSelector((state: RootState) => state.user)
   const dispatch = useAppDispatch()
   const [isChange, setIsChange] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const {formValues, handleChangeInput, setFormValues} = useForm(user)
 
-  useEffect(() => {
+  useEffect((): void => {
     setFormValues(user)
   }, [user, setFormValues])
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     handleChangeInput(e)
     setIsChange(true)
     setShowMessage(false)
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault()
     if (formValues) {
       dispatch(updateUser({
@@ -36,7 +36,7 @@ const Profile = () => {
     setShowMessage(true)
   }
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setFormValues(user)
     setIsChange(false)
   }

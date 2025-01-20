@@ -1,9 +1,10 @@
 import styles from './blank-constructor.module.css'
-import {BlankBurgerProps} from '../../../utils/types'
+import {IBlankBurgerProps as IProps} from '../../../utils/types'
+import {FC} from 'react'
 
-const BlankConstructor = (props: BlankBurgerProps) => {
+const BlankConstructor: FC<IProps> = (props: IProps) => {
   const { position = '', text, isHover } = props
-  const classes =
+  const classes: string =
    `pt-4
    ${styles.blank}
    ${position && styles[`blank_${position}`]}

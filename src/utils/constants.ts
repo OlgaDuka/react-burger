@@ -11,6 +11,15 @@ export const ENDPOINT = {
     UPDATE_TOKEN: 'auth/token',
     USER: 'auth/user'
 }
+
+export const ROUTES = {
+    HOME: '/',
+    FOGOT_PASSWORD: '/fogot-password',
+    LOGIN: '/login',
+    REGISTER: '/register',
+    RESET_PASSWORD: '/reset-password'
+}
+
 export const INGREDIENT_TYPES = ['Булки', 'Соусы', 'Начинки']
 
 export const INGREDIENT_PROPS = {
@@ -22,5 +31,6 @@ export const INGREDIENT_PROPS = {
 
 export const STORAGE_KEY = {
     ACCESS: 'accessToken',
-    REFRESH: 'refreshToken'
+    REFRESH: 'refreshToken',
+    RESET_PASSWORD: 'resetPassword'
 }

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 
 import styles from './menu-item.module.css'
-import {MenuItemProps} from '../../../utils/types'
+import {IMenuItemProps as IProps} from '../../../utils/types'
 
-const MenuItem = (props: MenuItemProps) => {
+const MenuItem: FC<IProps> = (props: IProps) => {
   const { text, children } = props
 
   return (

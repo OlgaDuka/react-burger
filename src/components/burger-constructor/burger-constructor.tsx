@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {FC, useEffect} from 'react'
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import {useModal} from '../../hooks/useModal'
@@ -13,9 +13,9 @@ import {clearOrder} from '../../services/slices/order'
 import {clearBurger} from '../../services/slices/burger-constructor'
 import {resetCount} from '../../services/slices/ingredients'
 import {sendOrder} from '../../services/thunks'
-import {IngredientItem} from '../../utils/types'
+import {IIngredientItem} from '../../utils/types'
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const { isOpenModal, openModal, closeModal } = useModal()
   const navigate: NavigateFunction = useNavigate()
   const dispatch = useAppDispatch()
@@ -32,7 +32,7 @@ const BurgerConstructor = () => {
         ingredients.push(bun._id)
       } else return
       if (fillings.length > 0) {
-        fillings.forEach((item: IngredientItem) => ingredients.push(item._id))
+        fillings.forEach((item: IIngredientItem) => ingredients.push(item._id))
         ingredients.push(bun._id)
       } else return
       dispatch(sendOrder(ingredients))

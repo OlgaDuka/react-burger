@@ -1,28 +1,29 @@
-import React, {FormEvent} from 'react'
+import React, {FC, FormEvent} from 'react'
 import styles from './pages.module.css'
 import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, NavigateFunction, useNavigate} from 'react-router-dom'
 import {resetPassword} from '../utils/api'
 import {useForm} from '../hooks/useForm'
+import {ROUTES, STORAGE_KEY} from "../utils/constants";
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
   const navigate: NavigateFunction = useNavigate()
   const {formValues, handleChangeInput} = useForm({ password: '', token: '' })
 
-  const reset = (e: FormEvent) => {
+  const reset = (e: FormEvent): void => {
     e.preventDefault()
     if (formValues) {
       resetPassword({
         password: formValues.password,
         token: formValues.token
       })
-      localStorage.removeItem('resetPassword')
-      navigate('/login')
+      localStorage.removeItem(STORAGE_KEY.RESET_PASSWORD)
+      navigate(ROUTES.LOGIN)
     }
   }
 
-  if (!localStorage.getItem('resetPassword')) {
-    navigate('/login')
+  if (!localStorage.getItem(STORAGE_KEY.RESET_PASSWORD)) {
+    navigate(ROUTES.LOGIN)
   }
 
   return (
@@ -52,7 +53,7 @@ const ResetPassword = () => {
           </Button>
         </form>
         <span className='mb-4'>Вспомнили пароль?&nbsp;
-          <Link to='/login'>Войти</Link>
+          <Link to={ROUTES.LOGIN}>Войти</Link>
         </span>
       </div>
     </div>

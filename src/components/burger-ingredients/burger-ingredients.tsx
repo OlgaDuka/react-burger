@@ -1,31 +1,31 @@
-import React, {useRef} from 'react'
+import React, {FC, RefObject, useRef, useState} from 'react'
 
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
 import styles from './burger-ingredients.module.css'
 import {RootState, useAppSelector} from '../../services'
-import {IngredientItem} from '../../utils/types'
+import {IIngredientItem} from '../../utils/types'
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients)
-  const [activeTab, setActiveTab] = React.useState('bun')
-  const tabsRef = useRef<HTMLDivElement>(null)
-  const bunsRef = useRef<HTMLDivElement>(null)
-  const saucesRef = useRef<HTMLDivElement>(null)
-  const mainsRef = useRef<HTMLDivElement>(null)
+  const [activeTab, setActiveTab] = useState('bun')
+  const tabsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+  const bunsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+  const saucesRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+  const mainsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
   const tabs: string[] = ['bun', 'sauce', 'main']
-  const tabRefs = [ bunsRef, saucesRef, mainsRef]
+  const tabRefs: RefObject<HTMLDivElement>[] = [ bunsRef, saucesRef, mainsRef]
 
   function scrollToRef(ref: any, index: number) {
     setActiveTab(tabs[index])
     return ref.current.scrollIntoView({behavior: 'smooth'})
   }
 
-  const handlerScroll = () => {
+  const handlerScroll = (): void => {
     const tabsPosition: number = tabsRef.current?.getBoundingClientRect().bottom || 0
     let minDistance: number = window.screen.height
-    let tab = ''
+    let tab: string = ''
 
     for (let i: number = 0; i < tabs.length; i++) {
       const distance: number = Math.abs((tabRefs[i].current?.getBoundingClientRect().top || 0) - tabsPosition)
@@ -52,7 +52,7 @@ const BurgerIngredients = () => {
           <div key={index} ref={tabRefs[index]} data-tab={tab}>
             <h2 className='text text_type_main-medium'>{INGREDIENT_TYPES[index]}</h2>
             <ul className={styles.list}>
-              {ingredients.map((item: IngredientItem) => item.type === tab
+              {ingredients.map((item: IIngredientItem) => item.type === tab
                 ? <li key={item._id}>
                     <IngredientCard item={item} />
                   </li>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, FC, FormEvent, useEffect, useState} from 'react'
 import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, Navigate, NavigateFunction, useNavigate} from 'react-router-dom'
 
@@ -6,25 +6,26 @@ import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
 import {RootState, useAppDispatch, useAppSelector} from '../services'
 import {registerUser} from '../services/thunks'
+import {ROUTES} from "../utils/constants";
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const { isAuthChecked, error, success } =  useAppSelector((state: RootState) => state.user)
   const dispatch = useAppDispatch()
   const navigate: NavigateFunction = useNavigate()
   const [isChange, setIsChange] = useState(false)
   const {formValues, handleChangeInput} = useForm({ name: '', email: '', password: '' })
 
-  useEffect(() => {
+  useEffect((): void => {
     if (success)
-      navigate('/login')
+      navigate(ROUTES.LOGIN)
   }, [success, navigate])
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     handleChangeInput(e)
     setIsChange(true)
   }
 
-  const register = (e: FormEvent) => {
+  const register = (e: FormEvent): void => {
     e.preventDefault()
     if (formValues) {
       dispatch(registerUser({
@@ -37,7 +38,7 @@ const RegisterPage = () => {
   }
 
   if (isAuthChecked) {
-    return <Navigate to='/' />
+    return <Navigate to={ROUTES.HOME} />
   }
 
   return (
@@ -80,7 +81,7 @@ const RegisterPage = () => {
           </Button>
         </form>
         <span className='mb-4'>Уже зарегистрированы?&nbsp;
-          <Link to='/login'>Войти</Link>
+          <Link to={ROUTES.LOGIN}>Войти</Link>
         </span>
       </div>
     </div>
