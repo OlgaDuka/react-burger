@@ -69,7 +69,7 @@ const BurgerConstructor: FC = () => {
         </Button>
       </div>
       {isOpenModal
-      ? <Modal onClose={closeOrder}>
+      ? <Modal onClose={closeOrder} header={loading ? 'Формируем заказ' : ''}>
           {loading ? <Loader /> : <OrderDetails />}
         </Modal>
       : null

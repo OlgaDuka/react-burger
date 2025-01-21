@@ -1,9 +1,16 @@
 import React, {FC} from 'react'
 import styles from './loader.module.css'
+
 const Loader: FC = () => {
   return (
-    <div className={styles.container}>
-      <p className='text text_type_main-medium'>Формируем заказ...</p>
+    <div className={`${styles.loading} pt-6`}>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   )
 }
