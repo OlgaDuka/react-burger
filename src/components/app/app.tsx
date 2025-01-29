@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
   FogotPassword,
-  HistoryPage,
+  Feed,
   Home,
   LoginPage,
   Page404,
@@ -13,7 +13,7 @@ import {
 import {NavigateFunction, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import ProtectedRoute from '../protected-route/protected-route'
 import styles from './app.module.css'
-import HistoryOrders from '../../pages/profile-page/history-orders'
+import Orders from '../../pages/profile-page/orders'
 import Profile from '../../pages/profile-page/profile'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
@@ -23,6 +23,7 @@ import {setAuthChecked} from '../../services/slices/user'
 import {fetchIngredients, getUser} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
+import OrderDetails from "../order-details/order-details";
 
 const App: FC = () => {
   const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
@@ -53,7 +54,8 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
-        <Route path="/history-page" element={<HistoryPage />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:number" element={<OrderDetails />} />
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
@@ -63,7 +65,8 @@ const App: FC = () => {
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>} />}>
           <Route index element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="profile" element={<ProtectedRoute element={<Profile/>} />} />
-          <Route path="history-orders" element={<ProtectedRoute element={<HistoryOrders/>} />} />
+          <Route path="orders" element={<ProtectedRoute element={<Orders/>} />} />
+          <Route path="orders/:number" element={<ProtectedRoute element={<OrderDetails/>} />} />
         </Route>
 
         <Route path="*" element={<Page404 />} />
@@ -76,6 +79,18 @@ const App: FC = () => {
               <IngredientDetails />
             </Modal>
             }
+          />
+          <Route path='/feed/:number' element={
+            <Modal onClose={() => navigate('/feed')} header='Заказ №...'>
+              <OrderDetails />
+            </Modal>
+          }
+          />
+          <Route path='/profile/orders/:number' element={
+            <Modal onClose={() => navigate('/profile/orders')} header='Заказ №...'>
+              <OrderDetails />
+            </Modal>
+          }
           />
         </Routes>
         )}

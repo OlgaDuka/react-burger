@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 
-const HistoryOrders: FC = () => {
+const Orders: FC = () => {
   return (
     <div>
 
@@ -8,4 +8,4 @@ const HistoryOrders: FC = () => {
   )
 }
 
-export default HistoryOrders
+export default Orders

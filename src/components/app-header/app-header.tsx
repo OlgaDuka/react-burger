@@ -3,10 +3,14 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-devel
 
 import MenuItem from './menu-item/menu-item'
 import styles from './app-header.module.css'
-import {Link, NavLink} from 'react-router-dom'
+import {Link, NavLink, useMatch} from 'react-router-dom'
 import {RootState, useAppSelector} from '../../services'
 
 const AppHeader: FC = () => {
+  const isConstructor = !!useMatch('/')
+  const isFeed = !!useMatch('/feed')
+  const isProfile = !!useMatch('/profile')
+  const isOrders = !!useMatch('/profile/orders')
   const { isAuthChecked, user } = useAppSelector((state: RootState) => state.user)
   const classLink = (isActive: boolean): string => {
     return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
@@ -17,19 +21,19 @@ const AppHeader: FC = () => {
       <nav className={styles.menu}>
         <NavLink
           to='/'
-          className={({isActive}) => classLink(isActive)}
+          className={() => classLink(isConstructor)}
         >
           <MenuItem text='Конструктор'>
-            <BurgerIcon type="primary" />
+            <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
           </MenuItem>
         </NavLink>
 
         <NavLink
-          to='/history-page'
-          className={({isActive}) => classLink(isActive)}
+          to='/feed'
+          className={() => classLink(isFeed)}
         >
           <MenuItem text='Лента заказов'>
-            <ListIcon type="secondary" />
+            <ListIcon type={isFeed ? 'primary' : 'secondary'} />
           </MenuItem>
         </NavLink>
 
@@ -39,10 +43,10 @@ const AppHeader: FC = () => {
 
         <NavLink
           to='/profile/'
-          className={({isActive}) => classLink(isActive) + ` ${styles.last_item}`}
+          className={() => classLink(isProfile || isOrders) + ` ${styles.last_item}`}
         >
           <MenuItem text={isAuthChecked && user ? user.name : 'Личный кабинет'}>
-            <ProfileIcon type="secondary" />
+            <ProfileIcon type={isProfile || isOrders ? 'primary' : 'secondary'} />
           </MenuItem>
         </NavLink>
       </nav>
