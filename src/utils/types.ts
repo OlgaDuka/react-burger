@@ -76,6 +76,37 @@ export type TSendEmail = {
 }
 
 export type TErrorResponse = {
-  success: boolean;
-  message: string;
+  success: boolean
+  message: string
 }
+
+export type TOrderStatus = 'created' | 'pending' | 'done'
+
+export type TOrderItem = {
+  readonly _id: string
+  readonly createdAt: string
+  readonly updatedAt: string
+  readonly ingredients: string[]
+  readonly name: string
+  readonly number: number
+  readonly status: TOrderStatus
+}
+
+export interface IFeedCardProps {
+  order: TOrderItem
+}
+
+export type TOrder = {
+  readonly success: boolean
+  readonly order: TOrderItem[]
+  readonly total: number
+  readonly totalToday: number
+}
+
+/*
+export interface IFeedListProps {
+  orders: TOrder
+} */
+
+
+

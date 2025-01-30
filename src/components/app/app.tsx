@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
   FogotPassword,
-  Feed,
+  FeedPage,
   Home,
   LoginPage,
   Page404,
@@ -54,7 +54,7 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
-        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed" element={<FeedPage />} />
         <Route path="/feed/:number" element={<OrderDetails />} />
 
         <Route path="/login" element={<LoginPage/>} />
