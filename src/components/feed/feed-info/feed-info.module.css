@@ -1,0 +1,29 @@
+.section {
+    text-align: left;
+    background: var(--background-alt);
+    gap: calc(var(--offset-base-size) * 9);
+}
+
+.block_list {
+    display: flex;
+}
+
+.part {
+    width: 272px;
+    display: flex;
+    flex-direction: column;
+}
+
+.table {
+    margin-bottom: calc(var(--offset-base-size) * 2);
+    display: flex;
+    gap: calc(var(--offset-base-size) * 6);
+}
+
+.table_done {
+    margin-bottom: calc(var(--offset-base-size) * 2);
+    display: flex;
+    color: var(--colors-interface-success);
+    gap: calc(var(--offset-base-size) * 6);
+}
+

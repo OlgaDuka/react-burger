@@ -96,17 +96,12 @@ export interface IFeedCardProps {
   order: TOrderItem
 }
 
-/*
 export type TOrder = {
   readonly success: boolean
   readonly order: TOrderItem[]
   readonly total: number
   readonly totalToday: number
 }
-
-export interface IFeedListProps {
-  orders: TOrder
-} */
 
 
 
