@@ -1,11 +1,12 @@
 .container {
     width: 584px;
-    height: 214px;
+    height: auto;
     padding: calc(var(--offset-base-size) * 6);
     display: flex;
     flex-direction: column;
     border-radius: var(--common-border-radius-s);
     background: var(--background);
+    box-sizing: border-box;
 }
 
 .title_row {
@@ -14,14 +15,39 @@
 }
 
 .img_row {
+    height: 64px;
     display: flex;
+    position: relative;
 }
 
 .img {
+    width: 112px;
+    height: 56px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--background-alt);
+    transform: translate(-24px, 4px);
+}
+
+.count {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 0;
+    top: 20px;
+    text-align: center;
+    z-index: 46;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.border {
+    position: absolute;
     width: 64px;
     height: 64px;
     border-radius: 50%;
     border: 2px solid var(--colors-interface-accent);
+    overflow: hidden;
 }
 
 .currency {

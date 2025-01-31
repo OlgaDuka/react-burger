@@ -1,5 +1,5 @@
 import {createAction, createReducer} from "@reduxjs/toolkit";
-import {TOrder} from "../../utils/types";
+import {TOrderItem} from "../../utils/types";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -11,14 +11,14 @@ import {
 
 interface IWSState {
   successConnect: boolean
-  orders: TOrder[]
+  orders: TOrderItem[]
   total: number
   totalToday: number
   error?: Event
 }
 
 interface IDataMessage {
-  orders: TOrder[];
+  orders: TOrderItem[];
   total: number;
   totalToday: number
 }
