@@ -1,0 +1,84 @@
+.card {
+    position: relative;
+    margin: 0 auto;
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.status {
+    text-align: left;
+    color: var(--colors-interface-success);
+}
+
+.result {
+    display: flex;
+}
+
+.date {
+    margin-right: auto;
+    color: var(--text-inactive-color);
+}
+
+.info {
+    display: flex;
+    height: 64px;
+    align-items: center;
+}
+
+.img {
+    width: 112px;
+    height: 56px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--background-alt);
+    transform: translate(-24px, 4px);
+}
+
+.border {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--colors-interface-accent);
+    overflow: hidden;
+}
+
+.name {
+    max-width: 340px;
+    text-wrap: normal;
+}
+
+.currency {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    padding-top: 2px;
+    display: block;
+    height: auto;
+    max-height: 320px;
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    width: calc(var(--offset-base-size) * 2);
+}
+
+/* Track */
+.container::-webkit-scrollbar-track {
+    background: rgba(47, 47, 55, 1);
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+    background: rgba(133, 133, 173, 1);
+}

@@ -6,7 +6,7 @@ import {RootState, useAppSelector} from "../../../services";
 import {Link, useLocation} from "react-router-dom";
 
 const FeedCard = (props: IProps) => {
-  const ingredientsAll: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
+  const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)
   const { order } = props
   const {
     _id,
@@ -19,22 +19,20 @@ const FeedCard = (props: IProps) => {
   const location = useLocation()
   let totalPrice = 0
   const countImages = ingredients.length
-  const orderIngredients: Array<IIngredientItem | undefined> = ingredients.map((id: string) =>
-    ingredientsAll.find((item: IIngredientItem) => item._id === id))
 
   const renderImages = (): ReactNode =>
-    ingredients.map((id: string, index) => {
-      const orderIngredient = ingredientsAll.find((item: IIngredientItem) => item._id === id)
+    ingredients.map((item: string, index) => {
       const offset = index * 48
       const z_index = 50 - index
-      if (orderIngredients && orderIngredient?.price) {
+      const orderIngredient: IIngredientItem = ingredientsAll[item]
+      if (orderIngredient?.price) {
         totalPrice += orderIngredient?.price
       }
 
       return orderIngredient && (index < 5
         ? <div className={styles.border} style={{left: `${offset}px`, zIndex: `${z_index}`}}>
           <img
-            key={id}
+            key={index}
             className={styles.img}
             src={orderIngredient.image}
             alt={orderIngredient.name}
@@ -43,7 +41,7 @@ const FeedCard = (props: IProps) => {
         </div>
         : <div className={styles.border} style={{left: '240px', zIndex: '45'}}>
             <img
-              key={id}
+              key={index}
               className={styles.img}
               src={'https://code.s3.yandex.net/react/code/cheese.png'}
               alt={orderIngredient.name}
@@ -55,11 +53,11 @@ const FeedCard = (props: IProps) => {
     })
 
   return (
-    <Link key={_id} to={`/feed/${number}`} state={{ background: location }} className={styles.link}>
+    <Link key={_id} to={`/feed/${_id}`} state={{ background: location }} className={styles.link}>
       <div className={styles.container}>
         <div className={`${styles.title_row} mb-6`}>
-          <span className='text_type_digits-default'>#{number}</span>
-          <span className='text_type_main-default text_color_inactive'>
+          <span className='text text_type_digits-default'>#{number}</span>
+          <span className='text text_type_main-default text_color_inactive'>
             <FormattedDate date={new Date(updatedAt ?? createdAt)} />
           </span>
         </div>

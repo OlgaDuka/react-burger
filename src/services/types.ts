@@ -11,15 +11,20 @@ export interface IDetailState {
 }
 
 export interface  IIngredientsState {
-  ingredients: IIngredientItem[],
-  loading: boolean,
+  ingredients: IIngredientItem[]
+  ingredientsMap: TIngredient
+  loading: boolean
   hasError: boolean
 }
 
+export type TIngredient = {
+  [key:string]: IIngredientItem
+}
+
 export interface IOrderState {
-  orderId: number | null,
-  loading: boolean,
-  hasError: boolean,
+  orderId: number | null
+  loading: boolean
+  hasError: boolean
   error: string | null
 }
 

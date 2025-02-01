@@ -35,3 +35,15 @@ export const STORAGE_KEY = {
     REFRESH: 'refreshToken',
     RESET_PASSWORD: 'resetPassword'
 }
+
+export const ORDER_STATUS =  {
+    CREATED: 'created',
+    PENDING: 'pending',
+    DONE: 'done'
+}
+
+export const STATUS_TEXT =  {
+    'created': 'Создан',
+    'pending': 'Готовится',
+    'done': 'Выполнен'
+}

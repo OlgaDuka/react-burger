@@ -23,7 +23,7 @@ import {setAuthChecked} from '../../services/slices/user'
 import {fetchIngredients, getUser} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
-import OrderDetails from "../order-details/order-details";
+import FeedDetails from "../feed/feed-details/feed-details";
 
 const App: FC = () => {
   const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
@@ -55,7 +55,7 @@ const App: FC = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:number" element={<OrderDetails />} />
+        <Route path="/feed/:id" element={<FeedDetails />} />
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
@@ -66,7 +66,7 @@ const App: FC = () => {
           <Route index element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="profile" element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="orders" element={<ProtectedRoute element={<Orders/>} />} />
-          <Route path="orders/:number" element={<ProtectedRoute element={<OrderDetails/>} />} />
+          <Route path="orders/:id" element={<ProtectedRoute element={<FeedDetails/>} />} />
         </Route>
 
         <Route path="*" element={<Page404 />} />
@@ -80,15 +80,15 @@ const App: FC = () => {
             </Modal>
             }
           />
-          <Route path='/feed/:number' element={
-            <Modal onClose={() => navigate('/feed')} header='Заказ №...'>
-              <OrderDetails />
+          <Route path='/feed/:id' element={
+            <Modal onClose={() => navigate('/feed')}>
+              <FeedDetails />
             </Modal>
           }
           />
-          <Route path='/profile/orders/:number' element={
-            <Modal onClose={() => navigate('/profile/orders')} header='Заказ №...'>
-              <OrderDetails />
+          <Route path='/profile/orders/:id' element={
+            <Modal onClose={() => navigate('/profile/orders')}>
+              <FeedDetails />
             </Modal>
           }
           />

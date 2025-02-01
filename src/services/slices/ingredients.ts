@@ -5,8 +5,15 @@ import {fetchIngredients} from '../thunks'
 
 const initialState: IIngredientsState = {
   ingredients: [],
+  ingredientsMap: {},
   loading: false,
   hasError: false
+}
+
+function groupIngredientsById(array: IIngredientItem[]) {
+  return array.reduce((obj: {}, item: IIngredientItem) => {
+    return {...obj, [item._id]: item }
+  }, {})
 }
 
 const ingredientsSlice = createSlice({
@@ -57,6 +64,7 @@ const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.fulfilled, (state: IIngredientsState, { payload }) => {
         state.loading = false
         state.ingredients = payload;
+        state.ingredientsMap = groupIngredientsById(payload)
       })
       .addCase(fetchIngredients.rejected, (state: IIngredientsState) => {
         state.loading = false

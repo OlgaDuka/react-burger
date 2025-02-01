@@ -1,5 +1,5 @@
 import {createAction, createReducer} from "@reduxjs/toolkit";
-import {TOrderItem} from "../../utils/types";
+import {TOrder, TOrderItem} from "../../utils/types";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -12,6 +12,7 @@ import {
 interface IWSState {
   successConnect: boolean
   orders: TOrderItem[]
+  ordersMap: TOrder
   total: number
   totalToday: number
   error?: Event
@@ -27,8 +28,15 @@ const initialState: IWSState = {
   successConnect: false,
   total: 0,
   totalToday: 0,
-  orders: []
+  orders: [],
+  ordersMap: {}
 };
+
+function groupOrderById(array: TOrderItem[]) {
+  return array.reduce((obj: {}, item: TOrderItem) => {
+    return {...obj, [item._id]: item }
+  }, {})
+}
 
 export const wsConnectionStart = createAction<string>(WS_CONNECTION_START)
 export const wsConnectionSuccess = createAction(WS_CONNECTION_SUCCESS)
@@ -54,6 +62,7 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     const {orders, total, totalToday} = payload
     state.error = undefined
     state.orders = orders
+    state.ordersMap = groupOrderById(orders)
     state.total = total
     state.totalToday=totalToday
   });
