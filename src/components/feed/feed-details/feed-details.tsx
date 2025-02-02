@@ -29,7 +29,7 @@ const FeedDetails = () => {
     const ingredient = ingredientsAll[item[0]]
 
     return (
-      <div className={`${styles.info} mb-4`}>
+      <div key={item[0]} className={`${styles.info} mb-4`}>
         <div className={styles.border}>
           <img className={styles.img} src={ingredient.image} alt={ingredient.name}/>
         </div>

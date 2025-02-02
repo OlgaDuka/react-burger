@@ -21,12 +21,12 @@ const FeedInfo = () => {
           <div className={styles.table_done}>
             <div className={`${styles.column} mb-2`}>
               {ordersDone1 && ordersDone1.map((item) => {
-                return <div>{item.number}</div>
+                return <div key={item._id}>{item.number}</div>
               })}
             </div>
             <div className={`${styles.column} mb-2`}>
               {ordersDone2 && ordersDone2.map((item) => {
-                return <div>{item.number}</div>
+                return <div key={item._id}>{item.number}</div>
               })}
             </div>
           </div>

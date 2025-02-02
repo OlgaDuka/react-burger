@@ -1,6 +1,6 @@
 .container {
-    width: 584px;
     height: auto;
+    margin-right: calc(var(--offset-base-size) * 2);
     padding: calc(var(--offset-base-size) * 6);
     display: flex;
     flex-direction: column;
@@ -12,6 +12,10 @@
 .title_row {
     display: flex;
     justify-content: space-between;
+}
+
+.status_done {
+    color: var(--colors-interface-success);
 }
 
 .img_row {

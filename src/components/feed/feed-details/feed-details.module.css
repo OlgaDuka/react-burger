@@ -1,9 +1,10 @@
 .card {
     position: relative;
     margin: 0 auto;
-    width: 640px;
+    width: 560px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .title {

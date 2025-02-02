@@ -4,8 +4,11 @@ import styles from './feed-card.module.css'
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {RootState, useAppSelector} from "../../../services";
 import {Link, useLocation} from "react-router-dom";
+import {ORDER_STATUS, STATUS_TEXT} from "../../../utils/constants";
 
 const FeedCard = (props: IProps) => {
+  const location = useLocation()
+  const isProfile = location.pathname.includes('profile')
   const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)
   const { order } = props
   const {
@@ -14,11 +17,12 @@ const FeedCard = (props: IProps) => {
     name,
     number,
     createdAt,
-    updatedAt
+    updatedAt,
+    status
   } = order
-  const location = useLocation()
   let totalPrice = 0
   const countImages = ingredients.length
+  const isDone = status === ORDER_STATUS.DONE
 
   const renderImages = (): ReactNode =>
     ingredients.map((item: string, index) => {
@@ -30,18 +34,16 @@ const FeedCard = (props: IProps) => {
       }
 
       return orderIngredient && (index < 5
-        ? <div className={styles.border} style={{left: `${offset}px`, zIndex: `${z_index}`}}>
+        ? <div key={index} className={styles.border} style={{left: `${offset}px`, zIndex: `${z_index}`}}>
           <img
-            key={index}
             className={styles.img}
             src={orderIngredient.image}
             alt={orderIngredient.name}
             title={orderIngredient.name}
           />
         </div>
-        : <div className={styles.border} style={{left: '240px', zIndex: '45'}}>
+        : <div key={index} className={styles.border} style={{left: '240px', zIndex: '45'}}>
             <img
-              key={index}
               className={styles.img}
               src={'https://code.s3.yandex.net/react/code/cheese.png'}
               alt={orderIngredient.name}
@@ -53,15 +55,21 @@ const FeedCard = (props: IProps) => {
     })
 
   return (
-    <Link key={_id} to={`/feed/${_id}`} state={{ background: location }} className={styles.link}>
-      <div className={styles.container}>
+    <Link
+      key={_id}
+      to={isProfile ? `/profile/orders/${_id}` : `/feed/${_id}`}
+      state={{ background: location }}
+      className={styles.link}
+    >
+      <div className={styles.container} style={{width: `${isProfile ? '860px' : '584px'}`}}>
         <div className={`${styles.title_row} mb-6`}>
           <span className='text text_type_digits-default'>#{number}</span>
           <span className='text text_type_main-default text_color_inactive'>
-            <FormattedDate date={new Date(updatedAt ?? createdAt)} />
+            <FormattedDate date={new Date(updatedAt ?? createdAt)}/>
           </span>
         </div>
-        <p className='text_type_main-medium mb-6'>{name}</p>
+        <p className='text_type_main-medium mb-2'>{name}</p>
+        {isProfile && <p className={`${isDone && styles.status_done} 'text_type_main-default mb-6`}>{STATUS_TEXT[status]}</p>}
         <div className={styles.title_row}>
           <div className={styles.img_row}>
             {renderImages()}
