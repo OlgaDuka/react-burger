@@ -1,20 +1,31 @@
-import React, {ReactNode} from 'react'
-import {TOrder} from "../../../utils/types";
-import {RootState, useAppSelector} from "../../../services";
+import React, {ReactNode, useEffect} from 'react'
+import {TOrder, TOrderItem} from "../../../utils/types";
+import {RootState, useAppDispatch, useAppSelector} from "../../../services";
 import {useParams} from "react-router-dom";
 import styles from './feed-details.module.css'
 import {STATUS_TEXT} from "../../../utils/constants";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {getOrder} from "../../../services/thunks";
 
 const FeedDetails = () => {
   const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)
   const ordersMap: TOrder = useAppSelector((state: RootState) => state.ws.ordersMap)
+  const order: TOrderItem = useAppSelector((state: RootState) => state.order.order)
+  const dispatch = useAppDispatch()
   const { id } = useParams()
-  const order = id && ordersMap[id]
+  const orderDetails = (id && ordersMap[id]) || order
 
-  if (!order) return null
+  useEffect(() => {
+    if (!(id && ordersMap[id]) && id) {
+      dispatch(getOrder(id))
+    }
+  }, [id, dispatch, ordersMap])
 
-  const { ingredients, } = order
+  if (!orderDetails) return (
+    <div>Заказ не найден</div>
+  )
+
+  const { ingredients, } = orderDetails
   const unical_list = ingredients.reduce((acc: Record<string, number>, currentValue) => ({
     ...acc,
     [currentValue]: (acc[currentValue] || 0) + 1
@@ -43,28 +54,24 @@ const FeedDetails = () => {
   }
 
   return (
-    order
-      ? <div className={styles.card}>
-        <div className={`${styles.title} text text_type_digits-default mb-10`}>{`#${order.number}`}</div>
-        <div className='text text_type_main-medium mt-10 mb-3'>{order.name}</div>
-        <div className={`${styles.status} text text_type_main-default mb-15`}>
-          {STATUS_TEXT[order.status]}
-        </div>
-        <div className='text text_type_main-medium mb-6'>Состав:</div>
-        <div className={`${styles.container} mb-10`}>
-          {unical_arr.map((item) => renderIngredient(item))}
-        </div>
-        <div className={styles.result}>
-          <div className={`${styles.date} text text_type_main-default`}>
-            <FormattedDate date={new Date(order.updatedAt ?? order.createdAt)} />
-          </div>
-          <div className='text text_type_digits-default mr-2'>{totalPrice}</div>
-          <CurrencyIcon type='primary'/>
-        </div>
+    <div className={styles.card}>
+      <div className={`${styles.title} text text_type_digits-default mb-10`}>{`#${orderDetails.number}`}</div>
+      <div className={`${styles.name} text text_type_main-medium mt-10 mb-3`}>{orderDetails.name}</div>
+      <div className={`${styles.status} text text_type_main-default mb-15`}>
+        {STATUS_TEXT[orderDetails.status]}
       </div>
-      : (
-        <div>Заказ не найден</div>
-      )
+      <div className='text text_type_main-medium mb-6'>Состав:</div>
+      <div className={`${styles.container} mb-10`}>
+        {unical_arr.map((item) => renderIngredient(item))}
+      </div>
+      <div className={styles.result}>
+        <div className={`${styles.date} text text_type_main-default`}>
+          <FormattedDate date={new Date(orderDetails.updatedAt ?? orderDetails.createdAt)} />
+        </div>
+        <div className='text text_type_digits-default mr-2'>{totalPrice}</div>
+        <CurrencyIcon type='primary'/>
+      </div>
+    </div>
   )
 }
 

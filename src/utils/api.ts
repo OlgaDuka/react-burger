@@ -2,7 +2,7 @@ import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
   IIngredientItem,
   TErrorResponse,
-  TLoginUser, TProfileUser, TResetPassword, TSendEmail
+  TLoginUser, TOrderItem, TProfileUser, TResetPassword, TSendEmail
 } from './types'
 import {TForm} from '../services/types'
 
@@ -50,14 +50,17 @@ export const requestWithUpdateToken = async (endpoint: string, options?: Request
 export const getIngredientsRequest = (): Promise<IIngredientItem[]> => request(ENDPOINT.INGREDIENTS)
   .then((res) => res.data.map((item: IIngredientItem) => { return { ...item, count: 0 }}))
 
-export const sendOrderRequest = (ingredients: string[]) => requestWithUpdateToken(ENDPOINT.ORDER, {
+export const getOrderRequest = (id: string): Promise<TOrderItem> => request(`${ENDPOINT.ORDERS}/${id}`)
+  .then((res) => res.orders[0])
+
+export const sendOrderRequest = (ingredients: string[]) => requestWithUpdateToken(ENDPOINT.ORDERS, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
     'Authorization': 'Bearer ' + localStorage.getItem(STORAGE_KEY.ACCESS)
   },
   body: JSON.stringify({ ingredients })
-}).then((res => res.order.number))
+}).then((res => res.order))
 
 export const sendEmail = (data: TForm<TSendEmail>) => request(ENDPOINT.PASSWORD_RESET, {
   method: 'POST',

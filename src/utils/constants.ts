@@ -3,7 +3,7 @@ export const WS_URL_All = 'wss://norma.nomoreparties.space/orders/all'
 export const WS_URL_USER = 'wss://norma.nomoreparties.space/orders'
 export const ENDPOINT = {
     INGREDIENTS: 'ingredients',
-    ORDER: 'orders',
+    ORDERS: 'orders',
     PASSWORD_RESET: 'password-reset',
     PASSWORD_RESET_RESET: 'password-reset/reset',
     REGISTER: 'auth/register',

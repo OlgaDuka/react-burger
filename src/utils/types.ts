@@ -83,13 +83,13 @@ export type TErrorResponse = {
 export type TOrderStatus = 'created' | 'pending' | 'done'
 
 export type TOrderItem = {
-  readonly _id: string
-  readonly createdAt: string
-  readonly updatedAt: string
-  readonly ingredients: string[]
-  readonly name: string
-  readonly number: number
-  readonly status: TOrderStatus
+  _id: string
+  createdAt: string
+  updatedAt: string
+  ingredients: string[]
+  name: string
+  number: number
+  status: TOrderStatus
 }
 
 export interface IFeedCardProps {

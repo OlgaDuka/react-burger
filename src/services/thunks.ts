@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {IIngredientItem, TLoginUser, TProfileUser} from '../utils/types'
+import {IIngredientItem, TLoginUser, TOrderItem, TProfileUser} from '../utils/types'
 import {
-  getIngredientsRequest,
+  getIngredientsRequest, getOrderRequest,
   getUserRequest,
   loginUserRequest, logoutUserRequest, registerUserRequest,
   sendOrderRequest,
@@ -14,9 +14,14 @@ export const fetchIngredients = createAsyncThunk<IIngredientItem[], void, { reje
   async () => await getIngredientsRequest()
 )
 
-export const sendOrder = createAsyncThunk<number, string[], { rejectValue: string }>(
-  'order/fetchOrder',
+export const sendOrder = createAsyncThunk<TOrderItem, string[], { rejectValue: string }>(
+  'orders/sendOrder',
   async (ingredients: string[]) => await sendOrderRequest(ingredients)
+)
+
+export const getOrder = createAsyncThunk<TOrderItem, string, { rejectValue: string }>(
+  'orders/getOrder',
+  async (id: string) => await getOrderRequest(id)
 )
 
 export const getUser = createAsyncThunk(

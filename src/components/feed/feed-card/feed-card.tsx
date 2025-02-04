@@ -57,7 +57,7 @@ const FeedCard = (props: IProps) => {
   return (
     <Link
       key={_id}
-      to={isProfile ? `/profile/orders/${_id}` : `/feed/${_id}`}
+      to={isProfile ? `/profile/orders/${number}` : `/feed/${number}`}
       state={{ background: location }}
       className={styles.link}
     >

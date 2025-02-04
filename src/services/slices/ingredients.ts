@@ -11,6 +11,8 @@ const initialState: IIngredientsState = {
 }
 
 function groupIngredientsById(array: IIngredientItem[]) {
+  if (!array.length) return {}
+
   return array.reduce((obj: {}, item: IIngredientItem) => {
     return {...obj, [item._id]: item }
   }, {})

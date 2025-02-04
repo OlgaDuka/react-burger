@@ -33,8 +33,11 @@ const initialState: IWSState = {
 };
 
 function groupOrderById(array: TOrderItem[]) {
+  if (!array.length) return {}
+  //const reversArr = array.reverse()
+
   return array.reduce((obj: {}, item: TOrderItem) => {
-    return {...obj, [item._id]: item }
+    return {...obj, [item.number]: item }
   }, {})
 }
 
@@ -51,6 +54,7 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     state.error = undefined
   });
   addCase(wsConnectionError, (state, {payload}) => {
+    console.log('payload: ', payload)
     state.successConnect = false
     state.error = payload
   });

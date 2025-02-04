@@ -21,6 +21,7 @@
 
 .result {
     display: flex;
+    justify-content: space-between;
 }
 
 .date {
@@ -52,7 +53,7 @@
 }
 
 .name {
-    max-width: 340px;
+    max-width: 500px;
     text-wrap: normal;
 }
 

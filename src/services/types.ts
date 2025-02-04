@@ -1,4 +1,4 @@
-import {IIngredientItem, TLoginUser, TProfileUser, TResetPassword, TSendEmail} from '../utils/types'
+import {IIngredientItem, TLoginUser, TOrderItem, TProfileUser, TResetPassword, TSendEmail} from '../utils/types'
 
 export interface IConstructorState {
   bun: IIngredientItem | null,
@@ -22,7 +22,7 @@ export type TIngredient = {
 }
 
 export interface IOrderState {
-  orderId: number | null
+  order: TOrderItem
   loading: boolean
   hasError: boolean
   error: string | null

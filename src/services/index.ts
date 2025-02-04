@@ -17,7 +17,8 @@ export const store = configureStore({
    user,
    ws
  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(createWebSocketMiddleware(wsActionsCreator))
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    .concat(createWebSocketMiddleware(wsActionsCreator))
 })
 
 export type RootState = ReturnType<typeof store.getState>
