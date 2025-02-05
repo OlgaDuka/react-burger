@@ -55,7 +55,7 @@ const FeedDetails = () => {
 
   return (
     <div className={styles.card}>
-      <div className={`${styles.title} text text_type_digits-default mb-10`}>{`#${orderDetails.number}`}</div>
+      <div className={`${styles.title} text text_type_digits-default mb-4`}>{`#${orderDetails.number}`}</div>
       <div className={`${styles.name} text text_type_main-medium mt-10 mb-3`}>{orderDetails.name}</div>
       <div className={`${styles.status} text text_type_main-default mb-15`}>
         {STATUS_TEXT[orderDetails.status]}

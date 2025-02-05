@@ -7,12 +7,12 @@ import styles from './pages.module.css'
 
 const Home: FC = () => {
   return (
-    <div className={styles.main}>
+    <main className={styles.main}>
       <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
         <BurgerConstructor />
       </DndProvider>
-    </div>
+    </main>
   )
 }
 

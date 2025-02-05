@@ -11,8 +11,15 @@
 
 .container {
     display: block;
-    height: calc(100vh - 250px);
     overflow-y: scroll;
+}
+
+.profile_height {
+    height: calc(100vh - 160px);
+}
+
+.feed_height {
+    height: calc(100vh - 260px);
 }
 
 .container::-webkit-scrollbar {

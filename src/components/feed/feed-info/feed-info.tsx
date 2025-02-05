@@ -13,20 +13,20 @@ const FeedInfo = () => {
 
 
   return (
-    <section className={`${styles.section} mt-25`}>
-      <div className={`${styles.block_list} mb-15`}>
+    <section className={`${styles.section} mt-15`}>
+      <div className={`${styles.block_list} mb-10`}>
 
         <div className={styles.part}>
           <div className='text text_type_main-medium mb-6'>Готовы:</div>
           <div className={styles.table_done}>
             <div className={`${styles.column} mb-2`}>
               {ordersDone1 && ordersDone1.map((item) => {
-                return <div key={item._id}>{item.number}</div>
+                return <div key={item._id} className='text text_type_digits-default'>{item.number}</div>
               })}
             </div>
             <div className={`${styles.column} mb-2`}>
               {ordersDone2 && ordersDone2.map((item) => {
-                return <div key={item._id}>{item.number}</div>
+                return <div key={item._id} className='text text_type_digits-default'>{item.number}</div>
               })}
             </div>
           </div>
@@ -37,19 +37,19 @@ const FeedInfo = () => {
           <div className={styles.table}>
             <div className={`${styles.column} mb-2`}>
               {ordersPending1 && ordersPending1.map((item) => {
-                return <div>{item.number}</div>
+                return <div key={item._id} className='text text_type_digits-default'>{item.number}</div>
               })}
             </div>
             <div className={`${styles.column} mb-2`}>
               {ordersPending2 && ordersPending2.map((item) => {
-                return <div>{item.number}</div>
+                return <div key={item._id} className='text text_type_digits-default'>{item.number}</div>
               })}
             </div>
           </div>
         </div>
       </div>
       <div className='text text_type_main-medium'>Выполнено за все время</div>
-      <div className='text text_type_digits-large mb-15'>{total}</div>
+      <div className='text text_type_digits-large mb-10'>{total}</div>
       <div className='text text_type_main-medium'>Выполнено за сегодня</div>
       <div className='text text_type_digits-large'>{totalToday}</div>
     </section>

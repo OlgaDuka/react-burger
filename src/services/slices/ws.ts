@@ -8,6 +8,7 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE
 } from "../middleware/action-types/ws-action-types";
+import {groupOrderById} from "../function";
 
 interface IWSState {
   successConnect: boolean
@@ -31,15 +32,6 @@ const initialState: IWSState = {
   orders: [],
   ordersMap: {}
 };
-
-function groupOrderById(array: TOrderItem[]) {
-  if (!array.length) return {}
-  //const reversArr = array.reverse()
-
-  return array.reduce((obj: {}, item: TOrderItem) => {
-    return {...obj, [item.number]: item }
-  }, {})
-}
 
 export const wsConnectionStart = createAction<string>(WS_CONNECTION_START)
 export const wsConnectionSuccess = createAction(WS_CONNECTION_SUCCESS)
@@ -66,7 +58,7 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     const {orders, total, totalToday} = payload
     state.error = undefined
     state.orders = orders
-    state.ordersMap = groupOrderById(orders)
+    state.ordersMap = groupOrderById(orders, true)
     state.total = total
     state.totalToday=totalToday
   });

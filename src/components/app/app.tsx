@@ -24,6 +24,7 @@ import {fetchIngredients, getUser} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
 import FeedDetails from "../feed/feed-details/feed-details";
+import OrderDetailsPage from "../../pages/order-details-page";
 
 const App: FC = () => {
   const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
@@ -55,7 +56,7 @@ const App: FC = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:id" element={<FeedDetails />} />
+        <Route path="/feed/:id" element={<OrderDetailsPage />} />
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
@@ -66,8 +67,8 @@ const App: FC = () => {
           <Route index element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="profile" element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="orders" element={<ProtectedRoute element={<Orders/>} />} />
-          <Route path="orders/:id" element={<ProtectedRoute element={<FeedDetails/>} />} />
         </Route>
+        <Route path="/profile/orders/:id" element={<ProtectedRoute element={<OrderDetailsPage/>} />} />
 
         <Route path="*" element={<Page404 />} />
       </Routes>

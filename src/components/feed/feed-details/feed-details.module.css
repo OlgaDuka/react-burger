@@ -1,17 +1,15 @@
 .card {
-    position: relative;
     margin: 0 auto;
     width: 560px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    text-align: left;
 }
 
 .title {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translate(-50%);
+    display: flex;
+    justify-content: center;
 }
 
 .status {
@@ -53,7 +51,6 @@
 }
 
 .name {
-    max-width: 500px;
     text-wrap: normal;
 }
 
