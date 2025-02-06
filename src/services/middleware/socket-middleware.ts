@@ -7,7 +7,7 @@ import {
 import {RootState} from '..'
 import {RECONNECT_TIME} from '../../utils/constants'
 import {updateToken} from '../../utils/api'
-import {TWebSocketActions, TWebSocketOptions} from '../types/widdleware-types'
+import {TWebSocketActions, TWebSocketOptions} from '../types/middleware-types'
 
 export function createWebSocketMiddleware<TMessage>(
   {
