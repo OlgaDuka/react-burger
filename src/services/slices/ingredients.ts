@@ -1,6 +1,6 @@
 import {IIngredientItem} from '../../utils/types'
 import {createSlice} from '@reduxjs/toolkit'
-import {IIngredientsState} from '../types/state_types'
+import {IIngredientsState} from '../types/state-types'
 import {fetchIngredients} from '../thunks'
 
 const initialState: IIngredientsState = {

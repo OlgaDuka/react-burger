@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IDraggDataProps, IIngredientItem} from '../../utils/types'
 import {v4 as uuidv4} from 'uuid'
-import {IConstructorState} from '../types/state_types'
+import {IConstructorState} from '../types/state-types'
 
 const initialState: IConstructorState = {
   bun: null,
