@@ -8,7 +8,8 @@ import {useLocation} from "react-router-dom";
 const FeedList = () => {
   const location = useLocation()
   const isProfile = location.pathname.includes('profile')
-  const orders: TOrderItem[] = useAppSelector((state: RootState) => state.ws.orders)
+  const orders: TOrderItem[] = useAppSelector((state: RootState) =>
+    isProfile ? state.wsUser.orders : state.ws.orders)
 
   return (
     <section className={`${styles.section} mt-6`}>

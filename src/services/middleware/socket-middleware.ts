@@ -1,39 +1,91 @@
-import {Middleware, MiddlewareAPI} from '@reduxjs/toolkit'
-import {AppDispatch, RootState} from '..';
-import {IWsActionsCreator, WsActionsType} from "../slices/ws";
-import {WS_CONNECTION_START, WS_SEND_MESSAGE} from "./action-types/ws-action-types";
+import {
+  type Dispatch,
+  type Middleware,
+  type MiddlewareAPI,
+  type UnknownAction
+} from '@reduxjs/toolkit'
+import {RootState} from '..'
+import {RECONNECT_TIME} from "../../utils/constants"
+import {updateToken} from "../../utils/api"
+import {TWebSocketActions, TWebSocketOptions} from "../types/widdleware-types";
 
-export const createWebSocketMiddleware = (wsActionsCreator: IWsActionsCreator): Middleware => {
-  return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-    let socket: WebSocket | null = null
+export function createWebSocketMiddleware<TMessage>(
+  {
+    connect,
+    disconnect,
+    sendMessage,
+    onConnected,
+    onDisconnected,
+    onMessageReceived,
+    onError
+  }: TWebSocketActions<TMessage>,
+  { withTokenRefresh }: TWebSocketOptions): Middleware<unknown, RootState, Dispatch<UnknownAction>> {
+  let socket: WebSocket | null = null
+  let isConnected = false
+  let reconnectTimer = 0
+  let url: string
 
-    return next => (action: WsActionsType) => {
-      const {
-        wsConnectionSuccess,
-        wsConnectionError,
-        wsConnectionClosed,
-        wsGetMessage
-      } = wsActionsCreator
-      const { type, payload} = action
-      const { dispatch} = store
+  return ((store: MiddlewareAPI<Dispatch<UnknownAction>, RootState>) =>
+    (next: Dispatch<UnknownAction>) =>
+      (action: UnknownAction) => {
+        const { payload } = action
+        const { dispatch} = store
+        if(connect.match(action)) {
+          if (socket !== null) {
+            console.warn('WebSocket is already connected')
+            return
+          }
+          url = payload as string
+          socket = new WebSocket(url)
+          isConnected = true
 
-      if (type === WS_CONNECTION_START) {
-        socket = new WebSocket(payload as string)
-      }
+          if (socket) {
+            socket.onopen = (event: Event) => dispatch(onConnected(event))
+            socket.onerror = (event: Event) => dispatch(onError(event))
+            socket.onclose = (event: CloseEvent) => {
+              dispatch(onDisconnected(event))
+              socket = null
+              if (isConnected) {
+                reconnectTimer = window.setTimeout(() => {
+                  dispatch(connect(url))
+                }, RECONNECT_TIME)
+              }
+            }
+            socket.onmessage = (event: MessageEvent) => {
+              const data = JSON.parse(event.data)
+              if (withTokenRefresh && data.message === 'Invalid or missing token') {
+                updateToken().then((refreshData) => {
+                  const wssUrl = new URL(url)
+                  wssUrl.searchParams.set('token', refreshData)
+                  store.dispatch(connect(wssUrl.toString()));
+                })
+                dispatch(disconnect())
+              } else {
+                dispatch(onMessageReceived(data))
+              }
+            }
+          }
+        }
 
-      if (socket) {
-        socket.onopen = () => dispatch(wsConnectionSuccess())
-        socket.onerror = (event: Event) => dispatch(wsConnectionError(event))
-        socket.onclose = () => dispatch(wsConnectionClosed())
-        socket.onmessage = (event: MessageEvent) => dispatch(wsGetMessage(JSON.parse(event.data)))
-      }
+        if (disconnect.match(action)) {
+          if (socket !== null) {
+            socket.close()
+          }
+          clearTimeout((reconnectTimer))
+          isConnected = false
+          reconnectTimer = 0
+          socket = null
+        }
 
-      if (type === WS_SEND_MESSAGE) {
-        socket?.send(JSON.stringify(payload))
-      }
+        if (sendMessage.match(action)) {
+          if (socket !== null && socket.readyState === WebSocket.OPEN) {
+            socket?.send(JSON.stringify(payload))
+          } else {
+            console.warn('WebSocket is not open. Cannot send message')
+          }
+        }
 
-      next(action)
-    }
+      return next(action)
   }) as Middleware
 }
 

@@ -1,6 +1,6 @@
 import {IIngredientItem} from '../../utils/types'
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {IDetailState} from '../types'
+import {IDetailState} from '../types/state_types'
 
 const initialState: IDetailState = {
   selectedIngredient: {

@@ -1,8 +1,8 @@
 import React, {FC, useEffect} from 'react'
 import FeedList from "../../components/feed/feed-list/feed-list";
 import {useAppDispatch} from "../../services";
-import {wsConnectionClosed, wsConnectionStart} from "../../services/slices/ws";
 import {STORAGE_KEY, WS_URL_USER} from "../../utils/constants";
+import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/slices/ws-user";
 
 const Orders: FC = () => {
   const dispatch = useAppDispatch()
@@ -10,10 +10,10 @@ const Orders: FC = () => {
   const ws_str_init = WS_URL_USER + `?token=${token}`
 
   useEffect(() => {
-    dispatch(wsConnectionStart(ws_str_init))
+    dispatch(wsUserConnectionStart(ws_str_init))
 
     return () => {
-      dispatch(wsConnectionClosed())
+      dispatch(wsUserConnectionClosed())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -55,6 +55,12 @@ export interface IProtectedRouteProps {
   anonimus?: boolean
 }
 
+export type TFormObject = TLoginUser | TResetPassword | TProfileUser | TSendEmail
+
+export type TForm<T> = {
+  [key:string]: string
+}
+
 export type TLoginUser = {
   name: string
   email: string
@@ -99,14 +105,6 @@ export interface IFeedCardProps {
 export type TOrder = {
   [key:string]: TOrderItem
 }
-
-/*
-export type TOrder = {
-  readonly success: boolean
-  readonly order: TOrderItem[]
-  readonly total: number
-  readonly totalToday: number
-} */
 
 
 

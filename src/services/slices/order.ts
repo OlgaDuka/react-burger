@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {IOrderState} from '../types'
+import {IOrderState} from '../types/state_types'
 import {getOrder, sendOrder} from '../thunks'
 
 const initialState: IOrderState = {

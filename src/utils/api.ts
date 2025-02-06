@@ -1,10 +1,9 @@
 import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
   IIngredientItem,
-  TErrorResponse,
+  TErrorResponse, TForm,
   TLoginUser, TOrderItem, TProfileUser, TResetPassword, TSendEmail
 } from './types'
-import {TForm} from '../services/types'
 
 const checkResponse = async (res: Response) => {
   if (res.ok) {
@@ -19,13 +18,15 @@ export const request = async (endpoint: string, options?: object) => {
   return await fetch(url, options).then(checkResponse)
 }
 
-const updateToken = async () => await request(ENDPOINT.UPDATE_TOKEN, {
+export const updateToken = async () => await request(ENDPOINT.UPDATE_TOKEN, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json;charset=utf-8' },
   body: JSON.stringify({ 'token': localStorage.getItem(STORAGE_KEY.REFRESH) })
 }).then((res) => {
-  localStorage.setItem(STORAGE_KEY.ACCESS, res.accessToken.split('Bearer ')[1])
+  const refreshData = res.accessToken.split('Bearer ')[1]
+  localStorage.setItem(STORAGE_KEY.ACCESS, refreshData)
   localStorage.setItem(STORAGE_KEY.REFRESH, res.refreshToken)
+  return refreshData
 })
 
 export const requestWithUpdateToken = async (endpoint: string, options?: RequestInit) => {
