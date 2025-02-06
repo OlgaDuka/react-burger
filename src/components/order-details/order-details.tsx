@@ -2,10 +2,10 @@ import React, {FC} from 'react'
 import {CheckMarkIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './order-details.module.css'
-import {RootState, useAppSelector} from '../../services'
+import {useAppSelector} from '../../services'
 
 const OrderDetails: FC = () => {
-  const { number } = useAppSelector((state: RootState) => state.order.order)
+  const { number } = useAppSelector((state) => state.order.order)
 
   return (
     <div className={styles.card}>

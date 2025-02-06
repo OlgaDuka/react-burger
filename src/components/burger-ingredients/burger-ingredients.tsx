@@ -4,11 +4,11 @@ import {Tab} from '@ya.praktikum/react-developer-burger-ui-components'
 import {INGREDIENT_TYPES} from '../../utils/constants'
 import IngredientCard from './ingredient-card/ingredient-card'
 import styles from './burger-ingredients.module.css'
-import {RootState, useAppSelector} from '../../services'
+import {useAppSelector} from '../../services'
 import {IIngredientItem} from '../../utils/types'
 
 const BurgerIngredients: FC = () => {
-  const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients)
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients)
   const [activeTab, setActiveTab] = useState('bun')
   const tabsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
   const bunsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)

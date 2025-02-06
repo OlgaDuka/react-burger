@@ -4,14 +4,14 @@ import {Button, EmailInput, PasswordInput} from '@ya.praktikum/react-developer-b
 
 import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
-import {RootState, useAppDispatch, useAppSelector} from '../services'
+import {useAppDispatch, useAppSelector} from '../services'
 import {loginUser} from '../services/thunks'
 import {ROUTES} from '../utils/constants'
 
 const LoginPage: FC = () => {
   const location = useLocation()
   const from: string = location.state?.from || '/'
-  const { isAuthChecked, error } = useAppSelector((state: RootState) => state.user)
+  const { isAuthChecked, error } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
   const {formValues, handleChangeInput} = useForm({ email: '', password: '' })
 

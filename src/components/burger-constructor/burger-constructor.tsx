@@ -8,7 +8,7 @@ import Buns from './buns/buns'
 import styles from './burger-constructor.module.css'
 import {NavigateFunction, useNavigate} from 'react-router-dom'
 import Loader from '../loader/loader'
-import {RootState, useAppDispatch, useAppSelector} from '../../services'
+import {useAppDispatch, useAppSelector} from '../../services'
 import {clearOrder} from '../../services/slices/order'
 import {clearBurger} from '../../services/slices/burger-constructor'
 import {resetCount} from '../../services/slices/ingredients'
@@ -20,10 +20,10 @@ const BurgerConstructor: FC = () => {
   const navigate: NavigateFunction = useNavigate()
   const dispatch = useAppDispatch()
 
-  const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)
-  const { loading, hasError } = useAppSelector((state: RootState) => state.order)
+  const isAuthChecked = useAppSelector((state) => state.user.isAuthChecked)
+  const { loading, hasError } = useAppSelector((state) => state.order)
   const { totalPrice, bun, fillings } =
-    useAppSelector((state: RootState) => state.burgerConstructor)
+    useAppSelector((state) => state.burgerConstructor)
 
   const handleOrder = (): void => {
     if (isAuthChecked) {

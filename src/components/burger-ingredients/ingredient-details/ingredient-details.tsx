@@ -4,11 +4,11 @@ import {INGREDIENT_PROPS} from '../../../utils/constants'
 import IngredientProp from './ingredient-prop/ingredient-prop'
 import styles from './ingredient-details.module.css'
 import {useParams} from 'react-router-dom'
-import {RootState, useAppSelector} from '../../../services'
+import {useAppSelector} from '../../../services'
 import {IIngredientItem} from '../../../utils/types'
 
 const IngredientDetails: FC = () => {
-  const ingredients = useAppSelector((state: RootState) => state.ingredients.ingredients)
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients)
   const { id } = useParams()
 
   const ingredient: IIngredientItem | undefined = useMemo(() => {

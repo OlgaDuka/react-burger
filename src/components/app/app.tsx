@@ -79,20 +79,18 @@ const App: FC = () => {
             <Modal onClose={() => navigate('/')} header='Детали ингредиента'>
               <IngredientDetails />
             </Modal>
-            }
-          />
+          }/>
           <Route path='/feed/:id' element={
             <Modal onClose={() => navigate('/feed')}>
               <FeedDetails />
             </Modal>
-          }
-          />
-          <Route path='/profile/orders/:id' element={
-            <Modal onClose={() => navigate('/profile/orders')}>
-              <FeedDetails />
-            </Modal>
-          }
-          />
+          }/>
+          <Route path='/profile/orders/:id' element={<ProtectedRoute element={
+              <Modal onClose={() => navigate('/profile/orders')}>
+                <FeedDetails />
+              </Modal>
+            }/>
+          }/>
         </Routes>
         )}
     </div>

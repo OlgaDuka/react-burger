@@ -4,11 +4,11 @@ import {Button, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link, Navigate, NavigateFunction, useNavigate} from 'react-router-dom'
 import {sendEmail} from '../utils/api'
 import {useForm} from '../hooks/useForm'
-import {RootState, useAppSelector} from '../services'
+import {useAppSelector} from '../services'
 import {ROUTES, STORAGE_KEY} from '../utils/constants'
 
 const ForgotPassword: FC = () => {
-  const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)
+  const isAuthChecked = useAppSelector((state) => state.user.isAuthChecked)
   const navigate: NavigateFunction = useNavigate()
   const {formValues , handleChangeInput} = useForm({ email: '' })
 

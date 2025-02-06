@@ -2,14 +2,14 @@ import React, {ReactNode} from 'react'
 import {IFeedCardProps as IProps, IIngredientItem} from '../../../utils/types'
 import styles from './feed-card.module.css'
 import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components'
-import {RootState, useAppSelector} from '../../../services'
+import {useAppSelector} from '../../../services'
 import {Link, useLocation} from 'react-router-dom'
 import {ORDER_STATUS, STATUS_TEXT} from '../../../utils/constants'
 
 const FeedCard = (props: IProps) => {
   const location = useLocation()
   const isProfile = location.pathname.includes('profile')
-  const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)
+  const ingredientsAll = useAppSelector((state) => state.ingredients.ingredientsMap)
   const { order } = props
   const {
     _id,

@@ -23,10 +23,7 @@ export const getOrder = createAsyncThunk<TOrderItem, string, { rejectValue: stri
   async (id: string) => await getOrderRequest(id)
 )
 
-export const getUser = createAsyncThunk(
-  'user/getUser',
-  () => getUserRequest()
-)
+export const getUser = createAsyncThunk('user/getUser', getUserRequest)
 
 export const updateUser = createAsyncThunk(
   'user/updateUser',
@@ -38,10 +35,7 @@ export const loginUser = createAsyncThunk(
   (user: TForm<TLoginUser>) => loginUserRequest(user)
 )
 
-export const logoutUser = createAsyncThunk(
-  'user/logoutUser',
-  () => logoutUserRequest()
-)
+export const logoutUser = createAsyncThunk('user/logoutUser', logoutUserRequest)
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',

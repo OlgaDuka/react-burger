@@ -4,14 +4,14 @@ import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-devel
 import MenuItem from './menu-item/menu-item'
 import styles from './app-header.module.css'
 import {Link, NavLink, useMatch} from 'react-router-dom'
-import {RootState, useAppSelector} from '../../services'
+import {useAppSelector} from '../../services'
 
 const AppHeader: FC = () => {
   const isConstructor = !!useMatch('/')
   const isFeed = !!useMatch('/feed')
   const isProfile = !!useMatch('/profile')
   const isOrders = !!useMatch('/profile/orders')
-  const { isAuthChecked, user } = useAppSelector((state: RootState) => state.user)
+  const { isAuthChecked, user } = useAppSelector((state) => state.user)
   const classLink = (isActive: boolean): string => {
     return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
   }

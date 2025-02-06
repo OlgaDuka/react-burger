@@ -1,6 +1,6 @@
 import React, {ReactNode, useEffect} from 'react'
 import {TOrder, TOrderItem} from '../../../utils/types'
-import {RootState, useAppDispatch, useAppSelector} from '../../../services'
+import {useAppDispatch, useAppSelector} from '../../../services'
 import {useParams} from 'react-router-dom'
 import styles from './feed-details.module.css'
 import {STATUS_TEXT} from '../../../utils/constants'
@@ -8,9 +8,9 @@ import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-
 import {getOrder} from '../../../services/thunks'
 
 const FeedDetails = () => {
-  const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)
-  const ordersMap: TOrder = useAppSelector((state: RootState) => state.ws.ordersMap)
-  const order: TOrderItem = useAppSelector((state: RootState) => state.order.order)
+  const ingredientsAll = useAppSelector((state) => state.ingredients.ingredientsMap)
+  const ordersMap: TOrder = useAppSelector((state) => state.ws.ordersMap)
+  const order: TOrderItem = useAppSelector((state) => state.order.order)
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const orderDetails = (id && ordersMap[id]) || order

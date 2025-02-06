@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './feed-info.module.css'
-import {RootState, useAppSelector} from '../../../services'
+import {useAppSelector} from '../../../services'
 
 const FeedInfo = () => {
-  const { total, totalToday, orders } = useAppSelector((state: RootState) => state.ws)
+  const { total, totalToday, orders } = useAppSelector((state) => state.ws)
   const ordersDone = orders.filter((item) => item.status === 'done')
   const ordersDone1 = ordersDone.length <= 7 ? ordersDone : ordersDone.slice(0, 7)
   const ordersDone2 = ordersDone.length > 7 ? ordersDone.slice(7, 14) : undefined

@@ -2,13 +2,13 @@ import React from 'react'
 import styles from './feed-list.module.css'
 import {TOrderItem} from '../../../utils/types'
 import FeedCard from '../feed-card/feed-card'
-import {RootState, useAppSelector} from '../../../services'
+import {useAppSelector} from '../../../services'
 import {useLocation} from 'react-router-dom'
 
 const FeedList = () => {
   const location = useLocation()
   const isProfile = location.pathname.includes('profile')
-  const orders: TOrderItem[] = useAppSelector((state: RootState) =>
+  const orders: TOrderItem[] = useAppSelector((state) =>
     isProfile ? state.wsUser.orders : state.ws.orders)
 
   return (
