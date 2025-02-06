@@ -1,4 +1,4 @@
-import {TOrderItem} from "../utils/types";
+import {TOrderItem} from '../utils/types'
 
 export function groupOrderById(orders: TOrderItem[], isUser: boolean) {
   if (!orders.length) return {}

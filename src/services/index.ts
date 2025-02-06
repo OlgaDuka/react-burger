@@ -26,8 +26,8 @@ import {
   wsUserConnectionError,
   wsUserGetMessage,
   wsUserSendMessage
-} from "./slices/ws-user"
-import createWebSocketMiddleware from "./middleware/socket-middleware";
+} from './slices/ws-user'
+import createWebSocketMiddleware from './middleware/socket-middleware'
 
 const webSocketMiddleware = createWebSocketMiddleware<IDataMessage>(
   {
@@ -68,6 +68,7 @@ const rootReducer = combineReducers({
   ws,
   wsUser
 })
+
 export const store = configureStore({
  reducer: rootReducer,
   middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false })

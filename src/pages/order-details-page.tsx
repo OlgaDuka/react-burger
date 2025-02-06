@@ -1,5 +1,5 @@
 import React from 'react'
-import FeedDetails from "../components/feed/feed-details/feed-details";
+import FeedDetails from '../components/feed/feed-details/feed-details'
 import styles from './pages.module.css'
 
 const OrderDetailsPage = () => {

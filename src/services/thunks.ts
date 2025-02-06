@@ -1,4 +1,4 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createAsyncThunk} from '@reduxjs/toolkit'
 import {IIngredientItem, TForm, TLoginUser, TOrderItem, TProfileUser} from '../utils/types'
 import {
   getIngredientsRequest, getOrderRequest,

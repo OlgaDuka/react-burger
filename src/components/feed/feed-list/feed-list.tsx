@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './feed-list.module.css'
-import {TOrderItem} from "../../../utils/types";
-import FeedCard from "../feed-card/feed-card";
-import {RootState, useAppSelector} from "../../../services";
-import {useLocation} from "react-router-dom";
+import {TOrderItem} from '../../../utils/types'
+import FeedCard from '../feed-card/feed-card'
+import {RootState, useAppSelector} from '../../../services'
+import {useLocation} from 'react-router-dom'
 
 const FeedList = () => {
   const location = useLocation()

@@ -5,7 +5,7 @@ import {Link, Navigate, NavigateFunction, useNavigate} from 'react-router-dom'
 import {sendEmail} from '../utils/api'
 import {useForm} from '../hooks/useForm'
 import {RootState, useAppSelector} from '../services'
-import {ROUTES, STORAGE_KEY} from "../utils/constants";
+import {ROUTES, STORAGE_KEY} from '../utils/constants'
 
 const ForgotPassword: FC = () => {
   const isAuthChecked = useAppSelector((state: RootState) => state.user.isAuthChecked)

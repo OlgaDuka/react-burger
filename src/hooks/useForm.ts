@@ -1,5 +1,5 @@
 import {ChangeEvent, Dispatch, SetStateAction, useState} from 'react'
-import {TForm, TFormObject} from "../utils/types";
+import {TForm, TFormObject} from '../utils/types'
 
 interface IForm {
   formValues: TForm<TFormObject> | null

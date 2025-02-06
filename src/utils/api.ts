@@ -1,8 +1,13 @@
 import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
   IIngredientItem,
-  TErrorResponse, TForm,
-  TLoginUser, TOrderItem, TProfileUser, TResetPassword, TSendEmail
+  TErrorResponse,
+  TForm,
+  TLoginUser,
+  TOrderItem,
+  TProfileUser,
+  TResetPassword,
+  TSendEmail
 } from './types'
 
 const checkResponse = async (res: Response) => {

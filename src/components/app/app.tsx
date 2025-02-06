@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
+  IngredientPage,
   FogotPassword,
   FeedPage,
   Home,
@@ -8,7 +9,8 @@ import {
   Page404,
   ProfilePage,
   RegisterPage,
-  ResetPassword
+  ResetPassword,
+  OrderDetailsPage
 } from '../../pages'
 import {NavigateFunction, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import ProtectedRoute from '../protected-route/protected-route'
@@ -17,14 +19,12 @@ import Orders from '../../pages/profile-page/orders'
 import Profile from '../../pages/profile-page/profile'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
-import IngredientPage from '../../pages/ingredient'
 import {RootState, useAppDispatch, useAppSelector} from '../../services'
 import {setAuthChecked} from '../../services/slices/user'
 import {fetchIngredients, getUser} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
-import FeedDetails from "../feed/feed-details/feed-details";
-import OrderDetailsPage from "../../pages/order-details-page";
+import FeedDetails from '../feed/feed-details/feed-details'
 
 const App: FC = () => {
   const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)

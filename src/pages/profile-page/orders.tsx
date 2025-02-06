@@ -1,8 +1,8 @@
 import React, {FC, useEffect} from 'react'
-import FeedList from "../../components/feed/feed-list/feed-list";
-import {useAppDispatch} from "../../services";
-import {STORAGE_KEY, WS_URL_USER} from "../../utils/constants";
-import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/slices/ws-user";
+import FeedList from '../../components/feed/feed-list/feed-list'
+import {useAppDispatch} from '../../services'
+import {STORAGE_KEY, WS_URL_USER} from '../../utils/constants'
+import {wsUserConnectionClosed, wsUserConnectionStart} from '../../services/slices/ws-user'
 
 const Orders: FC = () => {
   const dispatch = useAppDispatch()

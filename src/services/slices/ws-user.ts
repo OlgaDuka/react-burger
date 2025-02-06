@@ -1,6 +1,6 @@
-import {createAction, createReducer} from "@reduxjs/toolkit";
-import {TOrder, TOrderItem} from "../../utils/types";
-import {groupOrderById} from "../functions";
+import {createAction, createReducer} from '@reduxjs/toolkit'
+import {TOrder, TOrderItem} from '../../utils/types'
+import {groupOrderById} from '../functions'
 import {
   WSUSER_CONNECTION_CLOSED,
   WSUSER_CONNECTION_ERROR,
@@ -9,7 +9,7 @@ import {
   WSUSER_DISCONNECTED,
   WSUSER_GET_MESSAGE,
   WSUSER_SEND_MESSAGE
-} from "../types/ws-action-types";
+} from '../types/ws-action-types'
 
 interface IWS_User_State {
   successConnect: boolean
@@ -19,7 +19,7 @@ interface IWS_User_State {
 }
 
 export interface IDataUserMessage {
-  orders: TOrderItem[];
+  orders: TOrderItem[]
 }
 
 const initialState: IWS_User_State = {
@@ -40,20 +40,20 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
   addCase(wsUserConnectionSuccess, state => {
     state.successConnect = true
     state.error = undefined
-  });
+  })
   addCase(wsUserConnectionError, (state, {payload}) => {
     console.log('payload: ', payload)
     state.successConnect = false
     state.error = payload
-  });
+  })
   addCase(wsUserConnectionClosed, state => {
     state.successConnect = false
     state.error = undefined
-  });
+  })
   addCase(wsUserGetMessage, (state, {payload}) => {
     const {orders} = payload
     state.error = undefined
     state.orders = orders
     state.ordersMap = groupOrderById(orders, true)
-  });
-});
+  })
+})

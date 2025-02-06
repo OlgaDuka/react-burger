@@ -4,7 +4,7 @@ import {Button, Input, PasswordInput} from '@ya.praktikum/react-developer-burger
 import {Link, NavigateFunction, useNavigate} from 'react-router-dom'
 import {resetPassword} from '../utils/api'
 import {useForm} from '../hooks/useForm'
-import {ROUTES, STORAGE_KEY} from "../utils/constants";
+import {ROUTES, STORAGE_KEY} from '../utils/constants'
 
 const ResetPassword: FC = () => {
   const navigate: NavigateFunction = useNavigate()

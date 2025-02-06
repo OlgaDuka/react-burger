@@ -6,7 +6,7 @@ import styles from './pages.module.css'
 import {useForm} from '../hooks/useForm'
 import {RootState, useAppDispatch, useAppSelector} from '../services'
 import {loginUser} from '../services/thunks'
-import {ROUTES} from "../utils/constants";
+import {ROUTES} from '../utils/constants'
 
 const LoginPage: FC = () => {
   const location = useLocation()

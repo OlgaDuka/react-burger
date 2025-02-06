@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react'
-import {IFeedCardProps as IProps, IIngredientItem} from "../../../utils/types";
+import {IFeedCardProps as IProps, IIngredientItem} from '../../../utils/types'
 import styles from './feed-card.module.css'
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import {RootState, useAppSelector} from "../../../services";
-import {Link, useLocation} from "react-router-dom";
-import {ORDER_STATUS, STATUS_TEXT} from "../../../utils/constants";
+import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components'
+import {RootState, useAppSelector} from '../../../services'
+import {Link, useLocation} from 'react-router-dom'
+import {ORDER_STATUS, STATUS_TEXT} from '../../../utils/constants'
 
 const FeedCard = (props: IProps) => {
   const location = useLocation()
@@ -24,6 +24,7 @@ const FeedCard = (props: IProps) => {
   const countImages = ingredients.length
   const isDone = status === ORDER_STATUS.DONE
 
+  if (!ingredients.length || !number) return null
   const renderImages = (): ReactNode =>
     ingredients.map((item: string, index) => {
       const offset = index * 48

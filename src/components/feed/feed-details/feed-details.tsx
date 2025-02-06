@@ -1,11 +1,11 @@
 import React, {ReactNode, useEffect} from 'react'
-import {TOrder, TOrderItem} from "../../../utils/types";
-import {RootState, useAppDispatch, useAppSelector} from "../../../services";
-import {useParams} from "react-router-dom";
+import {TOrder, TOrderItem} from '../../../utils/types'
+import {RootState, useAppDispatch, useAppSelector} from '../../../services'
+import {useParams} from 'react-router-dom'
 import styles from './feed-details.module.css'
-import {STATUS_TEXT} from "../../../utils/constants";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import {getOrder} from "../../../services/thunks";
+import {STATUS_TEXT} from '../../../utils/constants'
+import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components'
+import {getOrder} from '../../../services/thunks'
 
 const FeedDetails = () => {
   const ingredientsAll = useAppSelector((state: RootState) => state.ingredients.ingredientsMap)

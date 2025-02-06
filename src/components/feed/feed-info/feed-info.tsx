@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './feed-info.module.css'
-import {RootState, useAppSelector} from "../../../services";
+import {RootState, useAppSelector} from '../../../services'
 
 const FeedInfo = () => {
   const { total, totalToday, orders } = useAppSelector((state: RootState) => state.ws)

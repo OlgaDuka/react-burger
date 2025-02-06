@@ -5,9 +5,9 @@ import {
   type UnknownAction
 } from '@reduxjs/toolkit'
 import {RootState} from '..'
-import {RECONNECT_TIME} from "../../utils/constants"
-import {updateToken} from "../../utils/api"
-import {TWebSocketActions, TWebSocketOptions} from "../types/widdleware-types";
+import {RECONNECT_TIME} from '../../utils/constants'
+import {updateToken} from '../../utils/api'
+import {TWebSocketActions, TWebSocketOptions} from '../types/widdleware-types'
 
 export function createWebSocketMiddleware<TMessage>(
   {
@@ -89,4 +89,4 @@ export function createWebSocketMiddleware<TMessage>(
   }) as Middleware
 }
 
-export default createWebSocketMiddleware;
+export default createWebSocketMiddleware

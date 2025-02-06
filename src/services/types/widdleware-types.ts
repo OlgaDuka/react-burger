@@ -1,4 +1,4 @@
-import type {ActionCreatorWithoutPayload, ActionCreatorWithPayload} from "@reduxjs/toolkit";
+import type {ActionCreatorWithoutPayload, ActionCreatorWithPayload} from '@reduxjs/toolkit'
 
 export type TWebSocketActions<TMessage> = {
   connect: ActionCreatorWithPayload<string>

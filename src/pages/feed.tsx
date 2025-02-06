@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import styles from "./pages.module.css";
-import FeedList from "../components/feed/feed-list/feed-list";
-import FeedInfo from "../components/feed/feed-info/feed-info";
-import {useAppDispatch} from "../services";
-import {wsConnectionClosed, wsConnectionStart} from "../services/slices/ws";
-import {WS_URL_All} from "../utils/constants";
+import styles from './pages.module.css'
+import FeedList from '../components/feed/feed-list/feed-list'
+import FeedInfo from '../components/feed/feed-info/feed-info'
+import {useAppDispatch} from '../services'
+import {wsConnectionClosed, wsConnectionStart} from '../services/slices/ws'
+import {WS_URL_All} from '../utils/constants'
 
 const FeedPage = () => {
   const dispatch = useAppDispatch()
