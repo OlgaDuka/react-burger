@@ -55,6 +55,12 @@ export interface IProtectedRouteProps {
   anonimus?: boolean
 }
 
+export type TFormObject = TLoginUser | TResetPassword | TProfileUser | TSendEmail
+
+export type TForm<T> = {
+  [key:string]: string
+}
+
 export type TLoginUser = {
   name: string
   email: string
@@ -76,6 +82,29 @@ export type TSendEmail = {
 }
 
 export type TErrorResponse = {
-  success: boolean;
-  message: string;
+  success: boolean
+  message: string
 }
+
+export type TOrderStatus = 'created' | 'pending' | 'done'
+
+export type TOrderItem = {
+  _id: string
+  createdAt: string
+  updatedAt: string
+  ingredients: string[]
+  name: string
+  number: number
+  status: TOrderStatus
+}
+
+export interface IFeedCardProps {
+  order: TOrderItem
+}
+
+export type TOrder = {
+  [key:string]: TOrderItem
+}
+
+
+

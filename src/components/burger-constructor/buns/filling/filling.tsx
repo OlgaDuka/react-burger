@@ -4,13 +4,13 @@ import {useDrop} from 'react-dnd'
 import BlankConstructor from '../../blank-constructor/blank-constructor'
 import DraggableElement from './draggable-element/draggable-element'
 import styles from './filling.module.css'
-import {AppDispatch, RootState, useAppDispatch, useAppSelector} from '../../../../services'
+import {AppDispatch, useAppDispatch, useAppSelector} from '../../../../services'
 import {IIngredientItem} from '../../../../utils/types'
 import {addIngredient} from '../../../../services/slices/burger-constructor'
 import {increaseIngredient} from '../../../../services/slices/ingredients'
 
 const Filling: FC = () => {
-  const fillings: IIngredientItem[] = useAppSelector((state: RootState) => state.burgerConstructor.fillings)
+  const fillings: IIngredientItem[] = useAppSelector((state) => state.burgerConstructor.fillings)
   const dispatch: AppDispatch = useAppDispatch()
 
   const moveIngredient = (itemId: IIngredientItem): void => {

@@ -9,7 +9,7 @@ import {IModalProps as IProps} from '../../utils/types'
 const modalRoot: any = document.getElementById('modal-root')
 
 const Modal: FC<IProps> = (props: IProps) => {
-  const { children, onClose, header = ''} = props
+  const { children, onClose, header = null} = props
 
   const handleEscapePress = useCallback((event: KeyboardEvent): void => {
     if (event.key === 'Escape') {
@@ -30,7 +30,7 @@ const Modal: FC<IProps> = (props: IProps) => {
       <>
         <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
           <div className={`${styles.header} text text_type_main-large`}>
-            <div>{header}</div>
+            {header && <div>{header}</div>}
             <div className={styles.close}>
               <CloseIcon type="primary" onClick={onClose}/>
             </div>

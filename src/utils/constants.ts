@@ -1,8 +1,11 @@
 export const BASE_URL_GALAXY = 'https://norma.nomoreparties.space/api/'
+export const WS_URL_All = 'wss://norma.nomoreparties.space/orders/all'
+export const WS_URL_USER = 'wss://norma.nomoreparties.space/orders'
+export const RECONNECT_TIME = 3000
 
 export const ENDPOINT = {
     INGREDIENTS: 'ingredients',
-    ORDER: 'orders',
+    ORDERS: 'orders',
     PASSWORD_RESET: 'password-reset',
     PASSWORD_RESET_RESET: 'password-reset/reset',
     REGISTER: 'auth/register',
@@ -33,4 +36,16 @@ export const STORAGE_KEY = {
     ACCESS: 'accessToken',
     REFRESH: 'refreshToken',
     RESET_PASSWORD: 'resetPassword'
+}
+
+export const ORDER_STATUS =  {
+    CREATED: 'created',
+    PENDING: 'pending',
+    DONE: 'done'
+}
+
+export const STATUS_TEXT =  {
+    'created': 'Создан',
+    'pending': 'Готовится',
+    'done': 'Выполнен'
 }

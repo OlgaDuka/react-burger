@@ -2,9 +2,13 @@ import {BASE_URL_GALAXY, ENDPOINT, STORAGE_KEY} from './constants'
 import {
   IIngredientItem,
   TErrorResponse,
-  TLoginUser, TProfileUser, TResetPassword, TSendEmail
+  TForm,
+  TLoginUser,
+  TOrderItem,
+  TProfileUser,
+  TResetPassword,
+  TSendEmail
 } from './types'
-import {TForm} from '../services/types'
 
 const checkResponse = async (res: Response) => {
   if (res.ok) {
@@ -19,13 +23,15 @@ export const request = async (endpoint: string, options?: object) => {
   return await fetch(url, options).then(checkResponse)
 }
 
-const updateToken = async () => await request(ENDPOINT.UPDATE_TOKEN, {
+export const updateToken = async () => await request(ENDPOINT.UPDATE_TOKEN, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json;charset=utf-8' },
   body: JSON.stringify({ 'token': localStorage.getItem(STORAGE_KEY.REFRESH) })
 }).then((res) => {
-  localStorage.setItem(STORAGE_KEY.ACCESS, res.accessToken.split('Bearer ')[1])
+  const refreshData = res.accessToken.split('Bearer ')[1]
+  localStorage.setItem(STORAGE_KEY.ACCESS, refreshData)
   localStorage.setItem(STORAGE_KEY.REFRESH, res.refreshToken)
+  return refreshData
 })
 
 export const requestWithUpdateToken = async (endpoint: string, options?: RequestInit) => {
@@ -50,14 +56,17 @@ export const requestWithUpdateToken = async (endpoint: string, options?: Request
 export const getIngredientsRequest = (): Promise<IIngredientItem[]> => request(ENDPOINT.INGREDIENTS)
   .then((res) => res.data.map((item: IIngredientItem) => { return { ...item, count: 0 }}))
 
-export const sendOrderRequest = (ingredients: string[]) => requestWithUpdateToken(ENDPOINT.ORDER, {
+export const getOrderRequest = (id: string): Promise<TOrderItem> => request(`${ENDPOINT.ORDERS}/${id}`)
+  .then((res) => res.orders[0])
+
+export const sendOrderRequest = (ingredients: string[]) => requestWithUpdateToken(ENDPOINT.ORDERS, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
     'Authorization': 'Bearer ' + localStorage.getItem(STORAGE_KEY.ACCESS)
   },
   body: JSON.stringify({ ingredients })
-}).then((res => res.order.number))
+}).then((res => res.order))
 
 export const sendEmail = (data: TForm<TSendEmail>) => request(ENDPOINT.PASSWORD_RESET, {
   method: 'POST',

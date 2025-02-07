@@ -1,12 +1,21 @@
 import {IIngredientItem} from '../../utils/types'
 import {createSlice} from '@reduxjs/toolkit'
-import {IIngredientsState} from '../types'
+import {IIngredientsState} from '../types/state-types'
 import {fetchIngredients} from '../thunks'
 
 const initialState: IIngredientsState = {
   ingredients: [],
+  ingredientsMap: {},
   loading: false,
   hasError: false
+}
+
+function groupIngredientsById(array: IIngredientItem[]) {
+  if (!array.length) return {}
+
+  return array.reduce((obj: {}, item: IIngredientItem) => {
+    return {...obj, [item._id]: item }
+  }, {})
 }
 
 const ingredientsSlice = createSlice({
@@ -57,6 +66,7 @@ const ingredientsSlice = createSlice({
       .addCase(fetchIngredients.fulfilled, (state: IIngredientsState, { payload }) => {
         state.loading = false
         state.ingredients = payload;
+        state.ingredientsMap = groupIngredientsById(payload)
       })
       .addCase(fetchIngredients.rejected, (state: IIngredientsState) => {
         state.loading = false

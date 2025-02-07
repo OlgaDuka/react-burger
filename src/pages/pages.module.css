@@ -4,7 +4,7 @@
     max-width: 1280px;
     height: 100%;
     display: flex;
-    gap: calc(var(--offset-base-size) * 10);
+    gap: calc(var(--offset-base-size) * 15);
 }
 
 .wrapper {

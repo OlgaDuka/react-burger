@@ -1,0 +1,37 @@
+.section {
+    text-align: left;
+    background: var(--background-alt);
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.container {
+    display: block;
+    overflow-y: scroll;
+}
+
+.profile_height {
+    height: calc(100vh - 160px);
+}
+
+.feed_height {
+    height: calc(100vh - 260px);
+}
+
+.container::-webkit-scrollbar {
+    width: calc(var(--offset-base-size) * 2);
+}
+
+/* Track */
+.container::-webkit-scrollbar-track {
+    background: rgba(47, 47, 55, 1);
+}
+
+/* Handle */
+.container::-webkit-scrollbar-thumb {
+    background: rgba(133, 133, 173, 1);
+}

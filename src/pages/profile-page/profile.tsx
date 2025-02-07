@@ -3,11 +3,11 @@ import {Button, EmailInput, Input, PasswordInput} from '@ya.praktikum/react-deve
 
 import styles from './profile.module.css'
 import {useForm} from '../../hooks/useForm'
-import {RootState, useAppDispatch, useAppSelector} from '../../services'
+import {useAppDispatch, useAppSelector} from '../../services'
 import {updateUser} from '../../services/thunks'
 
 const Profile: FC = () => {
-  const { user, error, success } = useAppSelector((state: RootState) => state.user)
+  const { user, error, success } = useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
   const [isChange, setIsChange] = useState(false)
   const [showMessage, setShowMessage] = useState(false)

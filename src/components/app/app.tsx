@@ -1,28 +1,30 @@
 import React, {FC, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
+  IngredientPage,
   FogotPassword,
-  HistoryPage,
+  FeedPage,
   Home,
   LoginPage,
   Page404,
   ProfilePage,
   RegisterPage,
-  ResetPassword
+  ResetPassword,
+  OrderDetailsPage
 } from '../../pages'
 import {NavigateFunction, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import ProtectedRoute from '../protected-route/protected-route'
 import styles from './app.module.css'
-import HistoryOrders from '../../pages/profile-page/history-orders'
+import Orders from '../../pages/profile-page/orders'
 import Profile from '../../pages/profile-page/profile'
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
-import IngredientPage from '../../pages/ingredient'
 import {RootState, useAppDispatch, useAppSelector} from '../../services'
 import {setAuthChecked} from '../../services/slices/user'
 import {fetchIngredients, getUser} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
 import {STORAGE_KEY} from '../../utils/constants'
+import FeedDetails from '../feed/feed-details/feed-details'
 
 const App: FC = () => {
   const ingredients: IIngredientItem[] = useAppSelector((state: RootState) => state.ingredients.ingredients)
@@ -53,7 +55,8 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path="/" element={<Home/>} />
         <Route path="/ingredients/:id" element={<IngredientPage />} />
-        <Route path="/history-page" element={<HistoryPage />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<OrderDetailsPage />} />
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
@@ -63,8 +66,9 @@ const App: FC = () => {
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>} />}>
           <Route index element={<ProtectedRoute element={<Profile/>} />} />
           <Route path="profile" element={<ProtectedRoute element={<Profile/>} />} />
-          <Route path="history-orders" element={<ProtectedRoute element={<HistoryOrders/>} />} />
+          <Route path="orders" element={<ProtectedRoute element={<Orders/>} />} />
         </Route>
+        <Route path="/profile/orders/:id" element={<ProtectedRoute element={<OrderDetailsPage/>} />} />
 
         <Route path="*" element={<Page404 />} />
       </Routes>
@@ -75,8 +79,18 @@ const App: FC = () => {
             <Modal onClose={() => navigate('/')} header='Детали ингредиента'>
               <IngredientDetails />
             </Modal>
-            }
-          />
+          }/>
+          <Route path='/feed/:id' element={
+            <Modal onClose={() => navigate('/feed')}>
+              <FeedDetails />
+            </Modal>
+          }/>
+          <Route path='/profile/orders/:id' element={<ProtectedRoute element={
+              <Modal onClose={() => navigate('/profile/orders')}>
+                <FeedDetails />
+              </Modal>
+            }/>
+          }/>
         </Routes>
         )}
     </div>
