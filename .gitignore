@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 /services_old/
 
-/temp
+/cypress.config.ts
+/cypress
