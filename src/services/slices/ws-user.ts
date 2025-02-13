@@ -42,7 +42,6 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     state.error = undefined
   })
   addCase(wsUserConnectionError, (state, {payload}) => {
-    console.log('payload: ', payload)
     state.successConnect = false
     state.error = payload
   })

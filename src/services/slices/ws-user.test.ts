@@ -1,12 +1,16 @@
-import {reducer, wsConnectionClosed, wsConnectionError, wsConnectionSuccess, wsGetMessage} from './ws'
 import {TOrderItem} from '../../utils/types'
 import {DATA_ORDERS} from '../../utils/mock-data'
+import {
+  reducer,
+  wsUserConnectionClosed,
+  wsUserConnectionError,
+  wsUserConnectionSuccess,
+  wsUserGetMessage
+} from './ws-user'
 
 describe('WebSocket редьюсер', () => {
   const initialState = {
     successConnect: false,
-    total: 0,
-    totalToday: 0,
     orders: [],
     ordersMap: {}
   }
@@ -17,7 +21,7 @@ describe('WebSocket редьюсер', () => {
 
   it('выполняем соединение с успехом', () => {
     const mockEvent = new Event('connect')
-    const action = wsConnectionSuccess(mockEvent)
+    const action = wsUserConnectionSuccess(mockEvent)
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
@@ -29,7 +33,7 @@ describe('WebSocket редьюсер', () => {
 
   it('получаем ошибку соединения', () => {
     const mockError = new Event('error')
-    const action = wsConnectionError(mockError)
+    const action = wsUserConnectionError(mockError)
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
@@ -42,14 +46,12 @@ describe('WebSocket редьюсер', () => {
   it('закрываем соединение', () => {
     const connectedState = {
       successConnect: true,
-      total: 0,
-      totalToday: 0,
       orders: [],
       ordersMap: {},
       error: undefined,
     };
 
-    const action = wsConnectionClosed()
+    const action = wsUserConnectionClosed()
     const state = reducer(connectedState, action)
 
     expect(state).toEqual({
@@ -61,10 +63,8 @@ describe('WebSocket редьюсер', () => {
 
   it('получаем сообщение и загружаем данные в хранилище', () => {
     const mockOrders: TOrderItem[] = DATA_ORDERS
-    const action = wsGetMessage({
+    const action = wsUserGetMessage({
       orders: mockOrders,
-      total: 67826,
-      totalToday: 41
     })
 
     const state = reducer(initialState, action)
@@ -75,8 +75,6 @@ describe('WebSocket редьюсер', () => {
       ordersMap: {
         '68200': DATA_ORDERS[0]
       },
-      total: 67826,
-      totalToday: 41,
       error: undefined,
     })
   })

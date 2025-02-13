@@ -4,11 +4,14 @@ import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-com
 import {IIngredientProps as IProps} from '../../../utils/types'
 import styles from './ingredient-card.module.css'
 import {Link, useLocation} from 'react-router-dom'
+import {useAppSelector} from "../../../services";
 
 const IngredientCard: FC<IProps> = (props: IProps) => {
   const { item } = props
+  const { image, name, price, _id } = item
   const location = useLocation()
-  const { image, name, price, count, _id } = item
+  const ingredientsMap = useAppSelector((state) => state.ingredients.ingredientsMap)
+  const count = ingredientsMap[_id].count
 
   const [{ opacity }, dragRef] = useDrag({
     type: item.type === 'bun' ? 'bun' : 'ingredients',

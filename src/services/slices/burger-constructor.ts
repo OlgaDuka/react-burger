@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IDraggDataProps, IIngredientItem} from '../../utils/types'
-import {v4 as uuidv4} from 'uuid'
 import {IConstructorState} from '../types/state-types'
 
 const initialState: IConstructorState = {
@@ -14,20 +13,21 @@ export const constructorSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: (state: IConstructorState, { payload }) => {
-      const ingredient = Object.assign({}, payload)
-      ingredient.oguid = uuidv4()
+      const { data, oguid } = payload
+      const ingredient = Object.assign({}, data)
+      ingredient.oguid = oguid
 
-      if (payload.type === 'bun') {
+      if (data.type === 'bun') {
         return {
           ...state,
           bun: ingredient,
-          totalPrice: state.totalPrice + payload.price * 2
+          totalPrice: state.totalPrice + data.price * 2
         }
       }
       return {
         ...state,
         fillings: [...state.fillings, ingredient],
-        totalPrice: state.totalPrice + payload.price
+        totalPrice: state.totalPrice + data.price
       }
     },
     deleteIngredient: (state: IConstructorState, action: PayloadAction<IIngredientItem>) => {
