@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "react-scripts build && ./build/* leliduk@158.160.137.245:/home/leliduk/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [

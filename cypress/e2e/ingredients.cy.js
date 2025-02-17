@@ -23,4 +23,10 @@ describe("Модальное окно с деталями ингредиента
     cy.get(SELECTORS.modalOverlay).click()
     cy.get(SELECTORS.modal).should("not.exist")
   })
+
+  it("Закрываем окно при нажатии 'ESC'", () => {
+    cy.openModal(SELECTORS.ingredientCard)
+    cy.get('body').type('{esc}')
+    cy.get(SELECTORS.modal).should("not.exist")
+  })
 })
