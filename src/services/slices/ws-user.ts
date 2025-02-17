@@ -22,7 +22,7 @@ export interface IDataUserMessage {
   orders: TOrderItem[]
 }
 
-const initialState: IWS_User_State = {
+export const initialState: IWS_User_State = {
   successConnect: false,
   orders: [],
   ordersMap: {}

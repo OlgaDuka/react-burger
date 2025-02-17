@@ -1,16 +1,7 @@
-import  reducer from './user'
-import {IUserState} from "../types/state-types";
-import {getUser, loginUser, logoutUser, registerUser, updateUser} from "../thunks";
+import reducer, {initialState} from './user'
+import {getUser, loginUser, logoutUser, registerUser, updateUser} from '../thunks'
 
 describe('userSlice', () => {
-  const initialState: IUserState = {
-    user: null,
-    success: false,
-    isAuthChecked: false,
-    loading: false,
-    error: null
-  }
-
   it('получаем начальное состояние', () => {
     expect(reducer(undefined, {type: 'unknown'})).toEqual(initialState)
   })
@@ -83,5 +74,4 @@ describe('userSlice', () => {
       error: null
     })
   })
-
 })

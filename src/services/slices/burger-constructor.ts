@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {IDraggDataProps, IIngredientItem} from '../../utils/types'
 import {IConstructorState} from '../types/state-types'
 
-const initialState: IConstructorState = {
+export const initialState: IConstructorState = {
   bun: null,
   fillings: [],
   totalPrice: 0

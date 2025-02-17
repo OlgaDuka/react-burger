@@ -1,6 +1,7 @@
 import {TOrderItem} from '../../utils/types'
 import {DATA_ORDERS} from '../../utils/mock-data'
 import {
+  initialState,
   reducer,
   wsUserConnectionClosed,
   wsUserConnectionError,
@@ -9,12 +10,6 @@ import {
 } from './ws-user'
 
 describe('WebSocket редьюсер', () => {
-  const initialState = {
-    successConnect: false,
-    orders: [],
-    ordersMap: {}
-  }
-
   it('получаем начальное состояние', () => {
     expect(reducer(undefined, {type: 'unknown'})).toEqual(initialState)
   })
@@ -45,10 +40,8 @@ describe('WebSocket редьюсер', () => {
 
   it('закрываем соединение', () => {
     const connectedState = {
-      successConnect: true,
-      orders: [],
-      ordersMap: {},
-      error: undefined,
+      ...initialState,
+      successConnect: true
     };
 
     const action = wsUserConnectionClosed()

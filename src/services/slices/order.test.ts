@@ -1,23 +1,8 @@
-import {clearOrder, orderSlice} from './order'
-import {IOrderState} from "../types/state-types";
-import {getOrder, sendOrder} from "../thunks";
-import {DATA_INGREDIENTS, DATA_ORDERS} from "../../utils/mock-data";
+import {clearOrder, initialState, orderSlice} from './order'
+import {getOrder, sendOrder} from '../thunks'
+import {DATA_INGREDIENTS, DATA_ORDERS} from '../../utils/mock-data'
 describe('orderSlice', () => {
   const { reducer } = orderSlice
-  const initialState: IOrderState = {
-    order: {
-      _id: '',
-      createdAt: '',
-      updatedAt: '',
-      ingredients: [],
-      name: '',
-      number: 0,
-      status: 'created'
-    },
-    loading: false,
-    hasError: false,
-    error: null
-  }
 
   it('получаем начальное состояние', () => {
     expect(reducer(undefined, {type: 'unknown'})).toEqual(initialState)
@@ -36,10 +21,8 @@ describe('orderSlice', () => {
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
-      order: DATA_ORDERS[0],
-      loading: false,
-      hasError: false,
-      error: null
+      ...initialState,
+      order: DATA_ORDERS[0]
     })
   })
 
@@ -49,10 +32,8 @@ describe('orderSlice', () => {
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
-      order: DATA_ORDERS[0],
-      loading: false,
-      hasError: false,
-      error: null
+      ...initialState,
+      order: DATA_ORDERS[0]
     })
   })
 })

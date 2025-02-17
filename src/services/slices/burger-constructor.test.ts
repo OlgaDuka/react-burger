@@ -1,18 +1,17 @@
 import {v4 as uuidv4} from 'uuid'
-import {IConstructorState} from "../types/state-types";
-import {DATA_BURGERS} from "../../utils/mock-data";
-import reducer, {addIngredient, clearBurger, deleteIngredient, sortingIngredients} from "./burger-constructor";
+import {DATA_BURGERS} from '../../utils/mock-data'
+import reducer, {
+  addIngredient,
+  clearBurger,
+  deleteIngredient,
+  initialState,
+  sortingIngredients
+} from './burger-constructor'
 
 const id = uuidv4()
 const mock_fillings = [DATA_BURGERS[2], DATA_BURGERS[3], DATA_BURGERS[4], DATA_BURGERS[5]]
 
 describe('detailsSlice', () => {
-  const initialState: IConstructorState = {
-    bun: null,
-    fillings: [],
-    totalPrice: 0
-  }
-
   it('получаем начальное состояние', () => {
     expect(reducer(undefined, {type: 'unknown'})).toEqual(initialState)
   })
@@ -23,8 +22,8 @@ describe('detailsSlice', () => {
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
+      ...initialState,
       bun: { ...DATA_BURGERS[0], oguid: id },
-      fillings: [],
       totalPrice: 2510
     })
   })
@@ -35,7 +34,7 @@ describe('detailsSlice', () => {
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
-      bun: null,
+      ...initialState,
       fillings: [{ ...DATA_BURGERS[1], oguid: id }],
       totalPrice: 3000
     })
@@ -43,8 +42,8 @@ describe('detailsSlice', () => {
 
   it('удаляем ингредиент типа bun', () => {
     const stateBefore = {
+      ...initialState,
       bun: DATA_BURGERS[0],
-      fillings: mock_fillings,
       totalPrice: 4376
     }
     const payload = DATA_BURGERS[0]
@@ -52,7 +51,7 @@ describe('detailsSlice', () => {
     const state = reducer(stateBefore, action)
 
     expect(state).toEqual({
-      ...state,
+      ...initialState,
       bun: null,
       totalPrice: 1866
     })
@@ -60,7 +59,7 @@ describe('detailsSlice', () => {
 
   it('удаляем ингредиент типа не-bun', () => {
     const stateBefore = {
-      bun: DATA_BURGERS[0],
+      ...initialState,
       fillings: mock_fillings,
       totalPrice: 4376
     }
@@ -69,18 +68,22 @@ describe('detailsSlice', () => {
     const state = reducer(stateBefore, action)
 
     expect(state).toEqual({
-      ...state,
+      ...initialState,
       fillings: [DATA_BURGERS[2], DATA_BURGERS[3], DATA_BURGERS[4]],
       totalPrice: 4361
     })
   })
 
   it('сортируем ингредиенты', () => {
+    const stateBefore = {
+      ...initialState,
+      fillings: mock_fillings
+    }
     const action = sortingIngredients({ fromIndex: 3, toIndex: 0 })
-    const state = reducer({...initialState, fillings: mock_fillings }, action)
+    const state = reducer(stateBefore, action)
 
     expect(state).toEqual({
-      ...state,
+      ...initialState,
       fillings: [DATA_BURGERS[5], DATA_BURGERS[2], DATA_BURGERS[3], DATA_BURGERS[4]],
     })
   })
@@ -91,5 +94,4 @@ describe('detailsSlice', () => {
 
     expect(state).toEqual(initialState)
   })
-
 })

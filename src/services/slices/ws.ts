@@ -26,7 +26,7 @@ export interface IDataMessage {
   totalToday: number
 }
 
-const initialState: IWSState = {
+export const initialState: IWSState = {
   successConnect: false,
   total: 0,
   totalToday: 0,

@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import {IUserState} from '../types/state-types'
 import {getUser, loginUser, logoutUser, registerUser, updateUser} from '../thunks'
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   success: false,
   isAuthChecked: false,

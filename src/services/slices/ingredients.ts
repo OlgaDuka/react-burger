@@ -2,9 +2,9 @@ import {IIngredientItem} from '../../utils/types'
 import {createSlice} from '@reduxjs/toolkit'
 import {IIngredientsState} from '../types/state-types'
 import {fetchIngredients} from '../thunks'
-import {groupIngredientsById} from "../functions";
+import {groupIngredientsById} from '../functions'
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   ingredients: [],
   ingredientsMap: {},
   loading: false,

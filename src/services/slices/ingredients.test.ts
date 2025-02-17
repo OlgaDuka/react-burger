@@ -1,23 +1,16 @@
-import {IIngredientsState} from "../types/state-types";
-import {DATA_BURGERS, DATA_BURGERS_WITH_COUNT} from "../../utils/mock-data";
-import {fetchIngredients} from "../thunks";
-import reducer, {resetCount} from "./ingredients";
-import {groupIngredientsById} from "../functions";
+import {DATA_BURGERS, DATA_BURGERS_WITH_COUNT} from '../../utils/mock-data'
+import {fetchIngredients} from '../thunks'
+import reducer, {initialState, resetCount} from './ingredients'
+import {groupIngredientsById} from '../functions'
+import {IIngredientsState} from '../types/state-types'
 
 describe('ingredientsSlice', () => {
-  const initialState: IIngredientsState = {
-    ingredients: [],
-    ingredientsMap: {},
-    loading: false,
-    hasError: false
-  }
-
   it('получаем начальное состояние', () => {
     expect(reducer(undefined, {type: 'unknown'})).toEqual(initialState)
   })
 
   it('обнуляем счетчики ингредиентов', () => {
-    const stateBefore = {
+    const stateBefore: IIngredientsState = {
       ...initialState,
       ingredients: DATA_BURGERS_WITH_COUNT,
       ingredientsMap: groupIngredientsById(DATA_BURGERS_WITH_COUNT)
@@ -26,7 +19,7 @@ describe('ingredientsSlice', () => {
     const state = reducer(stateBefore, action)
 
     expect(state).toEqual({
-      ...state,
+      ...initialState,
       ingredients: DATA_BURGERS,
       ingredientsMap: groupIngredientsById(DATA_BURGERS)
     })
@@ -39,10 +32,9 @@ describe('ingredientsSlice', () => {
     const state = reducer(initialState, action)
 
     expect(state).toEqual({
+      ...initialState,
       ingredients: DATA_BURGERS,
       ingredientsMap: groupIngredients,
-      loading: false,
-      hasError: false
     })
   })
 })
