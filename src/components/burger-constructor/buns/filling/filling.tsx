@@ -8,7 +8,7 @@ import {AppDispatch, useAppDispatch, useAppSelector} from '../../../../services'
 import {IIngredientItem} from '../../../../utils/types'
 import {addIngredient} from '../../../../services/slices/burger-constructor'
 import {increaseIngredient} from '../../../../services/slices/ingredients'
-import {v4 as uuidv4} from "uuid";
+import {v4 as uuidv4} from 'uuid'
 
 const Filling: FC = () => {
   const fillings: IIngredientItem[] = useAppSelector((state) => state.burgerConstructor.fillings)

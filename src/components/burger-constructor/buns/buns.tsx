@@ -33,7 +33,7 @@ const Buns: FC = () => {
   })
 
   return (
-    <div ref={dropBun}>
+    <div ref={dropBun} data-testid='drop-container'>
       {bun
         ? <ConstructorElement
           type="top"

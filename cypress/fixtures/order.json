@@ -1,0 +1,76 @@
+{
+  "name": "Краторный традиционный-галактический бессмертный бургер",
+  "order":{
+    "createdAt": "2025-02-15T12:53:48.324Z",
+    "ingredients": [
+      {
+        "_id":"60666c42cc7b410027a1a9b1",
+        "name":"Краторная булка N-200i",
+        "type":"bun",
+        "proteins":80,
+        "fat":24,
+        "carbohydrates":53,
+        "calories":420,
+        "price":1255,
+        "image":"https://code.s3.yandex.net/react/code/bun-02.png"
+      },
+      {
+        "_id":"60666c42cc7b410027a1a9b9",
+        "name":"Соус традиционный галактический",
+        "type":"sauce",
+        "proteins":42,
+        "fat":24,
+        "carbohydrates":42,
+        "calories":99,
+        "price":15,
+        "image":"https://code.s3.yandex.net/react/code/sauce-03.png"
+      },
+      {
+        "_id":"60666c42cc7b410027a1a9b9",
+        "name":"Соус традиционный галактический",
+        "type":"sauce",
+        "proteins":42,
+        "fat":24,
+        "carbohydrates":42,
+        "calories":99,
+        "price":15,
+        "image":"https://code.s3.yandex.net/react/code/sauce-03.png"
+      },
+      {
+        "_id":"60666c42cc7b410027a1a9b4",
+        "name":"Мясо бессмертных моллюсков Protostomia",
+        "type":"main",
+        "proteins":433,
+        "fat":244,
+        "carbohydrates":33,
+        "calories":420,
+        "price":1337,
+        "image":"https://code.s3.yandex.net/react/code/meat-02.png"
+      },
+      {
+        "_id":"60666c42cc7b410027a1a9b1",
+        "name":"Краторная булка N-200i",
+        "type":"bun",
+        "proteins":80,
+        "fat":24,
+        "carbohydrates":53,
+        "calories":420,
+        "price":1255,
+        "image":"https://code.s3.yandex.net/react/code/bun-02.png"
+      }
+    ],
+    "name":"Краторный традиционный-галактический бессмертный бургер",
+    "number":68449,
+    "owner": {
+      "name": "Olga",
+      "email": "leliduk@yandex.ru",
+      "createAt": "2024-12-14T08:57:37.200Z",
+      "updateAt": "2025-02-15T13:11:13.510Z"
+    },
+    "price": 3877,
+    "status": "done",
+    "updateAt": "2025-02-15T13:11:13.510Z",
+    "_id": "67b09270133acd001be51076"
+  },
+  "success":true
+}

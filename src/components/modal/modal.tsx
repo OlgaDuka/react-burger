@@ -28,10 +28,10 @@ const Modal: FC<IProps> = (props: IProps) => {
 
   return ReactDom.createPortal (
       <>
-        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div data-testid='modal' className={styles.modal} onClick={(e) => e.stopPropagation()}>
           <div className={`${styles.header} text text_type_main-large`}>
             {header && <div>{header}</div>}
-            <div className={styles.close}>
+            <div data-testid='modal-close' className={styles.close}>
               <CloseIcon type="primary" onClick={onClose}/>
             </div>
           </div>
