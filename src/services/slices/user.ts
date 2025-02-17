@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import {IUserState} from '../types/state-types'
 import {getUser, loginUser, logoutUser, registerUser, updateUser} from '../thunks'
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   success: false,
   isAuthChecked: false,
@@ -45,6 +45,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state: IUserState, { payload }) => {
         state.loading = false
+        state.isAuthChecked = true
         state.success = true
         state.user = payload.user
         state.error = null
@@ -80,6 +81,7 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state: IUserState) => {
         state.loading = false
+        state.success = true
         state.user = null
         state.isAuthChecked = false
         state.error = null

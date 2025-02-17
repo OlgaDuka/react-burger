@@ -26,7 +26,7 @@ export interface IDataMessage {
   totalToday: number
 }
 
-const initialState: IWSState = {
+export const initialState: IWSState = {
   successConnect: false,
   total: 0,
   totalToday: 0,
@@ -48,7 +48,6 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     state.error = undefined
   })
   addCase(wsConnectionError, (state, {payload}) => {
-    console.log('payload: ', payload)
     state.successConnect = false
     state.error = payload
   })

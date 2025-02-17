@@ -1,6 +1,7 @@
 import React, {FC} from 'react'
 import {useDrop} from 'react-dnd'
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
+import {v4 as uuidv4} from 'uuid'
 
 import BlankConstructor from '../blank-constructor/blank-constructor'
 import Filling from './filling/filling'
@@ -14,11 +15,12 @@ const Buns: FC = () => {
   const dispatch: AppDispatch = useAppDispatch()
 
   const moveBun = (item: IIngredientItem): void => {
+    const oguid = uuidv4()
     if (bun) {
       dispatch(deleteIngredient(bun))
       dispatch(decreaseIngredient(bun._id))
     }
-    dispatch(addIngredient(item))
+    dispatch(addIngredient({ data: item, oguid }))
     dispatch(increaseIngredient(item._id))
   }
 
@@ -31,7 +33,7 @@ const Buns: FC = () => {
   })
 
   return (
-    <div ref={dropBun}>
+    <div ref={dropBun} data-testid='drop-container'>
       {bun
         ? <ConstructorElement
           type="top"

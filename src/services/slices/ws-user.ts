@@ -22,7 +22,7 @@ export interface IDataUserMessage {
   orders: TOrderItem[]
 }
 
-const initialState: IWS_User_State = {
+export const initialState: IWS_User_State = {
   successConnect: false,
   orders: [],
   ordersMap: {}
@@ -42,7 +42,6 @@ export const reducer = createReducer(initialState, ({ addCase }) => {
     state.error = undefined
   })
   addCase(wsUserConnectionError, (state, {payload}) => {
-    console.log('payload: ', payload)
     state.successConnect = false
     state.error = payload
   })

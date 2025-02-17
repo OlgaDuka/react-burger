@@ -8,13 +8,15 @@ import {AppDispatch, useAppDispatch, useAppSelector} from '../../../../services'
 import {IIngredientItem} from '../../../../utils/types'
 import {addIngredient} from '../../../../services/slices/burger-constructor'
 import {increaseIngredient} from '../../../../services/slices/ingredients'
+import {v4 as uuidv4} from 'uuid'
 
 const Filling: FC = () => {
   const fillings: IIngredientItem[] = useAppSelector((state) => state.burgerConstructor.fillings)
   const dispatch: AppDispatch = useAppDispatch()
 
   const moveIngredient = (itemId: IIngredientItem): void => {
-    dispatch(addIngredient(itemId))
+    const oguid = uuidv4()
+    dispatch(addIngredient({ data: itemId, oguid }))
     dispatch(increaseIngredient(itemId._id))
   }
 

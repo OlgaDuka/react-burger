@@ -2,20 +2,13 @@ import {IIngredientItem} from '../../utils/types'
 import {createSlice} from '@reduxjs/toolkit'
 import {IIngredientsState} from '../types/state-types'
 import {fetchIngredients} from '../thunks'
+import {groupIngredientsById} from '../functions'
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   ingredients: [],
   ingredientsMap: {},
   loading: false,
   hasError: false
-}
-
-function groupIngredientsById(array: IIngredientItem[]) {
-  if (!array.length) return {}
-
-  return array.reduce((obj: {}, item: IIngredientItem) => {
-    return {...obj, [item._id]: item }
-  }, {})
 }
 
 const ingredientsSlice = createSlice({
@@ -23,38 +16,37 @@ const ingredientsSlice = createSlice({
   initialState,
   reducers: {
      increaseIngredient: (state: IIngredientsState, { payload }) => {
-       const cloneIngredients = [...state.ingredients]
-       const index = cloneIngredients.findIndex((item: IIngredientItem) => item._id === payload)
-       const movedIngredient = Object.assign({}, cloneIngredients[index])
+       const cloneIngredientsMap = Object.assign({}, state.ingredientsMap)
+       const movedIngredient = Object.assign({}, cloneIngredientsMap[payload])
 
-        if (movedIngredient.type === 'bun') {
-          movedIngredient.count+=2
-        } else {
-          movedIngredient.count++
-        }
-        cloneIngredients.splice(index, 1, movedIngredient)
+       if (movedIngredient.type === 'bun') {
+         movedIngredient.count = 2
+       } else {
+         movedIngredient.count++
+       }
+       cloneIngredientsMap[payload] = movedIngredient
 
-        return { ...state, ingredients: cloneIngredients }
+       return { ...state, ingredientsMap: cloneIngredientsMap }
      },
      decreaseIngredient: (state: IIngredientsState, { payload }) => {
-       const cloneIngredients = [...state.ingredients]
-       const index = state.ingredients.findIndex((item: IIngredientItem) => item._id === payload)
-       const movedIngredient = Object.assign({}, cloneIngredients[index])
+       const cloneIngredientsMap = Object.assign({}, state.ingredientsMap)
+       const movedIngredient = Object.assign({}, cloneIngredientsMap[payload])
 
-        if (movedIngredient.type === 'bun') {
-          movedIngredient.count = 0
-        } else {
-          movedIngredient.count--
-        }
-        cloneIngredients.splice(index, 1, movedIngredient)
+       if (movedIngredient.type === 'bun') {
+         movedIngredient.count = 0
+       } else {
+         movedIngredient.count--
+       }
+       cloneIngredientsMap[payload] = movedIngredient
 
-        return { ...state, ingredients: cloneIngredients }
+       return { ...state, ingredientsMap: cloneIngredientsMap }
     },
     resetCount: (state: IIngredientsState) => {
        state.ingredients = state.ingredients.map((item: IIngredientItem) => {
           item.count = 0
           return item
        })
+       state.ingredientsMap = groupIngredientsById(state.ingredients)
     }
   },
   extraReducers: (builder) => {

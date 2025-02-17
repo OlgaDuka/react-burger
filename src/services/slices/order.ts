@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import {IOrderState} from '../types/state-types'
 import {getOrder, sendOrder} from '../thunks'
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   order: {
     _id: '',
     createdAt: '',
