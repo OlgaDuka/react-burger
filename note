@@ -1,0 +1,3 @@
+// Для деплоя приложения на виртуальный сервер нужно заменить скрипт в package.json на подобную строку:
+// "deploy": "react-scripts build && scp -r ./build/* leliduk@158.160.137.245:/home/leliduk/stellar-frontend"
+
