@@ -1,4 +1,5 @@
 import {ReactElement, ReactNode} from 'react'
+import {TIconProps} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
 
 export interface IIngredientItem {
   _id: string
@@ -36,7 +37,7 @@ export interface IBlankBurgerProps {
 
 export interface IMenuItemProps {
   text: string
-  children: ReactNode
+  icon?: React.ReactElement<TIconProps>
 }
 
 export interface IModalProps {
@@ -105,6 +106,19 @@ export interface IFeedCardProps {
 export type TOrder = {
   [key:string]: TOrderItem
 }
+
+/*
+
+declare type TIconTypes = 'secondary' | 'primary' | 'error' | 'success' | 'disabled';
+export declare type TIconProps = {
+    type: TIconTypes;
+    className?: string;
+    onClick?: () => void;
+};
+export declare const getIconColor: (type: TIconTypes) => string;
+export {};
+
+ */
 
 
 

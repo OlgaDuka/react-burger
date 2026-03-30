@@ -1,53 +1,61 @@
-import React, {FC} from 'react'
+import React, {FC, useCallback} from 'react'
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import MenuItem from './menu-item/menu-item'
 import styles from './app-header.module.css'
-import {Link, NavLink, useMatch} from 'react-router-dom'
-import {useAppSelector} from '../../services'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useAppSelector } from '../../services'
 
 const AppHeader: FC = () => {
-  const isConstructor = !!useMatch('/')
-  const isFeed = !!useMatch('/feed')
-  const isProfile = !!useMatch('/profile')
-  const isOrders = !!useMatch('/profile/orders')
+  const location = useLocation()
   const { isAuthChecked, user } = useAppSelector((state) => state.user)
-  const classLink = (isActive: boolean): string => {
-    return `${styles.link} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`
-  }
+
+  // Проверяем, активен ли маршрут или его подпуть (например, /profile/orders)
+  const isActive = useCallback(
+    (path: string) => {
+      if (path === '/profile') {
+        return location.pathname.startsWith('/profile')
+      }
+      return location.pathname === path;
+    },
+    [location.pathname]
+  )
+
+  const getLinkClass = useCallback(
+      (path: string) => {
+        const baseClass = styles.link
+        const activeClass = isActive(path) ? styles.active : ''
+        return `${baseClass} ${activeClass}`.trim()
+      },
+      [isActive]
+  )
 
   return (
     <header className={styles.header}>
       <nav className={styles.menu}>
-        <NavLink
-          to='/'
-          className={() => classLink(isConstructor)}
-        >
-          <MenuItem text='Конструктор'>
-            <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
-          </MenuItem>
+        <NavLink to='/' className={getLinkClass('/')}>
+          <MenuItem
+            text='Конструктор'
+            icon={<BurgerIcon type="primary" />}
+          />
         </NavLink>
 
-        <NavLink
-          to='/feed'
-          className={() => classLink(isFeed)}
-        >
-          <MenuItem text='Лента заказов'>
-            <ListIcon type={isFeed ? 'primary' : 'secondary'} />
-          </MenuItem>
+        <NavLink to='/feed' className={getLinkClass('/feed')}>
+          <MenuItem
+            text='Лента заказов'
+            icon={<ListIcon type="primary" />}
+          />
         </NavLink>
 
         <Link to='/' className={styles.logo}>
           <Logo />
         </Link>
 
-        <NavLink
-          to='/profile/'
-          className={() => classLink(isProfile || isOrders) + ` ${styles.last_item}`}
-        >
-          <MenuItem text={isAuthChecked && user ? user.name : 'Личный кабинет'}>
-            <ProfileIcon type={isProfile || isOrders ? 'primary' : 'secondary'} />
-          </MenuItem>
+        <NavLink to='/profile/' className={getLinkClass('/profile') + ` ${styles.last_item}`}>
+          <MenuItem
+            text={isAuthChecked && user ? user.name : 'Личный кабинет'}
+            icon={<ProfileIcon type="primary" />}
+          />
         </NavLink>
       </nav>
     </header>

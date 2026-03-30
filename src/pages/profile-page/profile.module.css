@@ -29,6 +29,11 @@
 
 .link {
     text-decoration: none;
+    transition: var(--common-transition);
+}
+
+.link:hover {
+    color: var(--text-primary-color);
 }
 
 .buttons {
