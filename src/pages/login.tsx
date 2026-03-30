@@ -63,7 +63,7 @@ const LoginPage: FC = () => {
           <Link to={ROUTES.REGISTER}>Зарегистрироваться</Link>
         </span>
         <span>Забыли пароль?&nbsp;
-          <Link to={ROUTES.FOGOT_PASSWORD}>Восстановить пароль</Link>
+          <Link to={ROUTES.FORGOT_PASSWORD}>Восстановить пароль</Link>
         </span>
       </div>
     </div>

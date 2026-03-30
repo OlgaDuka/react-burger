@@ -17,7 +17,7 @@ export const ENDPOINT = {
 
 export const ROUTES = {
     HOME: '/',
-    FOGOT_PASSWORD: '/fogot-password',
+    FORGOT_PASSWORD: '/forgot-password',
     LOGIN: '/login',
     REGISTER: '/register',
     RESET_PASSWORD: '/reset-password'

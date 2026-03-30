@@ -2,7 +2,7 @@ import React, {FC, useEffect} from 'react'
 import AppHeader from '../app-header/app-header'
 import {
   IngredientPage,
-  FogotPassword,
+  ForgotPassword,
   FeedPage,
   Home,
   LoginPage,
@@ -60,7 +60,7 @@ const App: FC = () => {
 
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/register" element={<RegisterPage/>} />
-        <Route path="/fogot-password" element={<FogotPassword/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/reset-password" element={<ResetPassword/>} />
 
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>} />}>
@@ -76,7 +76,7 @@ const App: FC = () => {
       {background && (
         <Routes>
           <Route path='/ingredients/:id' element={
-            <Modal onClose={() => navigate('/')} header='Детали ингредиента'>
+            <Modal onClose={() => navigate('/')} header='Детали ингредиента' key={location.pathname}>
               <IngredientDetails />
             </Modal>
           }/>
@@ -86,7 +86,7 @@ const App: FC = () => {
             </Modal>
           }/>
           <Route path='/profile/orders/:id' element={<ProtectedRoute element={
-              <Modal onClose={() => navigate('/profile/orders')}>
+              <Modal onClose={() => navigate('/profile/orders')} key={location.pathname}>
                 <FeedDetails />
               </Modal>
             }/>

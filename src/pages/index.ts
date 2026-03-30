@@ -1,7 +1,7 @@
 import IngredientPage from './ingredient'
 import LoginPage from './login'
 import RegisterPage from './register'
-import FogotPassword from './forgot-password'
+import ForgotPassword from './forgot-password'
 import ResetPassword from './reset-password'
 import ProfilePage from './profile-page'
 import FeedPage from './feed'
@@ -16,7 +16,7 @@ export {
   Home,
   ProfilePage,
   RegisterPage,
-  FogotPassword,
+  ForgotPassword,
   ResetPassword,
   FeedPage,
   OrderDetailsPage
