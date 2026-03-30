@@ -10,10 +10,10 @@ import {NavigateFunction, useNavigate} from 'react-router-dom'
 import Loader from '../loader/loader'
 import {useAppDispatch, useAppSelector} from '../../services'
 import {clearOrder} from '../../services/slices/order'
-import {clearBurger} from '../../services/slices/burger-constructor'
-import {resetCount} from '../../services/slices/ingredients'
 import {sendOrder} from '../../services/thunks'
 import {IIngredientItem} from '../../utils/types'
+import {clearBurger} from "../../services/slices/burger-constructor";
+import {resetCount} from "../../services/slices/ingredients";
 
 const BurgerConstructor: FC = () => {
   const { isOpenModal, openModal, closeModal } = useModal()
@@ -26,17 +26,19 @@ const BurgerConstructor: FC = () => {
     useAppSelector((state) => state.burgerConstructor)
 
   const handleOrder = (): void => {
+    if (!bun) return
+
+    const ingredients = [
+      bun._id,
+      ...fillings.map((item: IIngredientItem)=> item._id),
+      bun._id
+    ]
+
     if (isAuthChecked) {
-      const ingredients = []
-      if (bun) {
-        ingredients.push(bun._id)
-      } else return
-      if (fillings.length > 0) {
-        fillings.forEach((item: IIngredientItem) => ingredients.push(item._id))
-        ingredients.push(bun._id)
-      } else return
       dispatch(sendOrder(ingredients))
-    } else navigate('/login')
+    } else {
+      return navigate('/login')
+    }
   }
 
   const closeOrder = (): void => {
@@ -69,14 +71,14 @@ const BurgerConstructor: FC = () => {
           htmlType="button"
           type="primary"
           size="large"
-          disabled={!totalPrice}
+          disabled={!bun || fillings.length === 0}
           onClick={handleOrder}
         >
           Оформить заказ
         </Button>
       </div>
       {isOpenModal
-      ? <Modal onClose={closeOrder} header={loading ? 'Формируем заказ' : ''}>
+      ? <Modal onClose={closeOrder} header={loading ? 'Формируем заказ' : ''} key={loading ? 'loading' : 'success'}>
           {loading ? <Loader /> : <OrderDetails />}
         </Modal>
       : null

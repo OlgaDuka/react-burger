@@ -1,6 +1,7 @@
 .card {
     margin: 0 auto;
     width: 520px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
