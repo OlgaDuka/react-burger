@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, useMemo} from 'react'
 import {IFeedCardProps as IProps, IIngredientItem} from '../../../utils/types'
 import styles from './feed-card.module.css'
 import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components'
@@ -20,19 +20,25 @@ const FeedCard = (props: IProps) => {
     updatedAt,
     status
   } = order
-  let totalPrice = 0
-  const countImages = ingredients.length
+
+    // memoize total price
+    const totalPrice = useMemo(() => {
+        return ingredients.reduce((acc, id) => {
+            const ingredient = ingredientsAll[id];
+            return acc + (ingredient?.price || 0);
+        }, 0);
+    }, [ingredients, ingredientsAll]);
+
+    const countImages = ingredients.length
   const isDone = status === ORDER_STATUS.DONE
 
   if (!ingredients.length || !number) return null
+
   const renderImages = (): ReactNode =>
     ingredients.map((item: string, index) => {
       const offset = index * 48
       const z_index = 50 - index
       const orderIngredient: IIngredientItem = ingredientsAll[item]
-      if (orderIngredient?.price) {
-        totalPrice += orderIngredient?.price
-      }
 
       return orderIngredient && (index < 5
         ? <div key={index} className={styles.border} style={{left: `${offset}px`, zIndex: `${z_index}`}}>

@@ -51,7 +51,7 @@
 }
 
 .name {
-    text-wrap: normal;
+    text-wrap: wrap;
 }
 
 .currency {
@@ -64,7 +64,7 @@
     padding-top: 2px;
     display: block;
     height: auto;
-    max-height: 320px;
+    max-height: 230px;
     overflow-y: scroll;
 }
 
