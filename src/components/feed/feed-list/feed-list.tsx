@@ -4,6 +4,7 @@ import {TOrderItem} from '../../../utils/types'
 import FeedCard from '../feed-card/feed-card'
 import {useAppSelector} from '../../../services'
 import {useLocation} from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const FeedList = () => {
   const location = useLocation()
@@ -16,9 +17,15 @@ const FeedList = () => {
       {!isProfile && <h1 className='text_type_main-large mt-10 mb-5'>Лента заказов</h1>}
       <div className={`${styles.container} ${isProfile ? styles.profile_height : styles.feed_height}`}>
         {orders.map((item: TOrderItem) =>
-          <div key={item._id} className='mb-4'>
+          <motion.div
+              key={item._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className='mb-4'
+          >
             <FeedCard order={item}/>
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
