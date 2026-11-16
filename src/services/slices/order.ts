@@ -31,7 +31,9 @@ export const orderSlice = createSlice({
       })
       .addCase(sendOrder.fulfilled, (state: IOrderState, { payload}) => {
         state.loading = false
-        state.order = payload
+        // Пустой ответ не должен затирать текущий заказ: иначе компонент
+        // OrderDetails падает при чтении state.order.order.number.
+        if (payload) state.order = payload
       })
       .addCase(sendOrder.rejected, (state: IOrderState, action) => {
         state.loading = false
@@ -44,7 +46,7 @@ export const orderSlice = createSlice({
       })
       .addCase(getOrder.fulfilled, (state: IOrderState, { payload}) => {
         state.loading = false
-        state.order = payload
+        if (payload) state.order = payload
       })
       .addCase(getOrder.rejected, (state: IOrderState, action) => {
         state.loading = false

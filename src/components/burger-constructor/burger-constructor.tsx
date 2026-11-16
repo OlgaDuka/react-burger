@@ -20,7 +20,7 @@ const BurgerConstructor: FC = () => {
   const navigate: NavigateFunction = useNavigate()
   const dispatch = useAppDispatch()
 
-  const isAuthChecked = useAppSelector((state) => state.user.isAuthChecked)
+  const { user } = useAppSelector((state) => state.user)
   const { loading, hasError } = useAppSelector((state) => state.order)
   const { totalPrice, bun, fillings } =
     useAppSelector((state) => state.burgerConstructor)
@@ -34,11 +34,14 @@ const BurgerConstructor: FC = () => {
       bun._id
     ]
 
-    if (isAuthChecked) {
-      dispatch(sendOrder(ingredients))
-    } else {
-      return navigate('/login')
+    // Проверяем именно загруженного пользователя: с протухшим или устаревшим
+    // токеном заказ всё равно не создастся, лучше сразу отправить на вход.
+    if (!user) {
+      navigate('/login')
+      return
     }
+
+    dispatch(sendOrder(ingredients))
   }
 
   const closeOrder = (): void => {
@@ -78,8 +81,17 @@ const BurgerConstructor: FC = () => {
         </Button>
       </div>
       {isOpenModal
-      ? <Modal onClose={closeOrder} header={loading ? 'Формируем заказ' : ''} key={loading ? 'loading' : 'success'}>
-          {loading ? <Loader /> : <OrderDetails />}
+      ? <Modal
+          onClose={closeOrder}
+          header={loading ? 'Формируем заказ' : hasError ? 'Ошибка' : ''}
+          key={loading ? 'loading' : hasError ? 'error' : 'success'}
+        >
+          {loading
+            ? <Loader />
+            : hasError
+              ? <p className='text text_type_main-default'>Не удалось оформить заказ. Попробуйте ещё раз.</p>
+              : <OrderDetails />
+          }
         </Modal>
       : null
       }

@@ -36,4 +36,19 @@ describe('orderSlice', () => {
       order: DATA_ORDERS[0]
     })
   })
+
+  // Регрессия: при ошибке API срез раньше записывал undefined,
+  // и OrderDetails падал на деструктуризации state.order.order.
+  it('не затирает заказ пустым ответом', () => {
+    const stateWithOrder = {...initialState, order: DATA_ORDERS[0]}
+    const action = sendOrder.fulfilled(
+      undefined as unknown as typeof DATA_ORDERS[0],
+      '',
+      DATA_INGREDIENTS
+    )
+    const state = reducer(stateWithOrder, action)
+
+    expect(state.order).toEqual(DATA_ORDERS[0])
+    expect(state.loading).toBe(false)
+  })
 })

@@ -39,7 +39,9 @@ export const requestWithUpdateToken = async (endpoint: string, options?: Request
     return await request(endpoint, options)
   } catch (error) {
     if (!String(error).includes("jwt expired")) {
-      return error
+      // Пробрасываем ошибку дальше: иначе thunk завершится «успешно» с undefined
+      // и в хранилище попадёт пустой заказ.
+      throw error
     }
     await updateToken()
 

@@ -4,7 +4,9 @@ import styles from './order-details.module.css'
 import {useAppSelector} from '../../services'
 
 const OrderDetails: FC = () => {
-  const { number } = useAppSelector((state) => state.order.order)
+  // Заказ может быть ещё не загружен или не создан — компонент не должен падать.
+  const order = useAppSelector((state) => state.order?.order)
+  const number = order?.number ?? 0
 
   return (
     <div data-testid='order_details' className={styles.card}>
