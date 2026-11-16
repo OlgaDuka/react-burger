@@ -2,6 +2,7 @@ import cors from 'cors'
 import express, { Express } from 'express'
 import { config } from './config'
 import { query } from './db/pool'
+import { docsRouter } from './docs'
 import { errorHandler } from './lib/http'
 import { authRouter } from './routes/auth'
 import { ingredientsRouter } from './routes/ingredients'
@@ -38,6 +39,7 @@ export function createApp(): Express {
   app.use('/api/orders', ordersRouter)
   app.use('/api/auth', authRouter)
   app.use('/api', passwordRouter)
+  app.use('/api', docsRouter)
 
   app.use((_req, res) => {
     res.status(404).json({ success: false, message: 'Not found' })

@@ -5,6 +5,7 @@
  *   node scripts/smoke.mjs
  */
 import WebSocket from 'ws'
+import { parse as parseYaml } from 'yaml'
 
 const API = (process.env.SMOKE_API_URL ?? 'http://localhost:3001').replace(/\/+$/, '')
 const WS = API.replace(/^http/, 'ws')
@@ -68,6 +69,15 @@ const main = async () => {
     'GET /api/ingredients',
     ingredients.status === 200 && ingredients.body?.data?.length > 0,
     `получено ${ingredients.body?.data?.length}`
+  )
+
+  const specResponse = await fetch(`${API}/api/openapi.yaml`)
+  const spec = parseYaml(await specResponse.text())
+  const documented = Object.keys(spec.paths ?? {}).length
+  check(
+    'GET /api/openapi.yaml',
+    specResponse.status === 200 && documented >= 12 && Boolean(spec.components?.schemas?.Order),
+    `путей в спецификации: ${documented}`
   )
 
   const bun = ingredients.body.data.find((item) => item.type === 'bun')

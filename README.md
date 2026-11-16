@@ -117,6 +117,26 @@ npm start           # только фронтенд (Vite, API должен бы
 
 Письма не отправляются: код восстановления печатается в консоль API-сервера.
 
+## Документация API (OpenAPI)
+
+Контракт всех ручек описан в [`server/openapi.yaml`](server/openapi.yaml) — OpenAPI 3.0.3.
+Сервер отдаёт его двумя способами, пока запущен `npm run api`:
+
+| Адрес | Что это |
+| --- | --- |
+| `http://localhost:3001/api/docs` | Swagger UI: интерактивный справочник с примерами и кнопкой Authorize |
+| `http://localhost:3001/api/openapi.yaml` | исходная спецификация для Swagger Editor, Postman или генерации клиента |
+
+Проверить файл после правок:
+
+```bash
+npx @apidevtools/swagger-cli validate server/openapi.yaml
+```
+
+WebSocket-каналы в OpenAPI не описываются: они перечислены в `info.description`
+и описаны схемой `WsOrdersMessage`. Спецификация читается на каждый запрос,
+поэтому изменения видны в браузере после обновления страницы, без перезапуска сервера.
+
 ## Переменные окружения
 
 Все настройки лежат в [`.env`](.env) в корне проекта. Vite отдаёт в браузер только
@@ -163,6 +183,8 @@ server/
   index.ts            запуск: БД → схема → сид → HTTP + WebSocket
   app.ts              сборка Express-приложения
   config.ts           чтение .env
+  docs.ts             Swagger UI и отдача openapi.yaml
+  openapi.yaml        контракт всех ручек (OpenAPI 3.0.3)
   ws.ts               /orders/all и /orders?token=
   db/
     schema.sql        DDL

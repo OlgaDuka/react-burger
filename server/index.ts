@@ -29,6 +29,7 @@ async function main(): Promise<void> {
   await new Promise<void>((resolve) => server.listen(config.port, resolve))
 
   console.log(`[api] REST   http://localhost:${config.port}/api`)
+  console.log(`[api] Docs   http://localhost:${config.port}/api/docs`)
   console.log(`[api] WS     ws://localhost:${config.port}/orders/all`)
   console.log(`[api] WS     ws://localhost:${config.port}/orders?token=<access>`)
 

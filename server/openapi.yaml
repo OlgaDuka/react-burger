@@ -1,0 +1,831 @@
+openapi: 3.0.3
+info:
+  title: Stellar Burger API
+  version: 1.0.0
+  description: |
+    REST API учебного проекта Stellar Burger: справочник ингредиентов, заказы,
+    аутентификация по JWT и восстановление пароля.
+
+    Все ответы — JSON. Успешные ответы содержат `success: true`,
+    ошибки — `success: false` и человекочитаемое `message`.
+
+    ## Аутентификация
+    `POST /api/auth/register` и `POST /api/auth/login` возвращают пару токенов.
+    Access-токен передаётся в заголовке `Authorization: Bearer <token>` и живёт
+    недолго; когда он истекает, сервер отвечает `401` с сообщением `jwt expired`,
+    после чего клиент обновляет пару через `POST /api/auth/token`.
+    Refresh-токен одноразовый: при обновлении он отзывается и выдаётся новый.
+
+    ## WebSocket
+    Спецификация OpenAPI не описывает WebSocket, поэтому каналы перечислены здесь.
+
+    - `ws://localhost:3001/orders/all` — лента всех заказов. Сразу после подключения
+      сервер присылает снимок `{ success, orders, total, totalToday }` и повторяет его
+      при каждом новом заказе.
+    - `ws://localhost:3001/orders?token=<access>` — заказы текущего пользователя,
+      формат сообщений тот же. При недействительном токене сервер присылает
+      `{ success: false, message: "Invalid or missing token" }` и закрывает соединение.
+
+    Оба канала описаны схемой `WsOrdersMessage` в разделе `components/schemas`.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3001
+    description: Локальный сервер разработки (`npm run api`)
+tags:
+  - name: Health
+    description: Проверка живости сервиса
+  - name: Ingredients
+    description: Справочник ингредиентов
+  - name: Orders
+    description: Создание и чтение заказов
+  - name: Auth
+    description: Регистрация, вход и профиль
+  - name: Password reset
+    description: Восстановление пароля по коду из письма
+paths:
+  /api/health:
+    get:
+      tags: [Health]
+      summary: Проверить состояние API и базы
+      operationId: getHealth
+      responses:
+        '200':
+          description: API и база доступны
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              example:
+                success: true
+                status: ok
+        '503':
+          description: База данных недоступна
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthFailure'
+              example:
+                success: false
+                status: db-unavailable
+                message: connect ECONNREFUSED 127.0.0.1:5433
+
+  /api/ingredients:
+    get:
+      tags: [Ingredients]
+      summary: Список ингредиентов
+      operationId: listIngredients
+      description: |
+        Отдаёт весь справочник: сначала булки, затем начинки и соусы.
+        Фронтенд добавляет к каждому элементу поле `count` самостоятельно.
+      responses:
+        '200':
+          description: Справочник ингредиентов
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Ingredient'
+              example:
+                success: true
+                data:
+                  - _id: 643d69a5c3f7b9001cfa093c
+                    name: Краторная булка N-200i
+                    type: bun
+                    proteins: 80
+                    fat: 24
+                    carbohydrates: 53
+                    calories: 420
+                    price: 1255
+                    image: https://code.s3.yandex.net/react/code/bun-02.png
+                    image_mobile: https://code.s3.yandex.net/react/code/bun-02-mobile.png
+                    image_large: https://code.s3.yandex.net/react/code/bun-02-large.png
+
+  /api/ingredients/{id}:
+    get:
+      tags: [Ingredients]
+      summary: Один ингредиент по id
+      operationId: getIngredient
+      parameters:
+        - $ref: '#/components/parameters/IngredientId'
+      responses:
+        '200':
+          description: Ингредиент найден
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, data]
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ingredient'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/orders:
+    get:
+      tags: [Orders]
+      summary: Последние заказы
+      operationId: listOrders
+      description: До 100 последних заказов, новые первыми. Авторизация не требуется.
+      responses:
+        '200':
+          description: Список заказов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrdersResponse'
+    post:
+      tags: [Orders]
+      summary: Создать заказ
+      operationId: createOrder
+      security:
+        - bearerAuth: []
+      description: |
+        Принимает массив id ингредиентов в том порядке, в котором их собрали.
+        Булка передаётся дважды — в начале и в конце; повторяющиеся id допустимы.
+        Имя заказа и сумма считаются на сервере.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+            example:
+              ingredients:
+                - 643d69a5c3f7b9001cfa093c
+                - 643d69a5c3f7b9001cfa0941
+                - 643d69a5c3f7b9001cfa093c
+      responses:
+        '200':
+          description: Заказ создан
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, order]
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  order:
+                    $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/orders/{id}:
+    get:
+      tags: [Orders]
+      summary: Заказ по id или номеру
+      operationId: getOrder
+      description: |
+        Принимает и внутренний `_id` (24 символа), и номер заказа, который
+        видит пользователь. Именно по номеру открываются страницы `/feed/:id`
+        и `/profile/orders/:id`.
+      parameters:
+        - $ref: '#/components/parameters/OrderIdOrNumber'
+      responses:
+        '200':
+          description: Заказ найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrdersResponse'
+              example:
+                success: true
+                orders:
+                  - _id: 67b09270133acd001be51076
+                    ingredients:
+                      - 643d69a5c3f7b9001cfa093c
+                      - 643d69a5c3f7b9001cfa0941
+                      - 643d69a5c3f7b9001cfa093c
+                    name: Краторный биокотлета бургер
+                    status: done
+                    number: 68400
+                    createdAt: '2026-11-10T09:12:00.000Z'
+                    updatedAt: '2026-11-10T09:15:00.000Z'
+                    price: 2934
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/auth/register:
+    post:
+      tags: [Auth]
+      summary: Зарегистрировать пользователя
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            example:
+              email: kosmonavt@example.com
+              name: Космонавт
+              password: burger123
+      responses:
+        '201':
+          description: Пользователь создан, пара токенов выдана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Войти по email и паролю
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: leliduk@yandex.ru
+              password: burger123
+      responses:
+        '200':
+          description: Пара токенов и профиль пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Неверная пара email/пароль
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                message: email or password are incorrect
+
+  /api/auth/logout:
+    post:
+      tags: [Auth]
+      summary: Выйти из аккаунта
+      operationId: logoutUser
+      description: Отзывает переданный refresh-токен. Access-токен просто перестаёт использоваться клиентом.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Выход выполнен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                success: true
+                message: Successful logout
+
+  /api/auth/token:
+    post:
+      tags: [Auth]
+      summary: Обновить пару токенов
+      operationId: refreshToken
+      description: |
+        Принимает refresh-токен, отзывает его и выдаёт новую пару.
+        Повторное использование старого токена возвращает `401`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Новая пара токенов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPairResponse'
+        '401':
+          description: Токен неизвестен, отозван или истёк
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                message: Token is invalid
+
+  /api/auth/user:
+    get:
+      tags: [Auth]
+      summary: Текущий пользователь
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Профиль пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    patch:
+      tags: [Auth]
+      summary: Изменить профиль
+      operationId: updateCurrentUser
+      security:
+        - bearerAuth: []
+      description: |
+        Любое из полей можно не передавать. Пустая строка в `password`
+        означает «оставить пароль прежним»: форма профиля отправляется целиком.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Профиль обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  /api/password-reset:
+    post:
+      tags: [Password reset]
+      summary: Запросить код восстановления
+      operationId: requestPasswordReset
+      description: |
+        Ответ всегда одинаковый, чтобы нельзя было проверить наличие email в базе.
+        Письмо не отправляется: код печатается в консоль API-сервера и живёт
+        15 минут (`PASSWORD_RESET_TTL_MINUTES`).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+      responses:
+        '200':
+          description: Запрос принят
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                success: true
+                message: Reset email sent
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /api/password-reset/reset:
+    post:
+      tags: [Password reset]
+      summary: Сменить пароль по коду
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirmRequest'
+            example:
+              password: newBurger123
+              token: '123456'
+      responses:
+        '200':
+          description: Пароль изменён, все refresh-токены отозваны
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+              example:
+                success: true
+                message: Password successfully reset
+        '400':
+          description: Код неверный, просрочен или уже использован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                message: Invalid reset token
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Access-токен из `/api/auth/login`, `/api/auth/register` или `/api/auth/token`.
+        Ответы этих методов отдают его уже с префиксом `Bearer `, поэтому в заголовок
+        значение подставляется как есть. Если токен истёк, сервер отвечает `401`
+        с сообщением `jwt expired` — это сигнал обновить пару через `/api/auth/token`.
+
+  parameters:
+    IngredientId:
+      name: id
+      in: path
+      required: true
+      description: Идентификатор ингредиента, 24 шестнадцатеричных символа
+      schema:
+        type: string
+        pattern: '^[0-9a-fA-F]{24}$'
+      example: 643d69a5c3f7b9001cfa093c
+    OrderIdOrNumber:
+      name: id
+      in: path
+      required: true
+      description: Внутренний `_id` заказа или его номер, который видит пользователь
+      schema:
+        type: string
+      examples:
+        byNumber:
+          summary: По номеру
+          value: '68400'
+        byId:
+          summary: По внутреннему id
+          value: 67b09270133acd001be51076
+
+  responses:
+    BadRequest:
+      description: Некорректные данные запроса
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: Поле «email» обязательно
+    Unauthorized:
+      description: Токен отсутствует, истёк или пользователь не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            missing:
+              summary: Заголовка нет
+              value:
+                success: false
+                message: Invalid or missing token
+            expired:
+              summary: Access-токен истёк
+              value:
+                success: false
+                message: jwt expired
+            deleted:
+              summary: Базу пересоздали, пользователя больше нет
+              value:
+                success: false
+                message: User not found
+    NotFound:
+      description: Объект не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: Order not found
+    Conflict:
+      description: Конфликт данных
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            emailTaken:
+              summary: Email уже занят
+              value:
+                success: false
+                message: User already exists
+
+  schemas:
+    Ingredient:
+      type: object
+      required: [_id, name, type, proteins, fat, carbohydrates, calories, price, image]
+      properties:
+        _id:
+          type: string
+          description: Идентификатор в стиле Mongo ObjectId
+          example: 643d69a5c3f7b9001cfa093c
+        name:
+          type: string
+          example: Краторная булка N-200i
+        type:
+          type: string
+          enum: [bun, main, sauce]
+          description: Булка, начинка или соус
+        proteins:
+          type: integer
+          example: 80
+        fat:
+          type: integer
+          example: 24
+        carbohydrates:
+          type: integer
+          example: 53
+        calories:
+          type: integer
+          example: 420
+        price:
+          type: integer
+          description: Цена в кредитах
+          example: 1255
+        image:
+          type: string
+          format: uri
+          example: https://code.s3.yandex.net/react/code/bun-02.png
+        image_mobile:
+          type: string
+          format: uri
+          example: https://code.s3.yandex.net/react/code/bun-02-mobile.png
+        image_large:
+          type: string
+          format: uri
+          example: https://code.s3.yandex.net/react/code/bun-02-large.png
+
+    Order:
+      type: object
+      required: [_id, ingredients, name, status, number, createdAt, updatedAt, price]
+      properties:
+        _id:
+          type: string
+          example: 67b09270133acd001be51076
+        ingredients:
+          type: array
+          description: |
+            id ингредиентов в порядке сборки. Булка встречается дважды,
+            повторяющиеся id допустимы.
+          items:
+            type: string
+          example:
+            - 643d69a5c3f7b9001cfa093c
+            - 643d69a5c3f7b9001cfa0941
+            - 643d69a5c3f7b9001cfa093c
+        name:
+          type: string
+          description: Имя собирается на сервере из названий ингредиентов
+          example: Краторный биокотлета бургер
+        status:
+          type: string
+          enum: [created, pending, done]
+          example: done
+        number:
+          type: integer
+          description: Номер заказа, который видит пользователь
+          example: 68400
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        price:
+          type: integer
+          description: Сумма заказа, считается на сервере
+          example: 2934
+        owner:
+          $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      required: [email, name]
+      properties:
+        email:
+          type: string
+          format: email
+          example: leliduk@yandex.ru
+        name:
+          type: string
+          example: Olga
+
+    ErrorResponse:
+      type: object
+      required: [success, message]
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+        message:
+          type: string
+          example: Order not found
+
+    HealthResponse:
+      type: object
+      required: [success, status]
+      properties:
+        success:
+          type: boolean
+          example: true
+        status:
+          type: string
+          enum: [ok]
+
+    HealthFailure:
+      type: object
+      required: [success, status, message]
+      properties:
+        success:
+          type: boolean
+          example: false
+        status:
+          type: string
+          enum: [db-unavailable]
+        message:
+          type: string
+
+    MessageResponse:
+      type: object
+      required: [success, message]
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+
+    TokenPairResponse:
+      type: object
+      required: [success, accessToken, refreshToken]
+      properties:
+        success:
+          type: boolean
+          example: true
+        accessToken:
+          type: string
+          description: Значение уже с префиксом `Bearer `
+          example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        refreshToken:
+          type: string
+          example: 9f2c1b7d4e8a4c3f9b0d6e2a1c8f5b7e...
+
+    AuthResponse:
+      allOf:
+        - $ref: '#/components/schemas/TokenPairResponse'
+        - type: object
+          required: [user]
+          properties:
+            user:
+              $ref: '#/components/schemas/User'
+
+    UserResponse:
+      type: object
+      required: [success, user]
+      properties:
+        success:
+          type: boolean
+          example: true
+        user:
+          $ref: '#/components/schemas/User'
+
+    OrdersResponse:
+      type: object
+      required: [success, orders]
+      properties:
+        success:
+          type: boolean
+          example: true
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+
+    CreateOrderRequest:
+      type: object
+      required: [ingredients]
+      properties:
+        ingredients:
+          type: array
+          minItems: 1
+          description: id ингредиентов; дубликаты допустимы
+          items:
+            type: string
+
+    RegisterRequest:
+      type: object
+      required: [email, name, password]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 320
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        password:
+          type: string
+          minLength: 6
+          maxLength: 100
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+          maxLength: 100
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 320
+        password:
+          type: string
+          description: Пустая строка означает «не менять пароль»
+          maxLength: 100
+
+    RefreshTokenRequest:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+          description: Refresh-токен, полученный при входе или обновлении
+
+    PasswordResetRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    PasswordResetConfirmRequest:
+      type: object
+      required: [password, token]
+      properties:
+        password:
+          type: string
+          minLength: 6
+          maxLength: 100
+        token:
+          type: string
+          description: Код из письма, 6 цифр
+          maxLength: 12
+
+    WsOrdersMessage:
+      type: object
+      description: |
+        Сообщение WebSocket-каналов `/orders/all` и `/orders?token=<access>`.
+        Не относится к OpenAPI-путям, приведено для полноты контракта.
+      required: [success, orders]
+      properties:
+        success:
+          type: boolean
+          example: true
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        total:
+          type: integer
+          description: Всего заказов в системе
+          example: 16
+        totalToday:
+          type: integer
+          description: Заказов за сегодня
+          example: 3
