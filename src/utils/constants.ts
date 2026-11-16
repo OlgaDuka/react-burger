@@ -1,6 +1,19 @@
-export const BASE_URL_GALAXY = 'https://norma.education-services.ru/api/'
-export const WS_URL_All = 'wss://norma.education-services.ru/orders/all'
-export const WS_URL_USER = 'wss://norma.education-services.ru/orders'
+// Адрес API можно переопределить переменными окружения Vite (файл .env в корне):
+//   VITE_API_URL=http://localhost:3001 — локальный сервер из `server/`
+//   VITE_API_URL=https://norma.education-services.ru — учебный API
+const API_ORIGIN = (import.meta.env.VITE_API_URL || 'https://norma.education-services.ru').replace(
+  /\/+$/,
+  ''
+)
+
+const WS_ORIGIN = (import.meta.env.VITE_WS_URL || API_ORIGIN.replace(/^http/, 'ws')).replace(
+  /\/+$/,
+  ''
+)
+
+export const BASE_URL_GALAXY = `${API_ORIGIN}/api/`
+export const WS_URL_All = `${WS_ORIGIN}/orders/all`
+export const WS_URL_USER = `${WS_ORIGIN}/orders`
 export const RECONNECT_TIME = 3000
 
 export const ENDPOINT = {
